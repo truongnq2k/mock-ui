@@ -147,9 +147,7 @@
       padding: 5px 0;
       border-radius: var(--radius-full);
       transition: all 0.3s ease;
-      cursor: default;
       cursor: pointer;
-      transition: all 0.2s ease;
     }
 
     .tabs div.active {
@@ -211,26 +209,25 @@
       text-shadow: 0 2px 8px rgba(0, 191, 165, 0.2);
     }
 
-    /* ── CHART ── */
+    /* ── CHART SECTION MỚI (TỐI GIẢN & REALTIME) ── */
     .chart-tabs {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      height: 28px;
-      gap: 6px;
-      margin-bottom: 12px;
+      height: 32px;
+      gap: 8px;
+      margin-bottom: 16px;
     }
 
     .chart-tabs div {
-      background: rgba(227, 242, 253, 0.5);
+      background: rgba(227, 242, 253, 0.4);
       border-radius: var(--radius-full);
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 600;
       color: var(--on-surface-variant);
       text-align: center;
-      line-height: 28px;
+      line-height: 32px;
       font-family: var(--font-label);
-      letter-spacing: 0.02em;
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
       cursor: pointer;
     }
 
@@ -238,13 +235,79 @@
       background: var(--primary);
       color: var(--on-primary);
       font-weight: 700;
-      box-shadow: 0 2px 12px rgba(0, 191, 165, 0.25);
+      box-shadow: 0 4px 12px rgba(0, 191, 165, 0.2);
+    }
+
+    /* Khu vực hiển thị thông số lớn trực quan */
+    .realtime-status-container {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
+
+    .realtime-value-box {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--on-surface);
+      letter-spacing: -1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .realtime-value-box span.unit {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--outline);
+      letter-spacing: 0;
+    }
+
+    /* Chấm nháy nhẹ báo hiệu đang chạy realtime */
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      display: inline-block;
+      animation: pulse 1.5s infinite;
+      align-self: center;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 191, 165, 0.7);
+      }
+
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 5px rgba(0, 191, 165, 0);
+      }
+
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 191, 165, 0);
+      }
+    }
+
+    .realtime-label-box {
+      font-size: 12px;
+      font-weight: 700;
+      font-family: var(--font-label);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      background: rgba(0, 191, 165, 0.1);
+      color: var(--primary-container);
     }
 
     .chart-wrap {
       width: 100%;
-      height: 48px;
-      margin-bottom: 4px;
+      height: 160px;
+      /* Tăng từ 48px lên để biểu đồ rõ ràng, thanh thoát */
     }
 
     /* ── HEALTH GRID ── */
@@ -263,7 +326,7 @@
       color: var(--on-surface-variant);
       font-family: var(--font-display);
       line-height: 1.4;
-      cursor: default;
+      cursor: pointer;
       transition: all 0.2s ease;
     }
 
@@ -642,12 +705,23 @@
     </div>
 
     <div class="card">
-      <div class="card-title">Biểu đồ theo dõi</div>
+      <div class="card-title" style="margin-bottom: 10px;">Biểu đồ theo dõi</div>
+
       <div class="chart-tabs">
         <div class="active" data-chart="heart">Nhịp tim</div>
         <div data-chart="bp">Huyết áp</div>
         <div data-chart="spo2">SpO2</div>
       </div>
+
+      <div class="realtime-status-container">
+        <div class="realtime-value-box" id="realtimeValBox">
+          <span class="pulse-dot"></span>
+          <span id="realtimeNum">72</span>
+          <span class="unit" id="realtimeUnit">bpm</span>
+        </div>
+        <div class="realtime-label-box" id="realtimeStatusText">Ổn định</div>
+      </div>
+
       <div class="chart-wrap" id="lineChart"></div>
     </div>
 
@@ -777,7 +851,7 @@
   </div>
 
   <script>
-    // ── Gauge Chart (ECharts) ── THIẾT KẾ MỚI ĐỒNG BỘ DỰ ÁN
+    // ── Gauge Chart (ECharts) ──
     const gaugeChart = echarts.init(document.getElementById('gaugeChart'));
     gaugeChart.setOption({
       series: [{
@@ -855,68 +929,88 @@
       }]
     });
 
-    // ── Line Chart (ECharts) ──
+    // ── Line Chart Tối Giản & Cập Nhật Realtime Trực Quan ──
     const lineChart = echarts.init(document.getElementById('lineChart'));
     const hours = ['0h', '3h', '6h', '9h', '12h', '15h', '18h', '21h'];
 
     const chartData = {
       heart: {
-        values: [72, 68, 64, 70, 74, 78, 76, 72],
+        values: [72, 68, 64, 70, 74, 78, 76, 73],
         color: '#00bfa5',
-        name: 'Nhịp tim',
-        label: "Nhịp tim TB: <b>72 bpm</b>"
+        unit: 'bpm',
+        status: 'Ổn định'
       },
       bp: {
-        values: [120, 118, 122, 125, 120, 115, 118, 120],
+        values: [120, 118, 122, 125, 120, 115, 118, 121],
         color: '#2196f3',
-        name: 'Huyết áp',
-        label: "Huyết áp TB: <b>120/80 mmHg</b>"
+        unit: 'mmHg',
+        status: 'Bình thường'
       },
       spo2: {
-        values: [98, 97, 96, 97, 98, 99, 98, 97],
+        values: [98, 97, 96, 97, 98, 99, 98, 98],
         color: '#33a0fd',
-        name: 'SpO2',
-        label: "SpO2 TB: <b>98%</b>"
+        unit: '%',
+        status: 'Tốt'
       }
     };
 
     let currentKey = 'heart';
+
     function updateChart(key) {
       currentKey = key;
       const d = chartData[key];
+
+      // 1. Cập nhật text realtime ngay phía trên biểu đồ
+      const currentLatestVal = Math.round(d.values[d.values.length - 1]);
+      document.getElementById('realtimeNum').innerText = currentLatestVal;
+      document.getElementById('realtimeUnit').innerText = d.unit;
+      document.getElementById('realtimeStatusText').innerText = d.status;
+
+      // Đổi màu dot và nhãn status đồng bộ theo tab dữ liệu chủ đạo
+      document.querySelector('.pulse-dot').style.backgroundColor = d.color;
+      const lblBox = document.getElementById('realtimeStatusText');
+      lblBox.style.color = d.color;
+      lblBox.style.backgroundColor = d.color + '15';
+
+      // 2. Vẽ biểu đồ gọn gàng, dọn dẹp các đường lưới thô ráp
       lineChart.setOption({
-        grid: { left: '2%', right: '2%', top: 12, bottom: 18, containLabel: false },
+        grid: { left: '4%', right: '4%', top: 15, bottom: 20, containLabel: false },
         xAxis: {
           type: 'category',
           data: hours,
           axisLine: { show: false },
           axisTick: { show: false },
-          axisLabel: { fontSize: 9, color: '#707883', fontWeight: 600 }
+          axisLabel: { fontSize: 10, color: '#94a3b8', fontWeight: 500, fontFamily: 'Plus Jakarta Sans' }
         },
         yAxis: {
           type: 'value',
-          splitLine: { lineStyle: { color: 'rgba(191,199,212,0.3)', type: 'dashed' } },
-          axisLabel: { fontSize: 9, color: '#707883' }
+          scale: true, // Tự động căn vùng giá trị tối ưu, không ép dẹt dải đồ thị
+          splitLine: { lineStyle: { color: 'rgba(191,199,212,0.25)', type: 'dashed' } },
+          axisLabel: { show: false } // Ẩn cột trục Y rườm rà vì chỉ số realtime trên text đã quá rõ
         },
         series: [{
           data: d.values,
           type: 'line',
           smooth: true,
-          symbol: 'none',
-          lineStyle: { width: 2, color: d.color },
+          symbol: 'circle',
+          symbolSize: 6,
+          showSymbol: true,
+          lineStyle: { width: 3, color: d.color },
           areaStyle: {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: d.color + '40' },
-              { offset: 1, color: d.color + '05' }
+              { offset: 0, color: d.color + '30' },
+              { offset: 1, color: d.color + '00' }
             ])
           },
-          itemStyle: { color: d.color }
+          itemStyle: { color: d.color, borderColor: '#fff', borderWidth: 1 }
         }]
-      });
+      }, true); // Dùng tham số true để reset vẽ lại cấu trúc mượt mà không lỗi cache đè
     }
 
+    // Khởi tạo đồ thị mặc định
     updateChart('heart');
 
+    // Sự kiện chuyển đổi tab đồ thị
     document.querySelectorAll('.chart-tabs div').forEach(tab => {
       tab.addEventListener('click', function () {
         document.querySelector('.chart-tabs div.active').classList.remove('active');
@@ -925,13 +1019,22 @@
       });
     });
 
-    // ── Simulate realtime ──
+    // ── Giả lập dữ liệu nhảy liên tục thời gian thực (Realtime Simulation) ──
     setInterval(() => {
       const d = chartData[currentKey];
-      const newVal = d.values.map(v => Math.max(0, v + (Math.random() - 0.5) * 4));
-      d.values = newVal;
+      // Thay đổi điểm cuối cùng (giá trị hiện tại) ngẫu nhiên dao động nhỏ
+      const lastIndex = d.values.length - 1;
+      const variation = (Math.random() - 0.5) * 3;
+
+      if (currentKey === 'spo2') {
+        d.values[lastIndex] = Math.min(100, Math.max(94, d.values[lastIndex] + (Math.random() - 0.5) * 0.6));
+      } else {
+        d.values[lastIndex] = d.values[lastIndex] + variation;
+      }
+
+      // Re-render mượt thông số
       updateChart(currentKey);
-    }, 2500);
+    }, 2000);
 
     window.addEventListener('resize', () => {
       gaugeChart.resize();
@@ -950,18 +1053,11 @@
         document.getElementById('sosOverlay').classList.remove('show');
       }
     }
-    function hideSos() {
-      document.getElementById('sosOverlay').classList.remove('show');
-    }
-    function hideBt() {
-      document.getElementById('btOverlay').classList.remove('show');
-    }
-    document.getElementById('sosOverlay').addEventListener('click', function (e) {
-      if (e.target === this) hideSos();
-    });
-    document.getElementById('btOverlay').addEventListener('click', function (e) {
-      if (e.target === this) hideBt();
-    });
+    function hideSos() { document.getElementById('sosOverlay').classList.remove('show'); }
+    function hideBt() { document.getElementById('btOverlay').classList.remove('show'); }
+
+    document.getElementById('sosOverlay').addEventListener('click', function (e) { if (e.target === this) hideSos(); });
+    document.getElementById('btOverlay').addEventListener('click', function (e) { if (e.target === this) hideBt(); });
   </script>
 
 </body>
