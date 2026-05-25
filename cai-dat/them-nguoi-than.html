@@ -173,6 +173,20 @@ body {
   box-shadow: 0 0 0 4px rgba(0, 191, 165, 0.1);
 }
 
+.field-group input.error {
+  border-color: var(--error);
+  box-shadow: 0 0 0 4px rgba(186, 26, 26, 0.1);
+}
+
+.error-text {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--error);
+  margin-top: 4px;
+  font-family: var(--font-label);
+  display: none;
+}
+
 .help-text {
   font-size: 11px;
   font-weight: 500;
@@ -278,13 +292,15 @@ body {
   <div class="card">
     <div class="field-group">
       <label>ID người thân</label>
-      <input type="text" placeholder="Nhập ID (VD: HC-2024-00123)" />
+      <input type="text" id="id" placeholder="Nhập ID (VD: HC-2024-00123)" required />
+      <div class="error-text" id="errId">Vui lòng nhập ID người thân</div>
       <div class="help-text">ID nằm trong phần Cài đặt của người thân</div>
     </div>
 
     <div class="field-group">
       <label>Tên gợi nhớ</label>
-      <input type="text" placeholder="VD: Mẹ, Ba, Chị Hai..." />
+      <input type="text" id="tengo" placeholder="VD: Mẹ, Ba, Chị Hai..." required />
+      <div class="error-text" id="errTen">Vui lòng nhập tên gợi nhớ</div>
       <div class="help-text">Tên này giúp bạn dễ nhận biết người thân</div>
     </div>
   </div>
@@ -302,6 +318,16 @@ body {
 
 <script>
 function showToast() {
+  const id = document.getElementById('id');
+  const ten = document.getElementById('tengo');
+  const errId = document.getElementById('errId');
+  const errTen = document.getElementById('errTen');
+  let ok = true;
+  if (!id.value.trim()) { id.classList.add('error'); errId.style.display = 'block'; ok = false; }
+  else { id.classList.remove('error'); errId.style.display = 'none'; }
+  if (!ten.value.trim()) { ten.classList.add('error'); errTen.style.display = 'block'; ok = false; }
+  else { ten.classList.remove('error'); errTen.style.display = 'none'; }
+  if (!ok) return;
   const t = document.getElementById('toast');
   t.classList.add('show');
   setTimeout(() => { t.classList.remove('show'); }, 1500);

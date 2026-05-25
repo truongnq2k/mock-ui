@@ -218,6 +218,20 @@ body {
   box-shadow: 0 0 0 4px rgba(0, 191, 165, 0.1);
 }
 
+.field-group input.error {
+  border-color: var(--error);
+  box-shadow: 0 0 0 4px rgba(186, 26, 26, 0.1);
+}
+
+.error-text {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--error);
+  margin-top: 4px;
+  font-family: var(--font-label);
+  display: none;
+}
+
 /* ── CHIPS ── */
 .chips {
   display: flex;
@@ -351,12 +365,14 @@ body {
   <div class="card">
     <div class="field-group">
       <label>Số điện thoại</label>
-      <input type="text" placeholder="Nhập số điện thoại (VD: 0987654321)" />
+      <input type="text" id="sdt" placeholder="Nhập số điện thoại (VD: 0987654321)" required />
+      <div class="error-text" id="errSdt">Vui lòng nhập số điện thoại</div>
     </div>
 
     <div class="field-group">
       <label>Mối quan hệ</label>
-      <input type="text" placeholder="VD: Vợ, Con gái, Bạn bè..." />
+      <input type="text" id="quanhe" placeholder="VD: Vợ, Con gái, Bạn bè..." required />
+      <div class="error-text" id="errQh">Vui lòng nhập mối quan hệ</div>
     </div>
 
     <div class="chips">
@@ -379,6 +395,16 @@ body {
 
 <script>
 function showToast() {
+  const sdt = document.getElementById('sdt');
+  const qh = document.getElementById('quanhe');
+  const errSdt = document.getElementById('errSdt');
+  const errQh = document.getElementById('errQh');
+  let ok = true;
+  if (!sdt.value.trim()) { sdt.classList.add('error'); errSdt.style.display = 'block'; ok = false; }
+  else { sdt.classList.remove('error'); errSdt.style.display = 'none'; }
+  if (!qh.value.trim()) { qh.classList.add('error'); errQh.style.display = 'block'; ok = false; }
+  else { qh.classList.remove('error'); errQh.style.display = 'none'; }
+  if (!ok) return;
   const t = document.getElementById('toast');
   t.classList.add('show');
   setTimeout(() => { t.classList.remove('show'); }, 1500);
