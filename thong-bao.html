@@ -114,7 +114,7 @@ body {
   justify-content: center;
   font-family: var(--font-label);
   letter-spacing: 0.02em;
-  cursor: default;
+  cursor: pointer;
   transition: all 0.25s ease;
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
@@ -235,7 +235,7 @@ body {
   font-size: 10px;
   font-weight: 700;
   font-family: var(--font-display);
-  cursor: default;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
@@ -280,9 +280,9 @@ body {
   </div>
 
   <div class="filter-tabs">
-    <div class="filter-tab active">Tất cả</div>
-    <div class="filter-tab">Cảnh báo</div>
-    <div class="filter-tab">Nhắc nhở</div>
+    <div class="filter-tab active" onclick="switchFilter(this)">Tất cả</div>
+    <div class="filter-tab" onclick="switchFilter(this)">Cảnh báo</div>
+    <div class="filter-tab" onclick="switchFilter(this)">Nhắc nhở</div>
   </div>
 
   <div class="day-heading">Hôm nay</div>
@@ -296,7 +296,7 @@ body {
       <div class="notice-text">
         Hệ thống phát hiện nhịp tim tăng cao bất thường (105 bpm). Hãy kiểm tra ngay.
       </div>
-      <button class="notice-btn">Xem chi tiết</button>
+      <button class="notice-btn" onclick="location.href='trang-chu.html?alert=bt'">Xem chi tiết</button>
     </div>
   </div>
 
@@ -309,7 +309,7 @@ body {
       <div class="notice-text">
         Bạn chưa điền phiếu theo dõi sức khoẻ buổi trưa. Hãy điền ngay để nhận 60 xu.
       </div>
-      <button class="notice-btn primary">Điền phiếu ngay</button>
+      <button class="notice-btn primary" onclick="location.href='phieu-theo-doi.html'">Điền phiếu ngay</button>
     </div>
   </div>
 
@@ -322,7 +322,7 @@ body {
       <div class="notice-text">
         Đã có số liệu sức khoẻ mới từ mẹ của bạn - Nguyễn Thị Lan. Điểm sức khoẻ: 72/100.
       </div>
-      <button class="notice-btn green">Xem số liệu</button>
+      <button class="notice-btn green" onclick="location.href='cai-dat/cai-dat-chi-tiet-nguoi-than.html'">Xem số liệu</button>
     </div>
   </div>
 
@@ -334,7 +334,7 @@ body {
       <div class="notice-text">
         Hãy điền phiếu theo dõi sức khoẻ buổi sáng. Chỉ mất 2 phút!
       </div>
-      <button class="notice-btn primary">Điền phiếu ngay</button>
+      <button class="notice-btn primary" onclick="location.href='phieu-theo-doi.html'">Điền phiếu ngay</button>
     </div>
   </div>
 
@@ -353,5 +353,11 @@ body {
 
 </div>
 
+<script>
+function switchFilter(el) {
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
 </body>
 </html>

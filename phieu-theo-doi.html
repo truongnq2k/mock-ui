@@ -96,10 +96,32 @@
     }
 
     .header h2 {
+      flex: 1;
       font-size: 16px;
       font-weight: 800;
       color: var(--on-surface);
       letter-spacing: -0.3px;
+    }
+
+    .skip-btn {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--outline);
+      font-family: var(--font-label);
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 6px 10px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(191, 199, 212, 0.2);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .skip-btn:active {
+      transform: scale(0.95);
+      background: rgba(255, 255, 255, 0.6);
     }
 
     /* ── TOP INFO ── */
@@ -396,6 +418,7 @@
     <div class="header">
       <div class="back" onclick="location.href='qua-tang/qua-tang.html'">←</div>
       <h2>Phiếu theo dõi sức khỏe</h2>
+      <a class="skip-btn" href="trang-chu.html">Bỏ qua</a>
     </div>
 
     <div class="top-info">

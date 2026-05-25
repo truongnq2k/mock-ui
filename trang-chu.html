@@ -1062,6 +1062,11 @@
 
     document.getElementById('sosOverlay').addEventListener('click', function (e) { if (e.target === this) hideSos(); });
     document.getElementById('btOverlay').addEventListener('click', function (e) { if (e.target === this) hideBt(); });
+
+    // ── Auto-show btOverlay if ?alert=bt ──
+    if (location.search.includes('alert=bt')) {
+      document.getElementById('btOverlay').classList.add('show');
+    }
   </script>
 
 </body>

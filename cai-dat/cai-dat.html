@@ -285,6 +285,29 @@ body {
   transform: scale(0.97);
 }
 
+/* ── LOGOUT ── */
+.logout-btn {
+  width: 100%;
+  height: 48px;
+  background: transparent;
+  border: 1.5px solid rgba(186, 26, 26, 0.2);
+  color: var(--error);
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.01em;
+  margin-bottom: 14px;
+}
+
+.logout-btn:active {
+  background: rgba(186, 26, 26, 0.06);
+  border-color: var(--error);
+  transform: scale(0.97);
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 440px) {
   body { padding: 0; background: transparent; }
@@ -354,6 +377,8 @@ body {
 
     <button class="search-btn">Tìm thiết bị mới</button>
   </div>
+
+  <button class="logout-btn" onclick="location.href='../dang-ky-thong-tin.html'">Đăng xuất</button>
 
 </div>
 
