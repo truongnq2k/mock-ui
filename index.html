@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Kolia AI - Thông tin cá nhân</title>
+  <title>Kolia AI - Đăng ký thông tin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -73,7 +73,7 @@
     /* ── HEADER ── */
     .header {
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 36px;
     }
 
     .header h1 {
@@ -125,14 +125,14 @@
       font-weight: 500;
       color: var(--on-surface-variant);
       opacity: 0.6;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
       font-family: var(--font-label);
       letter-spacing: 0.01em;
     }
 
-    /* ── FIELD ── */
+    /* ── INPUT ── */
     .field-group {
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
 
     .field-group label {
@@ -140,20 +140,19 @@
       font-size: 12px;
       font-weight: 700;
       color: var(--on-surface);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       font-family: var(--font-label);
       letter-spacing: 0.03em;
       text-transform: uppercase;
     }
 
-    .field-group input[type="text"],
-    .field-group input[type="number"] {
+    .field-group input {
       width: 100%;
-      height: 48px;
+      height: 52px;
       border: 1.5px solid rgba(191, 199, 212, 0.4);
       background: rgba(248, 250, 252, 0.5);
-      padding: 0 16px;
-      font-size: 15px;
+      padding: 0 18px;
+      font-size: 16px;
       font-weight: 600;
       color: var(--on-surface);
       font-family: var(--font-display);
@@ -188,47 +187,10 @@
       display: none;
     }
 
-    /* ── RADIO GROUP ── */
-    .radio-group {
-      width: 100%;
-      height: 48px;
-      border: 1.5px solid rgba(191, 199, 212, 0.4);
-      background: rgba(248, 250, 252, 0.5);
-      border-radius: var(--radius-full);
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 0 16px;
-      transition: all 0.25s ease;
-    }
-
-    .radio-group:focus-within {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(0, 191, 165, 0.1);
-    }
-
-    .radio-option {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--on-surface-variant);
-      font-family: var(--font-display);
-      cursor: default;
-    }
-
-    .radio-option input[type="radio"] {
-      width: 16px;
-      height: 16px;
-      accent-color: var(--primary);
-      cursor: default;
-    }
-
     /* ── BUTTON ── */
     .btn-submit {
       width: 100%;
-      height: 50px;
+      height: 52px;
       background: var(--primary);
       border: none;
       color: var(--on-primary);
@@ -240,7 +202,7 @@
       transition: all 0.25s ease;
       box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
       letter-spacing: 0.02em;
-      margin-top: 8px;
+      margin-top: 4px;
     }
 
     .btn-submit:active {
@@ -251,7 +213,7 @@
     /* ── PRIVACY ── */
     .privacy {
       max-width: 260px;
-      margin: 16px auto 0;
+      margin: 18px auto 0;
       text-align: center;
       font-size: 11px;
       font-weight: 500;
@@ -293,38 +255,16 @@
     </div>
 
     <div class="form-card">
-      <h2 class="form-title">Thông tin cá nhân</h2>
-      <p class="form-desc">Vui lòng điền thông tin để hoàn tất đăng ký</p>
+      <h2 class="form-title">Đăng ký thông tin</h2>
+      <p class="form-desc">Vui lòng cung cấp thông tin để bắt đầu</p>
 
       <div class="field-group">
-        <label>Họ và tên</label>
-        <input type="text" id="hoten" placeholder="VD: Nguyễn Văn An" required />
-        <div class="error-text" id="errHoten">Vui lòng nhập họ và tên</div>
+        <label>Số điện thoại</label>
+        <input type="tel" id="sodt" placeholder="0912 345 678" required />
+        <div class="error-text" id="errSodt">Vui lòng nhập số điện thoại</div>
       </div>
 
-      <div class="field-group">
-        <label>Giới tính</label>
-        <div class="radio-group" id="genderGroup">
-          <label class="radio-option">
-            <input type="radio" name="gender" value="Nam" checked /> Nam
-          </label>
-          <label class="radio-option">
-            <input type="radio" name="gender" value="Nữ" /> Nữ
-          </label>
-          <label class="radio-option">
-            <input type="radio" name="gender" value="Khác" /> Khác
-          </label>
-        </div>
-        <div class="error-text" id="errGender">Vui lòng chọn giới tính</div>
-      </div>
-
-      <div class="field-group">
-        <label>Tuổi</label>
-        <input type="number" id="tuoi" placeholder="VD: 65" required />
-        <div class="error-text" id="errTuoi">Vui lòng nhập tuổi</div>
-      </div>
-
-      <button class="btn-submit" onclick="validateAndComplete()">Hoàn tất</button>
+      <button class="btn-submit" onclick="validateAndNext()">Tiếp tục</button>
 
       <p class="privacy">
         Thông tin của bạn được bảo mật theo chính sách quyền riêng tư
@@ -334,47 +274,20 @@
   </div>
 
   <script>
-    function validateAndComplete() {
-      const hoten = document.getElementById('hoten');
-      const tuoi = document.getElementById('tuoi');
-      const errHoten = document.getElementById('errHoten');
-      const errTuoi = document.getElementById('errTuoi');
+    function validateAndNext() {
+      const sodt = document.getElementById('sodt');
+      const errSodt = document.getElementById('errSodt');
       let ok = true;
-
-      if (!hoten.value.trim()) {
-        hoten.classList.add('error');
-        errHoten.style.display = 'block';
+      if (!sodt.value.trim()) {
+        sodt.classList.add('error');
+        errSodt.style.display = 'block';
         ok = false;
       } else {
-        hoten.classList.remove('error');
-        errHoten.style.display = 'none';
+        sodt.classList.remove('error');
+        errSodt.style.display = 'none';
       }
-
-      const genders = document.getElementsByName('gender');
-      let genderChecked = false;
-      for (const g of genders) {
-        if (g.checked) { genderChecked = true; break; }
-      }
-      if (!genderChecked) {
-        document.getElementById('genderGroup').style.borderColor = 'var(--error)';
-        document.getElementById('errGender').style.display = 'block';
-        ok = false;
-      } else {
-        document.getElementById('genderGroup').style.borderColor = '';
-        document.getElementById('errGender').style.display = 'none';
-      }
-
-      if (!tuoi.value.trim() || parseInt(tuoi.value) <= 0) {
-        tuoi.classList.add('error');
-        errTuoi.style.display = 'block';
-        ok = false;
-      } else {
-        tuoi.classList.remove('error');
-        errTuoi.style.display = 'none';
-      }
-
       if (!ok) return;
-      location.href = 'phieu-theo-doi.html';
+      location.href = 'thong-tin-ca-nhan.html';
     }
   </script>
 </body>
