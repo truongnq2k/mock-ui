@@ -423,12 +423,12 @@
 
     <div class="top-info">
       <div class="tip">Lưu ý: Hãy chọn kết quả đúng nhất với tình trạng sức khỏe của bạn</div>
-      <div class="coin">Số dư: 110 🪙</div>
+      <div class="coin">Số dư: 110 <img src="assets/coin.png" style="width:14px;height:14px;vertical-align:middle;" alt=""></div>
     </div>
 
     <div class="progress">
       <span id="cauText">Câu 0/6</span>
-      <span id="coinText">Tích luỹ 0/60 🪙</span>
+      <span id="coinText">Tích luỹ 0/60 <img src="assets/coin.png" style="width:14px;height:14px;vertical-align:middle;" alt=""></span>
     </div>
     <div class="progress-bar">
       <div class="progress-fill" id="progressFill" style="width:0%"></div>
@@ -537,7 +537,7 @@
 
       const coin = document.createElement('div');
       coin.className = 'coin-fly';
-      coin.textContent = '🪙';
+      coin.innerHTML = '<img src="assets/coin.png" style="width:20px;height:20px;" alt="">';
       coin.style.left = (btnRect.left + btnRect.width / 2 - 10) + 'px';
       coin.style.top = (btnRect.top + btnRect.height / 2 - 10) + 'px';
       document.body.appendChild(coin);
@@ -559,7 +559,7 @@
       const pct = (count / TOTAL_Q) * 100;
       document.getElementById('progressFill').style.width = pct + '%';
       document.getElementById('cauText').textContent = `Câu ${count}/${TOTAL_Q}`;
-      document.getElementById('coinText').textContent = `Tích luỹ ${count * COIN_PER_Q}/60 🪙`;
+      document.getElementById('coinText').textContent = `Tích luỹ ${count * COIN_PER_Q}/60 <img src="assets/coin.png" style="width:14px;height:14px;vertical-align:middle;" alt="">`;
     }
   </script>
 </body>
