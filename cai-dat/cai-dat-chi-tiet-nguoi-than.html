@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Nguyễn Thị Lan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #00bfa5;
+  --primary-container: #00a48e;
+  --primary-dark: #006b5c;
+  --on-primary: #ffffff;
+  --secondary: #2196f3;
+  --tertiary: #e3f2fd;
+  --neutral: #f8fafc;
+  --on-surface: #191c1e;
+  --on-surface-variant: #404752;
+  --surface-container-lowest: #ffffff;
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
+  --outline: #707883;
+  --outline-variant: #bfc7d4;
+  --font-display: 'Manrope', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display);
+  padding: 16px;
+}
+
+.screen {
+  width: 100%;
+  max-width: 400px;
+  min-height: 100vh;
+  background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+  padding: 24px 20px;
+  position: relative;
+  border-radius: 40px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 30px 80px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(0, 191, 165, 0.06);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.screen::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-top: 4px;
+}
+
+.back {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--primary);
+  cursor: default;
+  line-height: 1;
+  padding: 2px 4px;
+}
+
+.info h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--on-surface);
+  letter-spacing: -0.3px;
+}
+
+.info .sub {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  opacity: 0.6;
+  margin-top: 2px;
+  font-family: var(--font-label);
+  letter-spacing: 0.02em;
+}
+
+/* ── TABS ── */
+.tabs {
+  height: 30px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: center;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  opacity: 0.7;
+  margin-bottom: 14px;
+  font-family: var(--font-label);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  gap: 3px;
+}
+
+.tabs div {
+  padding: 5px 0;
+  border-radius: var(--radius-full);
+  transition: all 0.3s ease;
+  cursor: default;
+  line-height: 1.2;
+}
+
+.tabs div.active {
+  background: var(--primary);
+  color: var(--on-primary);
+  opacity: 1;
+  font-weight: 700;
+  box-shadow: 0 2px 12px rgba(0, 191, 165, 0.3);
+}
+
+/* ── GLASS CARD ── */
+.card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  border-right-color: rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-glass);
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 12px;
+  letter-spacing: -0.3px;
+}
+
+/* ── SCORE ── */
+.score-card {
+  text-align: center;
+}
+
+.score-num {
+  font-size: 42px;
+  font-weight: 900;
+  color: #ff8f00;
+  line-height: 1;
+  letter-spacing: -1px;
+  margin-top: 4px;
+}
+
+.score-out-of {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  font-family: var(--font-label);
+  letter-spacing: 0.03em;
+}
+
+.status {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+}
+
+.status b {
+  color: #ff8f00;
+  font-weight: 800;
+}
+
+/* ── FORM ROW ── */
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.form-box {
+  background: rgba(248, 250, 252, 0.5);
+  border: 1px solid rgba(191, 199, 212, 0.3);
+  border-radius: var(--radius-md);
+  text-align: center;
+  padding: 10px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  font-family: var(--font-label);
+  letter-spacing: 0.02em;
+}
+
+.form-box b {
+  display: block;
+  margin-top: 4px;
+  font-size: 15px;
+  font-weight: 800;
+  font-family: var(--font-display);
+  letter-spacing: -0.3px;
+}
+
+.green { color: var(--primary); }
+.orange { color: #ff8f00; }
+.red { color: var(--error); }
+.teal { color: var(--primary-dark); }
+
+/* ── BUTTON ── */
+.btn {
+  width: 100%;
+  height: 50px;
+  background: var(--primary);
+  border: none;
+  color: var(--on-primary);
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  margin-bottom: 14px;
+  font-family: var(--font-display);
+  cursor: default;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
+  letter-spacing: 0.01em;
+}
+
+.btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 3px 12px rgba(0, 191, 165, 0.35);
+}
+
+/* ── HEALTH GRID ── */
+.health-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.health-item {
+  background: rgba(248, 250, 252, 0.5);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  line-height: 1.4;
+}
+
+.health-item b {
+  display: block;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  margin-top: 2px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 440px) {
+  body { padding: 0; background: transparent; }
+  .screen {
+    max-width: 100%;
+    border-radius: 0;
+    min-height: 100dvh;
+    box-shadow: none;
+    padding: 20px 16px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="header">
+    <div class="back">←</div>
+    <div class="info">
+      <h2>Nguyễn Thị Lan</h2>
+      <div class="sub">Con gái · ID: HC-2024-00123</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div>T2</div>
+    <div>T3</div>
+    <div>T4</div>
+    <div>T5</div>
+    <div class="active">Hôm<br>Nay</div>
+    <div>CN</div>
+  </div>
+
+  <div class="card score-card">
+    <div class="card-title" style="text-align:left;">Điểm sức khoẻ</div>
+    <div class="score-num">72</div>
+    <div class="score-out-of">/100 điểm</div>
+    <div class="status">Tình trạng: <b>TRUNG BÌNH</b></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Phiếu theo dõi hôm nay</div>
+    <div class="form-row">
+      <div class="form-box">
+        🌅 Sáng
+        <b class="green">75 điểm</b>
+      </div>
+      <div class="form-box">
+        ☀️ Trưa
+        <b class="orange">68 điểm</b>
+      </div>
+      <div class="form-box">
+        🌙 Tối
+        <b class="orange">72 điểm</b>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn">Xem phiếu theo dõi chi tiết</button>
+
+  <div class="card">
+    <div class="card-title">Chỉ số sức khoẻ</div>
+    <div class="health-grid">
+      <div class="health-item">
+        <span>❤️ Nhịp tim</span>
+        <b class="teal">78 bpm</b>
+      </div>
+      <div class="health-item">
+        <span>🩸 Huyết áp</span>
+        <b class="orange">135/85</b>
+      </div>
+      <div class="health-item">
+        <span>🫁 SpO2</span>
+        <b class="teal">96%</b>
+      </div>
+      <div class="health-item">
+        <span>🌡️ Nhiệt độ</span>
+        <b class="teal">36.8°C</b>
+      </div>
+      <div class="health-item">
+        <span>😴 Giấc ngủ</span>
+        <b class="red">5h 30m</b>
+      </div>
+      <div class="health-item">
+        <span>🚶 Bước chân</span>
+        <b class="orange">3,120</b>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

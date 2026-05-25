@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Kolia AI - Nhịp tim 24h</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #00bfa5;
+  --primary-container: #00a48e;
+  --primary-dark: #006b5c;
+  --on-primary: #ffffff;
+  --secondary: #2196f3;
+  --tertiary: #e3f2fd;
+  --neutral: #f8fafc;
+  --on-surface: #191c1e;
+  --on-surface-variant: #404752;
+  --outline: #707883;
+  --outline-variant: #bfc7d4;
+  --font-display: 'Manrope', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  min-height:100vh;
+  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  font-family:var(--font-display);
+  padding:16px;
+}
+
+.screen {
+  width:100%;
+  max-width:400px;
+  min-height:100vh;
+  background:linear-gradient(165deg,var(--tertiary) 0%,var(--neutral) 100%);
+  padding:20px 16px 32px;
+  border-radius:40px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.08), 0 30px 80px rgba(0,0,0,.5), 0 0 60px rgba(0,191,165,.06);
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+.screen::-webkit-scrollbar { display:none; }
+
+.header {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:16px;
+  padding-top:4px;
+}
+
+.back {
+  font-size:24px;
+  color:var(--primary);
+  line-height:1;
+  flex-shrink:0;
+}
+
+.title {
+  font-size:18px;
+  font-weight:800;
+  color:var(--on-surface);
+  line-height:1.2;
+  letter-spacing:-.3px;
+}
+
+.title span {
+  display:block;
+  font-size:11px;
+  font-weight:600;
+  color:var(--on-surface-variant);
+  opacity:.6;
+  font-family:var(--font-label);
+  letter-spacing:.02em;
+}
+
+.card {
+  background:rgba(255,255,255,.6);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-radius:var(--radius-xl);
+  padding:20px 20px;
+  margin-bottom:14px;
+  border:1px solid rgba(255,255,255,.4);
+  border-bottom-color:rgba(255,255,255,.05);
+  border-right-color:rgba(255,255,255,.05);
+  box-shadow:var(--shadow-glass);
+}
+
+.summary-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  text-align:center;
+  gap:4px;
+}
+
+.summary-item {
+  padding:4px 0;
+  border-right:1px solid rgba(191,199,212,.25);
+}
+.summary-item:last-child { border-right:none; }
+
+.summary-label {
+  font-size:11px;
+  font-weight:600;
+  color:var(--on-surface-variant);
+  opacity:.6;
+  font-family:var(--font-label);
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+
+.summary-value {
+  font-size:22px;
+  font-weight:900;
+  color:var(--on-surface);
+  letter-spacing:-.5px;
+  margin-top:2px;
+}
+
+.status-row {
+  text-align:center;
+  font-size:13px;
+  font-weight:700;
+  margin-top:8px;
+  padding-top:10px;
+  border-top:1px solid rgba(191,199,212,.2);
+  color:var(--primary);
+}
+
+.table-wrap { overflow-x:auto; }
+
+table {
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+}
+
+table thead tr { background:rgba(227,242,253,.5); }
+
+table th {
+  padding:10px 12px;
+  text-align:left;
+  color:var(--on-surface);
+  font-weight:700;
+  font-size:11px;
+  font-family:var(--font-label);
+  letter-spacing:.03em;
+  text-transform:uppercase;
+}
+
+table td {
+  padding:8px 12px;
+  color:var(--on-surface-variant);
+  font-weight:500;
+  border-bottom:1px solid rgba(191,199,212,.12);
+}
+table tbody tr:last-child td { border-bottom:none; }
+
+.hr-normal { color:var(--primary) !important; font-weight:700; }
+.hr-warn { color:#ff8f00 !important; font-weight:700; }
+.hr-danger { color:var(--error,#ba1a1a) !important; font-weight:700; }
+.text-normal { color:var(--primary) !important; }
+.text-warn { color:#ff8f00 !important; }
+.text-danger { color:var(--error,#ba1a1a) !important; }
+
+@media (max-width:440px) {
+  body { padding:0; background:transparent; }
+  .screen { max-width:100%; border-radius:0; min-height:100dvh; box-shadow:none; padding:16px 12px 24px; }
+  .card { padding:16px 14px; }
+  .summary-value { font-size:18px; }
+  table { font-size:12px; }
+  table th, table td { padding:8px 8px; }
+}
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="header">
+    <div class="back">←</div>
+    <div class="title">
+      ❤️ Nhịp tim 24h
+      <span>Hôm nay, 22/05/2026</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="summary-label">TB</div>
+        <div class="summary-value">72 bpm</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Cao nhất</div>
+        <div class="summary-value">98 bpm</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Thấp nhất</div>
+        <div class="summary-value">58 bpm</div>
+      </div>
+    </div>
+    <div class="status-row">Bình thường</div>
+  </div>
+
+  <div class="card" style="padding:0;">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Giờ</th><th>Nhịp tim</th><th>Trạng thái</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>00:00</td><td class="hr-normal">62 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>01:00</td><td class="hr-normal">58 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>02:00</td><td class="hr-normal">60 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>03:00</td><td class="hr-normal">59 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>04:00</td><td class="hr-normal">61 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>05:00</td><td class="hr-normal">65 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>06:00</td><td class="hr-normal">70 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>07:00</td><td class="hr-normal">75 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>08:00</td><td class="hr-normal">78 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>09:00</td><td class="hr-normal">80 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>10:00</td><td class="hr-warn">82 bpm</td><td class="text-warn">Hơi cao</td></tr>
+          <tr><td>11:00</td><td class="hr-warn">85 bpm</td><td class="text-warn">Hơi cao</td></tr>
+          <tr><td>12:00</td><td class="hr-normal">76 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>13:00</td><td class="hr-normal">72 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>14:00</td><td class="hr-normal">74 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>15:00</td><td class="hr-normal">78 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>16:00</td><td class="hr-normal">80 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>17:00</td><td class="hr-warn">85 bpm</td><td class="text-warn">Hơi cao</td></tr>
+          <tr><td>18:00</td><td class="hr-warn">90 bpm</td><td class="text-warn">Hơi cao</td></tr>
+          <tr><td>19:00</td><td class="hr-danger">98 bpm</td><td class="text-danger">Cao</td></tr>
+          <tr><td>20:00</td><td class="hr-warn">88 bpm</td><td class="text-warn">Hơi cao</td></tr>
+          <tr><td>21:00</td><td class="hr-normal">76 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>22:00</td><td class="hr-normal">70 bpm</td><td class="text-normal">Bình thường</td></tr>
+          <tr><td>23:00</td><td class="hr-normal">65 bpm</td><td class="text-normal">Bình thường</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

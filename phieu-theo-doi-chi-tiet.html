@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Kolia AI - Phiếu theo dõi chi tiết</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #00bfa5;
+  --primary-dark: #006b5c;
+  --on-primary: #ffffff;
+  --tertiary: #e3f2fd;
+  --neutral: #f8fafc;
+  --on-surface: #191c1e;
+  --on-surface-variant: #404752;
+  --outline: #707883;
+  --outline-variant: #bfc7d4;
+  --font-display: 'Manrope', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display);
+  padding: 16px;
+}
+
+.screen {
+  width: 100%;
+  max-width: 400px;
+  min-height: 100vh;
+  background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+  padding: 24px 20px;
+  border-radius: 40px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 30px 80px rgba(0,0,0,0.5), 0 0 60px rgba(0,191,165,0.06);
+  overflow-y: auto;
+}
+.screen::-webkit-scrollbar { display: none; }
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.back {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--primary-dark);
+  cursor: default;
+  transition: all 0.2s;
+}
+.back:active { transform: scale(0.92); }
+
+.header-info { flex: 1; }
+
+.title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--on-surface);
+  letter-spacing: -0.3px;
+}
+
+.date {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--outline);
+  margin-top: 2px;
+  font-family: var(--font-label);
+  letter-spacing: 0.01em;
+}
+
+/* ── SCORE BOX ── */
+.score-box {
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-xl);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-bottom-color: rgba(255,255,255,0.05);
+  border-right-color: rgba(255,255,255,0.05);
+  box-shadow: var(--shadow-glass);
+  margin-bottom: 16px;
+}
+
+.circle {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  border-radius: 50%;
+  background: rgba(0,191,165,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--primary);
+  font-family: var(--font-display);
+}
+
+.score-info h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 2px;
+}
+
+.score-info p {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+}
+
+.score-info b { color: var(--primary-dark); font-weight: 700; }
+
+/* ── SECTION ── */
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin: 0 0 10px 0;
+  letter-spacing: -0.2px;
+}
+
+/* ── Q&A ROW ── */
+.qa {
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  margin-bottom: 6px;
+  border: 1px solid rgba(191,199,212,0.15);
+}
+
+.question {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  margin-bottom: 3px;
+}
+
+.answer {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.answer.green { color: var(--primary-dark); }
+.answer.orange { color: #ff8f00; }
+.answer.blue { color: var(--secondary, #2196f3); }
+
+/* ── AI BOX ── */
+.ai-box {
+  margin-top: 14px;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-xl);
+  padding: 18px 20px;
+  border: 1px solid rgba(0,191,165,0.2);
+  border-left: 3px solid var(--primary);
+  box-shadow: var(--shadow-glass);
+}
+
+.ai-box h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 8px;
+}
+
+.ai-box p {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--on-surface-variant);
+  font-weight: 500;
+}
+
+.ai-box b { color: var(--on-surface); font-weight: 700; }
+
+.good { color: var(--primary-dark); font-weight: 800; font-size: 11px; }
+.warning { color: #ff8f00; font-weight: 800; font-size: 11px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 440px) {
+  body { padding: 0; background: transparent; }
+  .screen { max-width: 100%; border-radius: 0; min-height: 100dvh; box-shadow: none; padding: 20px 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="header">
+    <div class="back">←</div>
+    <div class="header-info">
+      <div class="title">📋 Phiếu theo dõi chi tiết</div>
+      <div class="date">Thời gian hoàn thành — 9:30 | 22/05/2026</div>
+    </div>
+  </div>
+
+  <div class="score-box">
+    <div class="circle">75</div>
+    <div class="score-info">
+      <h3>Điểm sức khỏe: 75/100</h3>
+      <p>Tình trạng: <b>Khá tốt</b> — Cần lưu ý vận động</p>
+    </div>
+  </div>
+
+  <div class="section-title">📝 Câu hỏi & Câu trả lời</div>
+
+  <div class="qa">
+    <div class="question">1. Hôm nay bạn cảm thấy thế nào?</div>
+    <div class="answer green">Khá tốt</div>
+  </div>
+  <div class="qa">
+    <div class="question">2. Bạn có đau đầu hoặc chóng mặt không?</div>
+    <div class="answer green">Không</div>
+  </div>
+  <div class="qa">
+    <div class="question">3. Bạn ngủ được bao lâu đêm qua?</div>
+    <div class="answer blue">7 tiếng</div>
+  </div>
+  <div class="qa">
+    <div class="question">4. Chất lượng giấc ngủ?</div>
+    <div class="answer orange">Bình thường</div>
+  </div>
+  <div class="qa">
+    <div class="question">5. Bạn có tập thể dục sáng nay không?</div>
+    <div class="answer orange">Không</div>
+  </div>
+  <div class="qa">
+    <div class="question">6. Bạn đã uống bao nhiêu nước?</div>
+    <div class="answer orange">2 cốc</div>
+  </div>
+  <div class="qa">
+    <div class="question">7. Bạn có uống thuốc đúng giờ không?</div>
+    <div class="answer green">✔ Có</div>
+  </div>
+  <div class="qa">
+    <div class="question">8. Huyết áp tự đo sáng nay?</div>
+    <div class="answer blue">125/82 mmHg</div>
+  </div>
+  <div class="qa">
+    <div class="question">9. Bạn có triệu chứng bất thường?</div>
+    <div class="answer green">Không</div>
+  </div>
+  <div class="qa">
+    <div class="question">10. Tâm trạng hiện tại?</div>
+    <div class="answer green">Vui vẻ</div>
+  </div>
+
+  <div class="ai-box">
+    <h3>👨‍⚕️ Nhận định Bác sĩ AI</h3>
+    <p><b>Tổng quan:</b> Sức khỏe buổi sáng ở mức khá (75/100).</p>
+    <br/>
+    <p class="good">✅ Điểm tốt:</p>
+    <p>• Ngủ đủ 7 tiếng, uống thuốc đúng giờ<br/>• Không có triệu chứng bất thường<br/>• Tâm trạng tích cực</p>
+    <br/>
+    <p class="warning">⚠ Cần cải thiện:</p>
+    <p>• Chưa tập thể dục sáng → Nên đi bộ 15-30 phút<br/>• Uống nước chưa đủ → Cần thêm 4–6 cốc/ngày<br/>• Huyết áp 125/82 hơi cao → Theo dõi thêm</p>
+  </div>
+
+</div>
+
+</body>
+</html>

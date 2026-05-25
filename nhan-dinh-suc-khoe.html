@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Kolia AI - Nhận định sức khoẻ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #00bfa5;
+  --primary-dark: #006b5c;
+  --on-primary: #ffffff;
+  --tertiary: #e3f2fd;
+  --neutral: #f8fafc;
+  --on-surface: #191c1e;
+  --on-surface-variant: #404752;
+  --error: #ba1a1a;
+  --outline: #707883;
+  --outline-variant: #bfc7d4;
+  --font-display: 'Manrope', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display);
+  padding: 16px;
+}
+
+.screen {
+  width: 100%;
+  max-width: 400px;
+  min-height: 100vh;
+  background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+  padding: 24px 20px;
+  border-radius: 40px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 30px 80px rgba(0,0,0,0.5), 0 0 60px rgba(0,191,165,0.06);
+  overflow-y: auto;
+}
+.screen::-webkit-scrollbar { display: none; }
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.back {
+  width: 36px;
+  height: 36px;
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--primary-dark);
+  cursor: default;
+  transition: all 0.2s;
+}
+.back:active { transform: scale(0.92); }
+
+.header h2 {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--on-surface);
+  letter-spacing: -0.3px;
+}
+
+/* ── SCORE ── */
+.score-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.score-circle {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(0,191,165,0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(0,191,165,0.1);
+}
+
+.score-num {
+  font-size: 32px;
+  color: var(--primary);
+  font-weight: 900;
+  line-height: 28px;
+  letter-spacing: -1px;
+}
+
+.score-sub {
+  font-size: 10px;
+  color: var(--on-surface-variant);
+  font-weight: 600;
+  font-family: var(--font-label);
+}
+
+.status-badge {
+  margin-top: 10px;
+  background: rgba(0,191,165,0.12);
+  color: var(--primary-dark);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 5px 16px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-label);
+  letter-spacing: 0.03em;
+}
+
+/* ── GLASS CARD ── */
+.card {
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-xl);
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-bottom-color: rgba(255,255,255,0.05);
+  border-right-color: rgba(255,255,255,0.05);
+  box-shadow: var(--shadow-glass);
+}
+
+.card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 10px;
+  letter-spacing: -0.2px;
+}
+
+.card p, .card li {
+  font-size: 12px;
+  color: var(--on-surface-variant);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+ul { list-style: none; }
+ul li {
+  padding: 3px 0;
+  font-size: 12px;
+  color: var(--on-surface-variant);
+  font-weight: 500;
+}
+ul li::before {
+  content: "• ";
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.card b { color: var(--on-surface); font-weight: 700; }
+
+/* ── WARNING ── */
+.warning-box {
+  margin-top: 12px;
+  background: rgba(255, 179, 0, 0.12);
+  border: 1px solid rgba(255, 179, 0, 0.25);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #6f5b00;
+  font-weight: 500;
+}
+.warning-box b { color: #5c4a00; }
+
+/* ── REWARD ── */
+.reward-box {
+  margin-top: 12px;
+  background: rgba(0, 191, 165, 0.08);
+  border-radius: var(--radius-md);
+  text-align: center;
+  padding: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+}
+.reward-box b { color: #ff8f00; font-weight: 800; }
+
+/* ── BUTTON ── */
+.btn {
+  width: 100%;
+  height: 50px;
+  background: var(--primary);
+  border: none;
+  color: var(--on-primary);
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  box-shadow: 0 6px 24px rgba(0,191,165,0.3);
+  cursor: default;
+  transition: all 0.25s ease;
+  letter-spacing: 0.01em;
+}
+.btn:active { transform: scale(0.97); box-shadow: 0 3px 12px rgba(0,191,165,0.35); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 440px) {
+  body { padding: 0; background: transparent; }
+  .screen { max-width: 100%; border-radius: 0; min-height: 100dvh; box-shadow: none; padding: 20px 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="header">
+    <div class="back">←</div>
+    <h2>Nhận định sức khoẻ</h2>
+  </div>
+
+  <div class="score-wrap">
+    <div class="score-circle">
+      <div class="score-num">87</div>
+      <div class="score-sub">/100 điểm</div>
+    </div>
+    <div class="status-badge">✅ Tình trạng: TỐT</div>
+  </div>
+
+  <div class="card">
+    <h3>📋 Tổng kết phiếu hôm nay</h3>
+    <ul>
+      <li>Giấc ngủ: Rất ngon</li>
+      <li>Đau mỏi: Không</li>
+      <li>Chóng mặt: Không</li>
+      <li>Ăn uống: Tốt</li>
+      <li>Tâm trạng: Vui vẻ</li>
+      <li>Thể dục: Có</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>👩‍⚕️ Nhận định từ Kolia AI</h3>
+    <p>Sức khỏe của bạn hôm nay rất tốt! Bạn ngủ đủ giấc, không có triệu chứng bất thường và duy trì vận động đều đặn.</p>
+    <br/>
+    <p><b>Lời khuyên:</b> Tiếp tục giữ thói quen tốt này. Uống đủ 2L nước mỗi ngày và duy trì giấc ngủ trước 22h.</p>
+
+    <div class="warning-box">
+      ⚠️ <b>Lưu ý:</b> Nếu xuất hiện triệu chứng bất thường, hãy liên hệ bác sĩ hoặc bấm SOS ngay.
+    </div>
+
+    <div class="reward-box">
+      🎉 Bạn nhận được <b>60 🪙</b> cho phiếu hôm nay!
+    </div>
+  </div>
+
+  <button class="btn">Quay về trang chủ</button>
+
+</div>
+
+</body>
+</html>

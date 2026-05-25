@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Kolia AI - Thông tin cá nhân</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #00bfa5;
+  --primary-container: #00a48e;
+  --primary-dark: #006b5c;
+  --on-primary: #ffffff;
+  --secondary: #2196f3;
+  --tertiary: #e3f2fd;
+  --neutral: #f8fafc;
+  --on-surface: #191c1e;
+  --on-surface-variant: #404752;
+  --surface-container-lowest: #ffffff;
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
+  --outline: #707883;
+  --outline-variant: #bfc7d4;
+  --font-display: 'Manrope', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display);
+  padding: 16px;
+}
+
+.screen {
+  width: 100%;
+  max-width: 400px;
+  min-height: 100vh;
+  background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+  padding: 32px 24px;
+  position: relative;
+  border-radius: 40px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 30px 80px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(0, 191, 165, 0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ── HEADER ── */
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.header h1 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--primary-dark);
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+
+.header p {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  opacity: 0.7;
+  font-family: var(--font-label);
+  letter-spacing: 0.02em;
+}
+
+/* ── FORM CARD ── */
+.form-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-xl);
+  padding: 28px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  border-right-color: rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-glass);
+}
+
+.form-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+}
+
+.form-desc {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  opacity: 0.6;
+  margin-bottom: 24px;
+  font-family: var(--font-label);
+  letter-spacing: 0.01em;
+}
+
+/* ── FIELD ── */
+.field-group {
+  margin-bottom: 16px;
+}
+
+.field-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 6px;
+  font-family: var(--font-label);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.field-group input[type="text"],
+.field-group input[type="number"] {
+  width: 100%;
+  height: 48px;
+  border: 1.5px solid rgba(191, 199, 212, 0.4);
+  background: rgba(248, 250, 252, 0.5);
+  padding: 0 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--on-surface);
+  font-family: var(--font-display);
+  outline: none;
+  border-radius: var(--radius-full);
+  transition: all 0.25s ease;
+}
+
+.field-group input::placeholder {
+  color: var(--outline);
+  font-weight: 500;
+  opacity: 0.6;
+}
+
+.field-group input:focus {
+  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 0 4px rgba(0, 191, 165, 0.1);
+}
+
+/* ── RADIO GROUP ── */
+.radio-group {
+  width: 100%;
+  height: 48px;
+  border: 1.5px solid rgba(191, 199, 212, 0.4);
+  background: rgba(248, 250, 252, 0.5);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 16px;
+  transition: all 0.25s ease;
+}
+
+.radio-group:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(0, 191, 165, 0.1);
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  font-family: var(--font-display);
+  cursor: default;
+}
+
+.radio-option input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+  cursor: default;
+}
+
+/* ── BUTTON ── */
+.btn-submit {
+  width: 100%;
+  height: 50px;
+  background: var(--primary);
+  border: none;
+  color: var(--on-primary);
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  cursor: default;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
+  letter-spacing: 0.02em;
+  margin-top: 8px;
+}
+
+.btn-submit:active {
+  transform: scale(0.97);
+  box-shadow: 0 3px 12px rgba(0, 191, 165, 0.35);
+}
+
+/* ── PRIVACY ── */
+.privacy {
+  max-width: 260px;
+  margin: 16px auto 0;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--outline);
+  font-family: var(--font-label);
+  letter-spacing: 0.01em;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 440px) {
+  body {
+    padding: 0;
+    background: transparent;
+  }
+
+  .screen {
+    max-width: 100%;
+    border-radius: 0;
+    min-height: 100dvh;
+    box-shadow: none;
+    padding: 24px 16px;
+  }
+
+  .form-card {
+    padding: 24px 20px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="header">
+    <h1>Kolia AI</h1>
+    <p>Ứng dụng theo dõi sức khoẻ</p>
+  </div>
+
+  <div class="form-card">
+    <h2 class="form-title">Thông tin cá nhân</h2>
+    <p class="form-desc">Vui lòng điền thông tin để hoàn tất đăng ký</p>
+
+    <div class="field-group">
+      <label>Họ và tên</label>
+      <input type="text" value="Nguyễn Văn An" />
+    </div>
+
+    <div class="field-group">
+      <label>Giới tính</label>
+      <div class="radio-group">
+        <label class="radio-option">
+          <input type="radio" name="gender" checked /> Nam
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="gender" /> Nữ
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="gender" /> Khác
+        </label>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Tuổi</label>
+      <input type="number" value="65" />
+    </div>
+
+    <button class="btn-submit">Hoàn tất</button>
+
+    <p class="privacy">
+      Thông tin của bạn được bảo mật theo chính sách quyền riêng tư
+    </p>
+  </div>
+
+</div>
+
+</body>
+</html>

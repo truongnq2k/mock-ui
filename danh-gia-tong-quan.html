@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Kolia AI - Đánh giá tổng quan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #00bfa5;
+  --primary-container: #00a48e;
+  --primary-dark: #006b5c;
+  --on-primary: #ffffff;
+  --secondary: #2196f3;
+  --tertiary: #e3f2fd;
+  --neutral: #f8fafc;
+  --on-surface: #191c1e;
+  --on-surface-variant: #404752;
+  --surface-container-lowest: #ffffff;
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
+  --outline: #707883;
+  --outline-variant: #bfc7d4;
+  --font-display: 'Manrope', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display);
+  padding: 16px;
+}
+
+.screen {
+  width: 100%;
+  max-width: 400px;
+  min-height: 100vh;
+  background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+  padding: 24px 20px 32px;
+  position: relative;
+  border-radius: 40px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 30px 80px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(0, 191, 165, 0.06);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.screen::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-top: 4px;
+}
+
+.back {
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--primary-dark);
+  line-height: 1;
+  cursor: default;
+  margin-top: -2px;
+}
+
+.header-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--on-surface);
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+}
+
+.header-date {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  opacity: 0.6;
+  margin-top: 2px;
+  font-family: var(--font-label);
+  letter-spacing: 0.02em;
+}
+
+/* ── GLASS CARD ── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-xl);
+  padding: 24px 20px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  border-right-color: rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-glass);
+}
+
+/* ── SCORE CARD ── */
+.score-card {
+  text-align: center;
+}
+
+.score-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 6px solid rgba(0, 191, 165, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  position: relative;
+}
+
+.score-circle::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 6px solid var(--primary);
+  clip-path: polygon(0 0, 60% 0, 60% 40%, 45% 55%, 0 55%);
+}
+
+.score-num {
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.score-out-of {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  font-family: var(--font-label);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 191, 165, 0.12);
+  color: var(--primary-dark);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-label);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.status-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+/* ── SECTION TITLE ── */
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 10px;
+  letter-spacing: -0.3px;
+  padding-left: 2px;
+}
+
+/* ── METRIC ROW ── */
+.metric {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.metric:last-child {
+  margin-bottom: 0;
+}
+
+.metric-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--on-surface);
+  line-height: 1.2;
+}
+
+.metric-name span {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  opacity: 0.7;
+  margin-top: 1px;
+  font-family: var(--font-label);
+}
+
+.point-badge {
+  min-width: 44px;
+  height: 34px;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  letter-spacing: -0.3px;
+}
+
+.point-badge.amber {
+  background: #ff8f00;
+}
+
+/* ── AI BOX ── */
+.ai-box {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: var(--radius-xl);
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(0, 191, 165, 0.15);
+  border-left: 3px solid var(--primary);
+}
+
+.ai-box h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 8px;
+}
+
+.ai-box p {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  line-height: 1.55;
+  opacity: 0.85;
+}
+
+/* ── LEGEND ── */
+.legend {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  line-height: 1.6;
+  padding-left: 2px;
+}
+
+.legend-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 12px;
+  font-family: var(--font-label);
+  letter-spacing: 0.02em;
+}
+
+.legend-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.legend-dot.good { background: var(--primary); }
+.legend-dot.mid { background: #ff8f00; }
+.legend-dot.bad { background: var(--error); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 440px) {
+  body {
+    padding: 0;
+    background: transparent;
+  }
+
+  .screen {
+    max-width: 100%;
+    border-radius: 0;
+    min-height: 100dvh;
+    box-shadow: none;
+    padding: 20px 16px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="header">
+    <div class="back">←</div>
+    <div>
+      <div class="header-title">Đánh giá tổng quan</div>
+      <div class="header-date">Hôm nay, 22/05/2026</div>
+    </div>
+  </div>
+
+  <div class="glass-card score-card">
+    <div class="score-circle">
+      <div class="score-num">87</div>
+      <div class="score-out-of">/100</div>
+    </div>
+    <div class="status-badge">Sức khoẻ TỐT</div>
+  </div>
+
+  <div class="section-title">📊 Điểm từng chỉ số</div>
+
+  <div class="glass-card" style="padding: 16px 12px 8px;">
+    <div class="metric">
+      <div class="metric-name">
+        ❤️ Nhịp tim
+        <span>72 bpm — Bình thường</span>
+      </div>
+      <div class="point-badge">90</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-name">
+        🩸 Huyết áp
+        <span>120/80 mmHg — Bình thường</span>
+      </div>
+      <div class="point-badge">88</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-name">
+        🫁 SpO2
+        <span>97% — Bình thường</span>
+      </div>
+      <div class="point-badge">95</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-name">
+        🚶 Bước chân
+        <span>6,240 bước — Chưa đạt mục tiêu</span>
+      </div>
+      <div class="point-badge amber">78</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-name">
+        😴 Giấc ngủ
+        <span>7h 15m — Tốt</span>
+      </div>
+      <div class="point-badge">85</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-name">
+        🌡️ Nhiệt độ
+        <span>36.5°C — Bình thường</span>
+      </div>
+      <div class="point-badge">92</div>
+    </div>
+  </div>
+
+  <div class="ai-box">
+    <h3>👨‍⚕️ Nhận định của AI</h3>
+    <p>
+      Sức khoẻ tổng thể của bạn đang ở mức TỐT (87/100). Các chỉ số sinh tồn đều trong ngưỡng an toàn.
+    </p>
+    <br />
+    <p>
+      ⚠️ Lưu ý: Bước chân chưa đạt mục tiêu 8,000 bước/ngày. Hãy cố gắng đi bộ thêm vào buổi chiều.
+    </p>
+  </div>
+
+  <div class="legend">
+    Thang điểm:<br>
+    <span class="legend-label"><span class="legend-dot good"></span> 80–100: Tốt</span>
+    <span class="legend-label"><span class="legend-dot mid"></span> 60–79: Trung bình</span>
+    <span class="legend-label"><span class="legend-dot bad"></span> 0–59: Cần chú ý</span>
+  </div>
+
+</div>
+
+</body>
+</html>

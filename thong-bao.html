@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Kolia AI - Thông báo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #00bfa5;
+  --primary-container: #00a48e;
+  --primary-dark: #006b5c;
+  --on-primary: #ffffff;
+  --secondary: #2196f3;
+  --tertiary: #e3f2fd;
+  --neutral: #f8fafc;
+  --on-surface: #191c1e;
+  --on-surface-variant: #404752;
+  --surface-container-lowest: #ffffff;
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
+  --outline: #707883;
+  --outline-variant: #bfc7d4;
+  --font-display: 'Manrope', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display);
+  padding: 16px;
+}
+
+.screen {
+  width: 100%;
+  max-width: 400px;
+  min-height: 100vh;
+  background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+  padding: 24px 20px 32px;
+  position: relative;
+  border-radius: 40px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 30px 80px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(0, 191, 165, 0.06);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.screen::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-top: 4px;
+}
+
+.back {
+  color: var(--primary);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1;
+  cursor: default;
+}
+
+.header-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--on-surface);
+  letter-spacing: -0.4px;
+}
+
+/* ── FILTER TABS ── */
+.filter-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.filter-tab {
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.45);
+  color: var(--on-surface-variant);
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-label);
+  letter-spacing: 0.02em;
+  cursor: default;
+  transition: all 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.filter-tab.active {
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 700;
+  border-color: var(--primary);
+  box-shadow: 0 2px 12px rgba(0, 191, 165, 0.25);
+}
+
+/* ── DAY HEADER ── */
+.day-heading {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--on-surface-variant);
+  margin: 16px 0 10px 4px;
+  letter-spacing: -0.2px;
+}
+
+/* ── NOTICE CARD ── */
+.notice-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 12px;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  border-right-color: rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-glass);
+}
+
+.notice-card.alert {
+  background: rgba(255, 241, 241, 0.65);
+  backdrop-filter: blur(20px);
+  border-color: rgba(255, 197, 197, 0.3);
+}
+
+.notice-card.success {
+  background: rgba(221, 255, 240, 0.65);
+  backdrop-filter: blur(20px);
+  border-color: rgba(20, 189, 120, 0.2);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  flex-shrink: 0;
+}
+
+.status-dot.red { background: var(--error); }
+.status-dot.primary { background: var(--primary); }
+.status-dot.green { background: #18b96f; }
+
+.notice-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(248, 250, 252, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.notice-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.notice-time {
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--outline);
+  font-family: var(--font-label);
+}
+
+.notice-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 4px;
+  padding-right: 44px;
+  letter-spacing: -0.1px;
+}
+
+.notice-text {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  opacity: 0.7;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.notice-btn {
+  height: 28px;
+  border: none;
+  background: var(--error);
+  color: white;
+  padding: 0 14px;
+  border-radius: var(--radius-full);
+  font-size: 10px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  cursor: default;
+  transition: all 0.2s ease;
+}
+
+.notice-btn:active {
+  transform: scale(0.95);
+}
+
+.notice-btn.primary {
+  background: var(--primary);
+  box-shadow: 0 2px 8px rgba(0, 191, 165, 0.2);
+}
+
+.notice-btn.green {
+  background: #18b96f;
+  box-shadow: 0 2px 8px rgba(24, 185, 111, 0.2);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 440px) {
+  body {
+    padding: 0;
+    background: transparent;
+  }
+
+  .screen {
+    max-width: 100%;
+    border-radius: 0;
+    min-height: 100dvh;
+    box-shadow: none;
+    padding: 20px 16px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="header">
+    <div class="back">←</div>
+    <div class="header-title">🔔 Thông báo</div>
+  </div>
+
+  <div class="filter-tabs">
+    <div class="filter-tab active">Tất cả</div>
+    <div class="filter-tab">Cảnh báo</div>
+    <div class="filter-tab">Nhắc nhở</div>
+  </div>
+
+  <div class="day-heading">Hôm nay</div>
+
+  <div class="notice-card alert">
+    <span class="status-dot red"></span>
+    <div class="notice-icon">🚨</div>
+    <div class="notice-body">
+      <div class="notice-time">14:32</div>
+      <div class="notice-title">Cảnh báo bất thường!</div>
+      <div class="notice-text">
+        Hệ thống phát hiện nhịp tim tăng cao bất thường (105 bpm). Hãy kiểm tra ngay.
+      </div>
+      <button class="notice-btn">Xem chi tiết</button>
+    </div>
+  </div>
+
+  <div class="notice-card">
+    <span class="status-dot primary"></span>
+    <div class="notice-icon">📋</div>
+    <div class="notice-body">
+      <div class="notice-time">12:00</div>
+      <div class="notice-title">Nhắc điền phiếu theo dõi</div>
+      <div class="notice-text">
+        Bạn chưa điền phiếu theo dõi sức khoẻ buổi trưa. Hãy điền ngay để nhận 60 xu.
+      </div>
+      <button class="notice-btn primary">Điền phiếu ngay</button>
+    </div>
+  </div>
+
+  <div class="notice-card success">
+    <span class="status-dot green"></span>
+    <div class="notice-icon">👨‍👩‍👧</div>
+    <div class="notice-body">
+      <div class="notice-time">10:15</div>
+      <div class="notice-title">Số liệu mới từ mẹ</div>
+      <div class="notice-text">
+        Đã có số liệu sức khoẻ mới từ mẹ của bạn - Nguyễn Thị Lan. Điểm sức khoẻ: 72/100.
+      </div>
+      <button class="notice-btn green">Xem số liệu</button>
+    </div>
+  </div>
+
+  <div class="notice-card">
+    <div class="notice-icon">📋</div>
+    <div class="notice-body">
+      <div class="notice-time">06:30</div>
+      <div class="notice-title">Nhắc điền phiếu sáng</div>
+      <div class="notice-text">
+        Hãy điền phiếu theo dõi sức khoẻ buổi sáng. Chỉ mất 2 phút!
+      </div>
+      <button class="notice-btn primary">Điền phiếu ngay</button>
+    </div>
+  </div>
+
+  <div class="day-heading">Hôm qua</div>
+
+  <div class="notice-card">
+    <div class="notice-icon">✅</div>
+    <div class="notice-body">
+      <div class="notice-time">21/05</div>
+      <div class="notice-title">Hoàn thành phiếu theo dõi</div>
+      <div class="notice-text">
+        Bạn đã điền đủ 3 phiếu (sáng, trưa, tối). +180 xu!
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Kolia AI - Nhận quà tặng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #00bfa5;
+  --primary-container: #00a48e;
+  --primary-dark: #006b5c;
+  --on-primary: #ffffff;
+  --secondary: #2196f3;
+  --tertiary: #e3f2fd;
+  --neutral: #f8fafc;
+  --on-surface: #191c1e;
+  --on-surface-variant: #404752;
+  --surface-container-lowest: #ffffff;
+  --error: #ba1a1a;
+  --outline: #707883;
+  --outline-variant: #bfc7d4;
+  --font-display: 'Manrope', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display);
+  padding: 16px;
+}
+
+.screen {
+  width: 100%;
+  max-width: 400px;
+  min-height: 100vh;
+  background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+  padding: 24px 20px 32px;
+  position: relative;
+  border-radius: 40px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 30px 80px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(0, 191, 165, 0.06);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.screen::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-top: 4px;
+}
+
+.back {
+  font-size: 22px;
+  color: var(--primary);
+  font-weight: 400;
+  cursor: default;
+  line-height: 1;
+}
+
+.title {
+  font-size: 18px;
+  color: var(--on-surface);
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+/* ── GIFT INFO ── */
+.gift-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-xl);
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  border-right-color: rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-glass);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.gift-icon {
+  font-size: 36px;
+  flex-shrink: 0;
+}
+
+.gift-info {
+  flex: 1;
+}
+
+.gift-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 2px;
+}
+
+.gift-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ff8f00;
+}
+
+/* ── FORM SECTION ── */
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 10px;
+  letter-spacing: -0.2px;
+}
+
+.form-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-xl);
+  padding: 22px 20px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  border-right-color: rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-glass);
+}
+
+.field-group {
+  margin-bottom: 14px;
+}
+
+.field-group:last-child {
+  margin-bottom: 0;
+}
+
+.field-group label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 6px;
+  font-family: var(--font-label);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.field-group input,
+.field-group textarea {
+  width: 100%;
+  border: 1.5px solid rgba(191, 199, 212, 0.4);
+  background: rgba(248, 250, 252, 0.5);
+  border-radius: var(--radius-full);
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--on-surface);
+  font-family: var(--font-display);
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.field-group input {
+  height: 46px;
+}
+
+.field-group textarea {
+  height: 80px;
+  padding-top: 14px;
+  resize: none;
+  border-radius: var(--radius-lg);
+}
+
+.field-group input::placeholder,
+.field-group textarea::placeholder {
+  color: var(--outline);
+  opacity: 0.5;
+  font-weight: 500;
+}
+
+.field-group input:focus,
+.field-group textarea:focus {
+  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 0 4px rgba(0, 191, 165, 0.1);
+}
+
+/* ── WARNING ── */
+.warning {
+  background: rgba(255, 241, 184, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 210, 77, 0.5);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #7b6a1a;
+  margin-bottom: 16px;
+  font-family: var(--font-display);
+}
+
+.warning b {
+  color: #e65100;
+  font-weight: 800;
+}
+
+/* ── BUTTONS ── */
+.btn {
+  width: 100%;
+  height: 50px;
+  background: var(--primary);
+  border: none;
+  border-radius: var(--radius-full);
+  color: var(--on-primary);
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  cursor: default;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
+  letter-spacing: 0.02em;
+}
+
+.btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 3px 12px rgba(0, 191, 165, 0.35);
+}
+
+.cancel {
+  text-align: center;
+  color: var(--outline);
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 14px;
+  font-family: var(--font-label);
+  cursor: default;
+  transition: opacity 0.2s;
+}
+
+.cancel:active {
+  opacity: 0.5;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 440px) {
+  body {
+    padding: 0;
+    background: transparent;
+  }
+
+  .screen {
+    max-width: 100%;
+    border-radius: 0;
+    min-height: 100dvh;
+    box-shadow: none;
+    padding: 20px 16px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="header">
+    <div class="back">←</div>
+    <div class="title">Nhận quà tặng</div>
+  </div>
+
+  <div class="gift-card">
+    <div class="gift-icon">👕</div>
+    <div class="gift-info">
+      <div class="gift-name">Áo thể thao</div>
+      <div class="gift-price">50 🪙</div>
+    </div>
+  </div>
+
+  <div class="section-title">Thông tin người nhận</div>
+
+  <div class="form-card">
+    <div class="field-group">
+      <label>Họ và tên người nhận</label>
+      <input type="text" placeholder="Nhập họ tên đầy đủ" />
+    </div>
+
+    <div class="field-group">
+      <label>Số điện thoại</label>
+      <input type="text" placeholder="VD: 0987 654 321" />
+    </div>
+
+    <div class="field-group">
+      <label>Địa chỉ nhận hàng</label>
+      <textarea placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố"></textarea>
+    </div>
+
+    <div class="field-group">
+      <label>Ghi chú (không bắt buộc)</label>
+      <input type="text" placeholder="VD: Giao giờ hành chính" />
+    </div>
+  </div>
+
+  <div class="warning">
+    ⚠️ Sau khi xác nhận, <b>50 🪙</b> sẽ bị trừ khỏi số dư<br>
+    Số dư hiện tại: <b>200 🪙</b> → Còn lại: <b>150 🪙</b>
+  </div>
+
+  <button class="btn">Xác nhận đổi quà</button>
+
+  <div class="cancel">Huỷ bỏ</div>
+
+</div>
+
+</body>
+</html>

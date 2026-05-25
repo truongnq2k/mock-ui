@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Cài đặt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #00bfa5;
+  --primary-container: #00a48e;
+  --primary-dark: #006b5c;
+  --on-primary: #ffffff;
+  --secondary: #2196f3;
+  --tertiary: #e3f2fd;
+  --neutral: #f8fafc;
+  --on-surface: #191c1e;
+  --on-surface-variant: #404752;
+  --surface-container-lowest: #ffffff;
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
+  --outline: #707883;
+  --outline-variant: #bfc7d4;
+  --warning: #ff8f00;
+  --font-display: 'Manrope', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display);
+  padding: 16px;
+}
+
+.screen {
+  width: 100%;
+  max-width: 400px;
+  min-height: 100vh;
+  background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+  padding: 24px 20px;
+  position: relative;
+  border-radius: 40px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 30px 80px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(0, 191, 165, 0.06);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.screen::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-top: 4px;
+}
+
+.back {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--primary);
+  cursor: default;
+  line-height: 1;
+}
+
+.header h1 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--on-surface);
+  letter-spacing: -0.4px;
+}
+
+/* ── GLASS CARD ── */
+.card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  border-right-color: rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-glass);
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 12px;
+  letter-spacing: -0.2px;
+}
+
+/* ── PROFILE ── */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border: 3px solid var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.profile-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--on-surface);
+  letter-spacing: -0.3px;
+}
+
+.profile-meta {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  opacity: 0.6;
+  margin-top: 2px;
+  font-family: var(--font-label);
+}
+
+.profile-coin {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--warning);
+  margin-top: 3px;
+}
+
+/* ── PERSON LIST ── */
+.person {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(191, 199, 212, 0.3);
+}
+
+.person:last-of-type {
+  border-bottom: none;
+}
+
+.person-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--on-surface);
+}
+
+.person-info {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  opacity: 0.6;
+  margin-top: 2px;
+  font-family: var(--font-label);
+}
+
+/* ── ADD BUTTON (ghost) ── */
+.add-btn {
+  width: 100%;
+  height: 36px;
+  border: 1.5px dashed var(--outline-variant);
+  background: transparent;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  margin-top: 8px;
+  font-family: var(--font-display);
+  cursor: default;
+  transition: all 0.25s ease;
+}
+
+.add-btn:active {
+  background: rgba(0, 191, 165, 0.06);
+  border-color: var(--primary);
+}
+
+/* ── SOS ── */
+.sos-card {
+  border: 1px solid rgba(186, 26, 26, 0.15);
+}
+
+.sos-title {
+  color: var(--error);
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.sos-desc {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  opacity: 0.6;
+  margin-bottom: 12px;
+  font-family: var(--font-label);
+}
+
+.phone-box {
+  height: 40px;
+  background: rgba(255, 218, 214, 0.4);
+  border: 1px solid rgba(186, 26, 26, 0.15);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin-bottom: 10px;
+  font-family: var(--font-label);
+}
+
+/* ── DEVICE ── */
+.device-box {
+  background: rgba(0, 191, 165, 0.06);
+  border: 1px solid rgba(0, 191, 165, 0.2);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+
+.device-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--on-surface);
+}
+
+.device-status {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--primary-dark);
+  margin-top: 3px;
+  font-family: var(--font-label);
+}
+
+.search-btn {
+  width: 100%;
+  height: 44px;
+  background: var(--primary);
+  border: none;
+  color: var(--on-primary);
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  cursor: default;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(0, 191, 165, 0.2);
+}
+
+.search-btn:active {
+  transform: scale(0.97);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 440px) {
+  body { padding: 0; background: transparent; }
+  .screen {
+    max-width: 100%;
+    border-radius: 0;
+    min-height: 100dvh;
+    box-shadow: none;
+    padding: 20px 16px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="header">
+    <div class="back">←</div>
+    <h1>Cài đặt</h1>
+  </div>
+
+  <div class="card profile">
+    <div class="avatar">👤</div>
+    <div>
+      <div class="profile-name">Nguyễn Văn An</div>
+      <div class="profile-meta">ID: HC-2024-00587</div>
+      <div class="profile-coin">🪙 200</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">👨‍👩‍👧 Danh sách người thân</div>
+
+    <div class="person">
+      <div class="person-name">Nguyễn Thị Lan</div>
+      <div class="person-info">Con gái • 0912 xxx 456</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Nguyễn Văn Bình</div>
+      <div class="person-info">Con trai • 0987 xxx 123</div>
+    </div>
+    <div class="person">
+      <div class="person-name">Trần Thị Hoa</div>
+      <div class="person-info">Vợ • 0909 xxx 789</div>
+    </div>
+
+    <button class="add-btn">+ Thêm người thân</button>
+  </div>
+
+  <div class="card sos-card">
+    <div class="sos-title">🚨 Liên hệ nhận cảnh báo SOS</div>
+    <div class="sos-desc">Số điện thoại nhận cảnh báo khẩn cấp khi bạn bấm SOS</div>
+
+    <div class="phone-box">📞&nbsp; 0912 xxx 456 (Nguyễn Thị Lan)</div>
+
+    <button class="add-btn">+ Thêm người thân</button>
+  </div>
+
+  <div class="card">
+    <div class="section-title">⌚ Kết nối thiết bị đeo tay</div>
+
+    <div class="device-box">
+      <div class="device-name">Kolia Band Pro</div>
+      <div class="device-status">🟢 Đã kết nối • Pin 85%</div>
+    </div>
+
+    <button class="search-btn">Tìm thiết bị mới</button>
+  </div>
+
+</div>
+
+</body>
+</html>

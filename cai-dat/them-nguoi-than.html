@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Thêm người thân</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #00bfa5;
+  --primary-dark: #006b5c;
+  --on-primary: #ffffff;
+  --tertiary: #e3f2fd;
+  --neutral: #f8fafc;
+  --on-surface: #191c1e;
+  --on-surface-variant: #404752;
+  --outline: #707883;
+  --outline-variant: #bfc7d4;
+  --font-display: 'Manrope', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display);
+  padding: 16px;
+}
+
+.screen {
+  width: 100%;
+  max-width: 400px;
+  min-height: 100vh;
+  background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+  padding: 24px 20px;
+  position: relative;
+  border-radius: 40px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 30px 80px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(0, 191, 165, 0.06);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.screen::-webkit-scrollbar { display: none; }
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-top: 4px;
+}
+
+.back {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--primary);
+  cursor: default;
+  line-height: 1;
+}
+
+.header h1 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--on-surface);
+  letter-spacing: -0.4px;
+}
+
+/* ── ICON ── */
+.icon-wrap {
+  width: 76px;
+  height: 76px;
+  background: rgba(0, 191, 165, 0.08);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  margin: 0 auto 16px;
+}
+
+/* ── DESC ── */
+.desc {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  opacity: 0.65;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  font-family: var(--font-label);
+  letter-spacing: 0.01em;
+}
+
+/* ── GLASS CARD ── */
+.card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-xl);
+  padding: 24px 20px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  border-right-color: rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-glass);
+}
+
+/* ── FORM ── */
+.field-group {
+  margin-bottom: 18px;
+}
+
+.field-group:last-child {
+  margin-bottom: 0;
+}
+
+.field-group label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 6px;
+  font-family: var(--font-label);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.field-group input {
+  width: 100%;
+  height: 48px;
+  border: 1.5px solid rgba(191, 199, 212, 0.4);
+  background: rgba(248, 250, 252, 0.5);
+  padding: 0 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--on-surface);
+  font-family: var(--font-display);
+  outline: none;
+  border-radius: var(--radius-full);
+  transition: all 0.25s ease;
+}
+
+.field-group input::placeholder {
+  color: var(--outline);
+  font-weight: 500;
+  opacity: 0.5;
+}
+
+.field-group input:focus {
+  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 0 4px rgba(0, 191, 165, 0.1);
+}
+
+.help-text {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  opacity: 0.5;
+  margin-top: 4px;
+  font-family: var(--font-label);
+  letter-spacing: 0.01em;
+}
+
+/* ── BUTTON ── */
+.btn {
+  width: 100%;
+  height: 52px;
+  background: var(--primary);
+  border: none;
+  color: var(--on-primary);
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  cursor: default;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+}
+
+.btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 3px 12px rgba(0, 191, 165, 0.35);
+}
+
+/* ── NOTE ── */
+.note {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  opacity: 0.5;
+  line-height: 1.5;
+  font-family: var(--font-label);
+  letter-spacing: 0.01em;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 440px) {
+  body { padding: 0; background: transparent; }
+  .screen {
+    max-width: 100%;
+    border-radius: 0;
+    min-height: 100dvh;
+    box-shadow: none;
+    padding: 20px 16px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="header">
+    <div class="back">←</div>
+    <h1>Thêm người thân</h1>
+  </div>
+
+  <div class="icon-wrap">👨‍👩‍👧</div>
+
+  <div class="desc">
+    Nhập ID người thân để kết nối<br>
+    và theo dõi sức khoẻ cùng nhau
+  </div>
+
+  <div class="card">
+    <div class="field-group">
+      <label>ID người thân</label>
+      <input type="text" placeholder="Nhập ID (VD: HC-2024-00123)" />
+      <div class="help-text">ID nằm trong phần Cài đặt của người thân</div>
+    </div>
+
+    <div class="field-group">
+      <label>Tên gợi nhớ</label>
+      <input type="text" placeholder="VD: Mẹ, Ba, Chị Hai..." />
+      <div class="help-text">Tên này giúp bạn dễ nhận biết người thân</div>
+    </div>
+  </div>
+
+  <button class="btn">Thêm người thân</button>
+
+  <div class="note">
+    Người thân sẽ nhận được thông báo xác nhận<br>
+    trước khi kết nối được thiết lập
+  </div>
+
+</div>
+
+</body>
+</html>

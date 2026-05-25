@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Kolia AI - Trang chủ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #00bfa5;
+  --primary-container: #00a48e;
+  --primary-dark: #006b5c;
+  --on-primary: #ffffff;
+  --secondary: #2196f3;
+  --secondary-container: #33a0fd;
+  --tertiary: #e3f2fd;
+  --neutral: #f8fafc;
+  --on-surface: #191c1e;
+  --on-surface-variant: #404752;
+  --surface-container-lowest: #ffffff;
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
+  --outline: #707883;
+  --outline-variant: #bfc7d4;
+  --font-display: 'Manrope', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+  --shadow-glass-hover: 0 12px 40px rgba(0, 191, 165, 0.12);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display);
+  padding: 16px;
+}
+
+.screen {
+  width: 100%;
+  max-width: 400px;
+  min-height: 100vh;
+  background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+  padding: 24px 20px;
+  position: relative;
+  border-radius: 40px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 30px 80px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(0, 191, 165, 0.06);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.screen::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-top: 4px;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--primary-dark);
+  letter-spacing: -0.5px;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 18px;
+}
+
+.badge-wrap {
+  position: relative;
+  display: flex;
+}
+
+.badge {
+  position: absolute;
+  right: -6px;
+  top: -6px;
+  background: var(--error);
+  color: white;
+  font-size: 8px;
+  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-label);
+}
+
+/* ── TABS ── */
+.tabs {
+  height: 30px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  opacity: 0.7;
+  margin-bottom: 14px;
+  font-family: var(--font-label);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  gap: 4px;
+}
+
+.tabs div {
+  padding: 5px 0;
+  border-radius: var(--radius-full);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.tabs div.active {
+  background: var(--primary);
+  color: var(--on-primary);
+  opacity: 1;
+  font-weight: 700;
+  box-shadow: 0 2px 12px rgba(0, 191, 165, 0.3);
+}
+
+/* ── GLASS CARD ── */
+.card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-xl);
+  padding: 20px 20px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  border-right-color: rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-glass);
+  transition: box-shadow 0.3s ease;
+  position: relative;
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 14px;
+  letter-spacing: -0.3px;
+}
+
+/* ── SCORE CARD ── */
+.score-card {
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.gauge-wrap {
+  position: relative;
+  width: 200px;
+  height: 110px;
+  margin: 4px auto 0;
+}
+
+.arc-ring {
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  border-radius: 120px 120px 0 0;
+  background: conic-gradient(
+    from 270deg,
+    #00bfa5 0deg 96deg,
+    #b2dfdb 96deg 114deg,
+    #ffb300 114deg 150deg,
+    #ff7043 150deg 170deg,
+    #e53935 170deg 180deg,
+    transparent 180deg 360deg
+  );
+  overflow: hidden;
+}
+
+.arc-ring::after {
+  content: "";
+  position: absolute;
+  left: 36px;
+  top: 36px;
+  width: 128px;
+  height: 82px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 100px 100px 0 0;
+}
+
+.score-num {
+  position: absolute;
+  top: 44px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: var(--primary);
+  font-size: 38px;
+  font-weight: 900;
+  font-family: var(--font-display);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.score-out-of {
+  position: absolute;
+  top: 82px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  font-family: var(--font-label);
+  letter-spacing: 0.03em;
+}
+
+.status-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  margin-top: 6px;
+  font-family: var(--font-display);
+}
+
+.status-text b {
+  color: var(--primary);
+  font-weight: 800;
+}
+
+/* ── CHART ── */
+.chart-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: 28px;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.chart-tabs div {
+  background: rgba(227, 242, 253, 0.5);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  text-align: center;
+  line-height: 28px;
+  font-family: var(--font-label);
+  letter-spacing: 0.02em;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.chart-tabs .active {
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 700;
+  box-shadow: 0 2px 12px rgba(0, 191, 165, 0.25);
+}
+
+.chart-wrap {
+  width: 100%;
+  height: 90px;
+  margin-bottom: 6px;
+}
+
+.chart-wrap svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.chart-avg {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+}
+
+.chart-avg b {
+  color: var(--primary-dark);
+  font-weight: 700;
+}
+
+/* ── HEALTH GRID ── */
+.health-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.health-item {
+  background: rgba(248, 250, 252, 0.5);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  font-family: var(--font-display);
+  line-height: 1.4;
+}
+
+.health-item b {
+  display: block;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--primary-dark);
+  font-family: var(--font-display);
+  letter-spacing: -0.4px;
+  margin-top: 2px;
+}
+
+.health-item.orange b {
+  color: #ff8f00;
+}
+
+/* ── BUTTONS ── */
+.btn {
+  width: 100%;
+  height: 50px;
+  background: var(--primary);
+  border: none;
+  color: var(--on-primary);
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  margin-bottom: 14px;
+  font-family: var(--font-display);
+  cursor: default;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
+  letter-spacing: 0.01em;
+}
+
+.btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 3px 12px rgba(0, 191, 165, 0.35);
+}
+
+/* ── FORM ROW ── */
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.form-box {
+  background: rgba(248, 250, 252, 0.5);
+  border: 1px solid rgba(191, 199, 212, 0.3);
+  border-radius: var(--radius-md);
+  text-align: center;
+  padding: 10px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  font-family: var(--font-label);
+  letter-spacing: 0.02em;
+}
+
+.form-box b {
+  display: block;
+  margin-top: 4px;
+  font-size: 15px;
+  font-weight: 800;
+  font-family: var(--font-display);
+  letter-spacing: -0.3px;
+}
+
+.green {
+  color: var(--primary);
+}
+.orange-text {
+  color: #ff8f00;
+}
+
+/* ── BOTTOM ACTIONS ── */
+.bottom-actions {
+  display: grid;
+  grid-template-columns: 1.5fr 0.8fr;
+  gap: 10px;
+  margin-top: 4px;
+  padding-bottom: 12px;
+}
+
+.ai-btn {
+  height: 60px;
+  background: var(--primary);
+  border-radius: var(--radius-full);
+  color: var(--on-primary);
+  text-align: center;
+  padding-top: 12px;
+  font-size: 12px;
+  font-weight: 800;
+  font-family: var(--font-display);
+  line-height: 1.3;
+  box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
+  cursor: default;
+  transition: all 0.25s ease;
+}
+
+.ai-btn:active {
+  transform: scale(0.97);
+}
+
+.ai-btn span {
+  display: block;
+  font-size: 9px;
+  font-weight: 500;
+  opacity: 0.85;
+  font-family: var(--font-label);
+  letter-spacing: 0.02em;
+  margin-top: 3px;
+}
+
+.sos-btn {
+  height: 60px;
+  background: var(--error);
+  border-radius: var(--radius-full);
+  color: var(--on-primary);
+  text-align: center;
+  padding-top: 8px;
+  font-size: 26px;
+  font-weight: 900;
+  font-family: var(--font-display);
+  box-shadow: 0 6px 24px rgba(186, 26, 26, 0.3);
+  cursor: default;
+  transition: all 0.25s ease;
+}
+
+.sos-btn:active {
+  transform: scale(0.97);
+}
+
+.sos-btn span {
+  display: block;
+  font-size: 9px;
+  font-weight: 500;
+  opacity: 0.85;
+  font-family: var(--font-label);
+  letter-spacing: 0.02em;
+  margin-top: -2px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 440px) {
+  body {
+    padding: 0;
+    background: transparent;
+  }
+
+  .screen {
+    max-width: 100%;
+    border-radius: 0;
+    min-height: 100dvh;
+    box-shadow: none;
+    padding: 20px 16px;
+  }
+}
+
+@media (min-width: 441px) and (max-width: 768px) {
+  .screen {
+    max-width: 440px;
+    min-height: 90vh;
+    margin: 20px auto;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="header">
+    <div class="logo">Kolia Ai</div>
+    <div class="icons">
+      <div class="badge-wrap">🔔<span class="badge">0</span></div>
+      <div>🎁</div>
+      <div>⚙️</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div>T4</div>
+    <div>T5</div>
+    <div class="active">Hôm Nay</div>
+    <div>T7</div>
+    <div>CN</div>
+  </div>
+
+  <div class="card score-card">
+    <div class="card-title" style="text-align:left;">Điểm sức khoẻ</div>
+    <div class="gauge-wrap">
+      <div class="arc-ring"></div>
+      <div class="score-num">87</div>
+      <div class="score-out-of">/100 điểm</div>
+    </div>
+    <div class="status-text">Tình trạng: <b>TỐT</b> — Tiếp tục duy trì!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Biểu đồ theo dõi</div>
+    <div class="chart-tabs">
+      <div class="active">Nhịp tim</div>
+      <div>Huyết áp</div>
+      <div>SpO2</div>
+    </div>
+    <div class="chart-wrap">
+      <svg viewBox="0 0 340 90" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#00bfa5" stop-opacity="0.3" />
+            <stop offset="100%" stop-color="#00bfa5" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+        <path d="M0,72 Q24,68 44,54 Q64,40 80,50 Q96,60 120,32 Q144,4 164,16 Q184,28 204,44 Q224,60 248,18 Q272,-8 296,34 Q320,62 340,68 L340,90 L0,90 Z"
+          fill="url(#areaGrad)" />
+        <polyline
+          points="0,72 44,54 80,50 120,32 164,16 204,44 248,18 296,34"
+          fill="none"
+          stroke="#00bfa5"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <circle cx="44" cy="54" r="3" fill="#00bfa5" opacity="0.5"/>
+        <circle cx="120" cy="32" r="3" fill="#00bfa5" opacity="0.5"/>
+        <circle cx="164" cy="16" r="4" fill="#00bfa5" opacity="0.7"/>
+        <circle cx="248" cy="18" r="3" fill="#00bfa5" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="chart-avg">Nhịp tim TB: <b>72 bpm</b></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Đánh giá tổng quan</div>
+    <div class="health-grid">
+      <div class="health-item">
+        <span>❤️ Nhịp tim</span>
+        <b>72 bpm</b>
+      </div>
+      <div class="health-item">
+        <span>🩸 Huyết áp</span>
+        <b>120/80</b>
+      </div>
+      <div class="health-item">
+        <span>🫁 SpO2</span>
+        <b>98%</b>
+      </div>
+      <div class="health-item orange">
+        <span>🚶 Bước chân</span>
+        <b>6,240</b>
+      </div>
+      <div class="health-item">
+        <span>😴 Giấc ngủ</span>
+        <b>7h 15m</b>
+      </div>
+      <div class="health-item">
+        <span>🌡️ Nhiệt độ</span>
+        <b>36.5°C</b>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn">Xem đánh giá tổng quan</button>
+
+  <div class="card">
+    <div class="card-title">📋 Phiếu theo dõi hôm nay</div>
+    <div class="form-row">
+      <div class="form-box">
+        🌅 Sáng
+        <b class="green">75 điểm</b>
+      </div>
+      <div class="form-box">
+        ☀️ Trưa
+        <b class="orange-text">68 điểm</b>
+      </div>
+      <div class="form-box">
+        🌙 Tối
+        <b class="orange-text">72 điểm</b>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn">Xem phiếu theo dõi chi tiết</button>
+
+  <div class="bottom-actions">
+    <div class="ai-btn">
+      KOLIA TRỢ LÝ Y TẾ AI
+      <span>Hỏi về sức khoẻ của bạn</span>
+    </div>
+    <div class="sos-btn">
+      SOS
+      <span>Khẩn cấp</span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

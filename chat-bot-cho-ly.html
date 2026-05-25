@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>KOLIA Trợ lý Y tế AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #00bfa5;
+  --primary-container: #00a48e;
+  --primary-dark: #006b5c;
+  --on-primary: #ffffff;
+  --secondary: #2196f3;
+  --tertiary: #e3f2fd;
+  --neutral: #f8fafc;
+  --on-surface: #191c1e;
+  --on-surface-variant: #404752;
+  --surface-container-lowest: #ffffff;
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
+  --outline: #707883;
+  --outline-variant: #bfc7d4;
+  --font-display: 'Manrope', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display);
+  padding: 16px;
+}
+
+.screen {
+  width: 100%;
+  max-width: 400px;
+  min-height: 100vh;
+  background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+  padding: 20px 16px 12px;
+  position: relative;
+  border-radius: 40px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 30px 80px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(0, 191, 165, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(191, 199, 212, 0.2);
+  margin-bottom: 14px;
+}
+
+.back {
+  font-size: 28px;
+  color: var(--primary);
+  font-weight: 400;
+  line-height: 1;
+  cursor: default;
+}
+
+.header-content {
+  flex: 1;
+}
+
+.header-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--on-surface);
+  letter-spacing: -0.3px;
+}
+
+.header-status {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary);
+  font-family: var(--font-label);
+  letter-spacing: 0.03em;
+  margin-top: 1px;
+}
+
+/* ── CHAT AREA ── */
+.chat {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chat::-webkit-scrollbar {
+  display: none;
+}
+
+.message {
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.message.bot {
+  align-items: flex-start;
+}
+
+.message.user {
+  align-items: flex-end;
+}
+
+.bubble {
+  max-width: 280px;
+  padding: 12px 14px;
+  border-radius: var(--radius-lg);
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.bot .bubble {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px);
+  color: var(--on-surface);
+  border-bottom-left-radius: var(--radius-sm);
+}
+
+.user .bubble {
+  background: var(--primary);
+  color: var(--on-primary);
+  border-bottom-right-radius: var(--radius-sm);
+  box-shadow: 0 4px 16px rgba(0, 191, 165, 0.2);
+}
+
+.msg-time {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--outline);
+  margin-top: 4px;
+  font-family: var(--font-label);
+  letter-spacing: 0.02em;
+  padding: 0 4px;
+}
+
+/* ── QUICK REPLY ── */
+.quick-reply {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.quick-btn {
+  border: 1.5px solid var(--primary);
+  background: rgba(255, 255, 255, 0.5);
+  height: 32px;
+  padding: 0 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  border-radius: var(--radius-full);
+  font-family: var(--font-label);
+  cursor: default;
+  transition: all 0.2s ease;
+}
+
+.quick-btn.selected {
+  background: var(--primary);
+  color: var(--on-primary);
+  box-shadow: 0 2px 10px rgba(0, 191, 165, 0.25);
+}
+
+/* ── TIP BOX ── */
+.tip-box {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+  padding: 14px 16px;
+  border-radius: var(--radius-lg);
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--on-surface);
+  font-weight: 500;
+  margin-bottom: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.tip-box b {
+  color: var(--primary-dark);
+}
+
+/* ── WARNING ── */
+.warning {
+  background: rgba(255, 243, 205, 0.6);
+  backdrop-filter: blur(10px);
+  padding: 10px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #d68c00;
+  text-align: center;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 213, 79, 0.3);
+  margin-bottom: 6px;
+  font-family: var(--font-label);
+  letter-spacing: 0.01em;
+}
+
+/* ── BOTTOM BAR ── */
+.bottom {
+  padding-top: 10px;
+  border-top: 1px solid rgba(191, 199, 212, 0.2);
+}
+
+.input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.input {
+  flex: 1;
+  height: 44px;
+  border: 1.5px solid rgba(191, 199, 212, 0.3);
+  background: rgba(255, 255, 255, 0.5);
+  padding: 0 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--on-surface);
+  font-family: var(--font-display);
+  outline: none;
+  border-radius: var(--radius-full);
+  transition: all 0.25s ease;
+}
+
+.input::placeholder {
+  color: var(--outline);
+  opacity: 0.6;
+}
+
+.input:focus {
+  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 0 4px rgba(0, 191, 165, 0.08);
+}
+
+.mic-btn {
+  width: 44px;
+  height: 44px;
+  background: var(--primary);
+  border: none;
+  color: var(--on-primary);
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 50%;
+  font-family: var(--font-label);
+  cursor: default;
+  box-shadow: 0 4px 14px rgba(0, 191, 165, 0.25);
+  transition: all 0.2s ease;
+}
+
+.mic-btn:active {
+  transform: scale(0.93);
+}
+
+.send-btn {
+  width: 44px;
+  height: 44px;
+  background: var(--primary-dark);
+  border: none;
+  color: var(--on-primary);
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 50%;
+  font-family: var(--font-label);
+  cursor: default;
+  box-shadow: 0 4px 14px rgba(0, 107, 92, 0.25);
+  transition: all 0.2s ease;
+}
+
+.send-btn:active {
+  transform: scale(0.93);
+}
+
+.reward {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ff8f00;
+  font-family: var(--font-label);
+  letter-spacing: 0.02em;
+  padding-bottom: 4px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 440px) {
+  body {
+    padding: 0;
+    background: transparent;
+  }
+
+  .screen {
+    max-width: 100%;
+    border-radius: 0;
+    min-height: 100dvh;
+    box-shadow: none;
+    padding: 12px 12px 8px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="header">
+    <div class="back">←</div>
+    <div class="header-content">
+      <div class="header-title">KOLIA TRỢ LÝ Y TẾ AI</div>
+      <div class="header-status">🟢 Đang hoạt động</div>
+    </div>
+  </div>
+
+  <div class="chat">
+
+    <div class="message bot">
+      <div class="bubble">
+        Xin chào! Tôi là Bác sĩ AI của Kolia.<br>
+        Hôm nay bạn cảm thấy thế nào?<br>
+        Tôi có thể giúp gì cho bạn?
+      </div>
+      <div class="msg-time">Bác sĩ AI • 08:30</div>
+    </div>
+
+    <div class="message user">
+      <div class="bubble">
+        Tôi bị đau đầu từ sáng đến giờ
+      </div>
+      <div class="msg-time">Bạn • 08:31</div>
+    </div>
+
+    <div class="message bot">
+      <div class="bubble">
+        Tôi hiểu bạn đang khó chịu. Để tôi hỏi thêm:<br><br>
+        • Đau ở vị trí nào? (trán, thái dương, sau gáy)<br>
+        • Mức độ đau từ 1-10?<br>
+        • Có kèm buồn nôn hoặc chóng mặt không?<br><br>
+        Nếu đau dữ dội, hãy bấm SOS ngay nhé!
+      </div>
+      <div class="msg-time">Bác sĩ AI • 08:31</div>
+    </div>
+
+    <div class="quick-reply">
+      <button class="quick-btn">Đau thái dương</button>
+      <button class="quick-btn">Mức 5/10</button>
+      <button class="quick-btn">Có chóng mặt</button>
+      <button class="quick-btn selected">Đau thái dương, mức 5</button>
+    </div>
+
+    <div class="tip-box">
+      Dựa trên triệu chứng, có thể bạn bị đau đầu căng thẳng.
+      Lời khuyên:<br><br>
+      ✅ Nghỉ ngơi ở nơi yên tĩnh<br>
+      ✅ Uống đủ nước<br>
+      ✅ Massage nhẹ thái dương<br><br>
+      ⚠ Nếu không giảm sau 2h, hãy đi khám.
+    </div>
+
+    <div class="warning">⚠️ Bác sĩ AI chỉ tham khảo, không thay thế bác sĩ thật</div>
+
+  </div>
+
+  <div class="bottom">
+    <div class="input-row">
+      <input class="input" placeholder="Nhập câu hỏi sức khoẻ...">
+      <button class="mic-btn">Mic</button>
+      <button class="send-btn">Gửi</button>
+    </div>
+    <div class="reward">🪙 200 điểm • Mỗi lần gửi -1 điểm</div>
+  </div>
+
+</div>
+
+</body>
+</html>

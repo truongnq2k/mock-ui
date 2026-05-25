@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Kolia AI - Đổi quà tặng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #00bfa5;
+  --primary-container: #00a48e;
+  --primary-dark: #006b5c;
+  --on-primary: #ffffff;
+  --secondary: #2196f3;
+  --tertiary: #e3f2fd;
+  --neutral: #f8fafc;
+  --on-surface: #191c1e;
+  --on-surface-variant: #404752;
+  --surface-container-lowest: #ffffff;
+  --error: #ba1a1a;
+  --outline: #707883;
+  --outline-variant: #bfc7d4;
+  --font-display: 'Manrope', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display);
+  padding: 16px;
+}
+
+.screen {
+  width: 100%;
+  max-width: 400px;
+  min-height: 100vh;
+  background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+  padding: 24px 20px 32px;
+  position: relative;
+  border-radius: 40px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 30px 80px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(0, 191, 165, 0.06);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.screen::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding-top: 4px;
+}
+
+.back {
+  font-size: 22px;
+  color: var(--primary);
+  font-weight: 400;
+  cursor: default;
+  line-height: 1;
+}
+
+.title {
+  font-size: 18px;
+  color: var(--on-surface);
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+/* ── BALANCE ── */
+.balance-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-full);
+  padding: 12px 20px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  border-right-color: rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-glass);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 800;
+  color: #ff8f00;
+  font-family: var(--font-display);
+  letter-spacing: -0.3px;
+}
+
+/* ── SURVEY BUTTON ── */
+.survey-btn {
+  width: 100%;
+  height: 48px;
+  background: linear-gradient(135deg, #00bfa5, #00a48e);
+  border: none;
+  color: var(--on-primary);
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  font-family: var(--font-display);
+  cursor: default;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
+}
+
+.survey-btn:active {
+  transform: scale(0.97);
+}
+
+/* ── GRID ── */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.item {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  padding: 14px 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  border-right-color: rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-glass);
+  text-align: center;
+  transition: all 0.25s ease;
+}
+
+.img-box {
+  height: 64px;
+  background: rgba(248, 250, 252, 0.5);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  margin-bottom: 10px;
+}
+
+.item-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 10px;
+  line-height: 1.3;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.price-btn {
+  width: 100%;
+  height: 34px;
+  background: var(--primary);
+  color: var(--on-primary);
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  cursor: default;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 12px rgba(0, 191, 165, 0.2);
+}
+
+.price-btn:active {
+  transform: scale(0.95);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 440px) {
+  body {
+    padding: 0;
+    background: transparent;
+  }
+
+  .screen {
+    max-width: 100%;
+    border-radius: 0;
+    min-height: 100dvh;
+    box-shadow: none;
+    padding: 20px 16px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="header">
+    <div class="back">←</div>
+    <div class="title">Đổi quà tặng</div>
+  </div>
+
+  <div class="balance-card">Số dư: 200 🪙</div>
+
+  <button class="survey-btn">📋 Khảo sát sức khoẻ để nhận quà</button>
+
+  <div class="grid">
+    <div class="item">
+      <div class="img-box">👕</div>
+      <div class="item-name">Áo thể thao</div>
+      <button class="price-btn">50 🪙</button>
+    </div>
+
+    <div class="item">
+      <div class="img-box">🧢</div>
+      <div class="item-name">Mũ lưỡi trai</div>
+      <button class="price-btn">30 🪙</button>
+    </div>
+
+    <div class="item">
+      <div class="img-box">🩺</div>
+      <div class="item-name">Máy đo huyết áp</div>
+      <button class="price-btn">150 🪙</button>
+    </div>
+
+    <div class="item">
+      <div class="img-box">☂️</div>
+      <div class="item-name">Ô che nắng</div>
+      <button class="price-btn">40 🪙</button>
+    </div>
+
+    <div class="item">
+      <div class="img-box">🧴</div>
+      <div class="item-name">Bình nước</div>
+      <button class="price-btn">25 🪙</button>
+    </div>
+
+    <div class="item">
+      <div class="img-box">👟</div>
+      <div class="item-name">Giày thể thao</div>
+      <button class="price-btn">120 🪙</button>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

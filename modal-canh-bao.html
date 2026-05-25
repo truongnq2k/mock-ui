@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Kolia AI - Cảnh báo SOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #00bfa5;
+  --primary-dark: #006b5c;
+  --on-primary: #ffffff;
+  --tertiary: #e3f2fd;
+  --neutral: #f8fafc;
+  --on-surface: #191c1e;
+  --on-surface-variant: #404752;
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
+  --outline: #707883;
+  --outline-variant: #bfc7d4;
+  --font-display: 'Manrope', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display);
+  padding: 16px;
+}
+
+.overlay {
+  width: 100%;
+  max-width: 400px;
+  min-height: 100vh;
+  background: rgba(10, 14, 16, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 20px;
+  border-radius: 40px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 30px 80px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+/* ── MODAL ── */
+.modal {
+  width: 100%;
+  max-width: 320px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: var(--radius-xl);
+  padding: 28px 22px 24px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  border-right-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* ── CLOSE ── */
+.close-btn {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--on-surface-variant);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 28px;
+  text-align: center;
+  cursor: default;
+  font-family: var(--font-display);
+  transition: all 0.2s ease;
+}
+
+/* ── ICON ── */
+.icon-wrap {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: rgba(186, 26, 26, 0.1);
+  margin: 0 auto 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-inner {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--error);
+  color: white;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 48px;
+  font-family: var(--font-display);
+}
+
+/* ── TITLE ── */
+.modal-title {
+  color: var(--error);
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 2px;
+  letter-spacing: -0.3px;
+}
+
+.modal-sub {
+  color: var(--on-surface-variant);
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  font-family: var(--font-label);
+  letter-spacing: 0.01em;
+  opacity: 0.7;
+}
+
+/* ── INFO ── */
+.info-list {
+  background: rgba(186, 26, 26, 0.05);
+  border: 1px solid rgba(186, 26, 26, 0.12);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.info-list p {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  line-height: 1.7;
+  opacity: 0.85;
+}
+
+/* ── TIMER ── */
+.auto-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  opacity: 0.55;
+  margin-bottom: 4px;
+  font-family: var(--font-label);
+  letter-spacing: 0.03em;
+}
+
+.timer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--error);
+  color: var(--error);
+  border-radius: var(--radius-full);
+  padding: 3px 16px;
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.2;
+  font-family: var(--font-display);
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+/* ── BUTTON ── */
+.btn-cancel {
+  width: 100%;
+  height: 48px;
+  background: var(--primary);
+  border: none;
+  color: var(--on-primary);
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  cursor: default;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
+  letter-spacing: 0.01em;
+}
+
+.btn-cancel:active {
+  transform: scale(0.97);
+  box-shadow: 0 3px 12px rgba(0, 191, 165, 0.35);
+}
+
+/* ── NOTE ── */
+.note {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--outline);
+  line-height: 1.4;
+  margin-top: 10px;
+  font-family: var(--font-label);
+  letter-spacing: 0.01em;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 440px) {
+  body {
+    padding: 0;
+    background: transparent;
+  }
+
+  .overlay {
+    max-width: 100%;
+    border-radius: 0;
+    min-height: 100dvh;
+    padding: 20px 16px;
+  }
+
+  .modal {
+    padding: 24px 18px 20px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="overlay">
+
+  <div class="modal">
+
+    <div class="close-btn">✕</div>
+
+    <div class="icon-wrap">
+      <div class="icon-inner">!</div>
+    </div>
+
+    <div class="modal-title">🚨 CẢNH BÁO SOS</div>
+    <div class="modal-sub">Tín hiệu khẩn cấp đã được gửi đi!</div>
+
+    <div class="info-list">
+      <p>📞 Đang liên hệ người thân…</p>
+      <p>📍 Vị trí GPS đã được chia sẻ</p>
+      <p>🏥 Thông báo đến trung tâm y tế Kolia</p>
+      <p>⏱️ Đang gửi cảnh báo SOS đến người thân</p>
+    </div>
+
+    <div class="auto-label">Tự động tắt sau:</div>
+    <div class="timer">09:45</div>
+
+    <button class="btn-cancel">Hủy cảnh báo (Tôi ổn)</button>
+
+    <div class="note">
+      Cảnh báo sẽ tự tắt sau 10 phút<br>
+      hoặc bấm ✕ / Hủy cảnh báo để tắt
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Kolia AI - Phát hiện bất thường</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #00bfa5;
+  --primary-dark: #006b5c;
+  --on-primary: #ffffff;
+  --tertiary: #e3f2fd;
+  --neutral: #f8fafc;
+  --on-surface: #191c1e;
+  --on-surface-variant: #404752;
+  --surface-container-lowest: #ffffff;
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
+  --outline: #707883;
+  --outline-variant: #bfc7d4;
+  --warning: #ff8f00;
+  --warning-container: #fff3e0;
+  --font-display: 'Manrope', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display);
+  padding: 16px;
+}
+
+.overlay {
+  width: 100%;
+  max-width: 400px;
+  min-height: 100vh;
+  background: rgba(10, 14, 16, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 20px;
+  border-radius: 40px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 30px 80px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+/* ── MODAL ── */
+.modal {
+  width: 100%;
+  max-width: 360px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: var(--radius-xl);
+  padding: 32px 24px 28px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  border-right-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* ── ICON ── */
+.icon-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(255, 143, 0, 0.12);
+  margin: 0 auto 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-inner {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--warning);
+  color: white;
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 52px;
+  font-family: var(--font-display);
+}
+
+/* ── TITLE ── */
+.modal-title {
+  color: var(--warning);
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
+}
+
+.modal-sub {
+  color: var(--on-surface-variant);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  font-family: var(--font-label);
+  letter-spacing: 0.01em;
+  opacity: 0.75;
+}
+
+/* ── INFO BOX ── */
+.info-box {
+  background: rgba(255, 143, 0, 0.06);
+  border: 1px solid rgba(255, 143, 0, 0.2);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.info-box h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-bottom: 12px;
+}
+
+.info-box p {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  line-height: 1.6;
+}
+
+.info-box .red {
+  color: var(--error);
+  font-weight: 800;
+}
+
+.info-box .amber {
+  color: var(--warning);
+  font-weight: 800;
+}
+
+/* ── RECOMMEND ── */
+.recommend {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  line-height: 1.5;
+  margin-bottom: 18px;
+  opacity: 0.8;
+}
+
+.recommend b {
+  color: var(--on-surface);
+  font-weight: 700;
+}
+
+/* ── TIMER ── */
+.auto-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  opacity: 0.6;
+  margin-bottom: 6px;
+  font-family: var(--font-label);
+  letter-spacing: 0.03em;
+}
+
+.timer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--warning);
+  color: var(--warning);
+  border-radius: var(--radius-full);
+  padding: 4px 18px;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.2;
+  font-family: var(--font-display);
+  letter-spacing: 1px;
+  margin-bottom: 0;
+}
+
+/* ── BUTTON ── */
+.btn-dismiss {
+  width: 100%;
+  height: 48px;
+  background: var(--primary);
+  border: none;
+  color: var(--on-primary);
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  cursor: default;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
+  margin-top: 20px;
+  letter-spacing: 0.01em;
+}
+
+.btn-dismiss:active {
+  transform: scale(0.97);
+  box-shadow: 0 3px 12px rgba(0, 191, 165, 0.35);
+}
+
+/* ── NOTE ── */
+.note {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--outline);
+  line-height: 1.4;
+  margin-top: 12px;
+  font-family: var(--font-label);
+  letter-spacing: 0.01em;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 440px) {
+  body {
+    padding: 0;
+    background: transparent;
+  }
+
+  .overlay {
+    max-width: 100%;
+    border-radius: 0;
+    min-height: 100dvh;
+    padding: 20px 16px;
+  }
+
+  .modal {
+    padding: 28px 20px 24px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="overlay">
+
+  <div class="modal">
+
+    <div class="icon-wrap">
+      <div class="icon-inner">!</div>
+    </div>
+
+    <div class="modal-title">⚠ PHÁT HIỆN<br>BẤT THƯỜNG</div>
+    <div class="modal-sub">Hệ thống AI phát hiện chỉ số bất thường</div>
+
+    <div class="info-box">
+      <h3>Chỉ số bất thường:</h3>
+      <p>🩸 Huyết áp: <span class="red">155/95 mmHg</span> (Cao)</p>
+      <p>❤️ Nhịp tim: <span class="red">105 bpm</span> (Nhanh)</p>
+      <p>🫁 SpO2: <span class="amber">93%</span> (Thấp hơn bình thường)</p>
+      <p>⏰ Phát hiện lúc: 14:32 — 22/05/2026</p>
+    </div>
+
+    <div class="recommend">
+      💡 <b>Khuyến nghị:</b> Hãy ngồi nghỉ ngơi, thở đều.<br>
+      Nếu không cải thiện sau 15 phút, hãy bấm SOS.
+    </div>
+
+    <div class="auto-label">Tự động tắt sau:</div>
+    <div class="timer">04:32</div>
+
+    <button class="btn-dismiss">Tôi đã biết, tắt thông báo</button>
+
+    <div class="note">
+      Thông báo sẽ tự tắt sau 5 phút<br>
+      hoặc bấm nút tắt để đóng
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
