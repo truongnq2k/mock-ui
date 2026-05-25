@@ -82,7 +82,7 @@ body {
   font-size: 22px;
   color: var(--primary);
   font-weight: 400;
-  cursor: default;
+  cursor: pointer;
   line-height: 1;
 }
 
@@ -246,7 +246,7 @@ body {
   font-size: 15px;
   font-weight: 700;
   font-family: var(--font-display);
-  cursor: default;
+  cursor: pointer;
   transition: all 0.25s ease;
   box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
   letter-spacing: 0.02em;
@@ -264,7 +264,7 @@ body {
   font-weight: 600;
   margin-top: 14px;
   font-family: var(--font-label);
-  cursor: default;
+  cursor: pointer;
   transition: opacity 0.2s;
 }
 
@@ -294,7 +294,7 @@ body {
 <div class="screen">
 
   <div class="header">
-    <div class="back">←</div>
+    <div class="back" onclick="location.href='qua-tang.html'">←</div>
     <div class="title">Nhận quà tặng</div>
   </div>
 
@@ -337,7 +337,7 @@ body {
 
   <button class="btn">Xác nhận đổi quà</button>
 
-  <div class="cancel">Huỷ bỏ</div>
+  <div class="cancel" onclick="location.href='qua-tang.html'">Huỷ bỏ</div>
 
 </div>
 

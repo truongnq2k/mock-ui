@@ -206,6 +206,32 @@ body {
   box-shadow: 0 3px 12px rgba(0, 191, 165, 0.35);
 }
 
+/* ── TOAST ── */
+.toast {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-80px);
+  background: rgba(255, 87, 87, 0.92);
+  backdrop-filter: blur(16px);
+  color: #fff;
+  padding: 14px 24px;
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  box-shadow: 0 8px 32px rgba(255, 87, 87, 0.3);
+  z-index: 999;
+  opacity: 0;
+  transition: all 0.4s ease;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 /* ── NOTE ── */
 .note {
   text-align: center;
@@ -263,7 +289,7 @@ body {
     </div>
   </div>
 
-  <button class="btn">Thêm người thân</button>
+  <button class="btn" onclick="showToast()">Thêm người thân</button>
 
   <div class="note">
     Người thân sẽ nhận được thông báo xác nhận<br>
@@ -272,5 +298,15 @@ body {
 
 </div>
 
+<div class="toast" id="toast">Đã đến giới hạn</div>
+
+<script>
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => { t.classList.remove('show'); }, 1500);
+  setTimeout(() => { location.href = '../thanh-toan.html'; }, 1800);
+}
+</script>
 </body>
 </html>
