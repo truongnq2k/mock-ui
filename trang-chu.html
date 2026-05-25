@@ -802,7 +802,7 @@
         KOLIA TRỢ LÝ Y TẾ AI
         <span>Hỏi về sức khoẻ của bạn</span>
       </a>
-      <div class="sos-btn" onclick="showSos()">
+      <div class="sos-btn" onclick="toggleSos()">
         SOS
         <span>Khẩn cấp</span>
       </div>
@@ -832,6 +832,26 @@
         Cảnh báo sẽ tự tắt sau 10 phút<br>
         hoặc bấm ✕ / Hủy cảnh báo để tắt
       </div>
+    </div>
+  </div>
+
+  <!-- ── BẤT THƯỜNG MODAL ── -->
+  <div class="sos-overlay" id="btOverlay">
+    <div class="sos-modal">
+      <button class="sos-close" onclick="hideBt()">✕</button>
+      <div class="icon-wrap" style="width:72px;height:72px;border-radius:50%;background:rgba(255,143,0,0.12);margin:0 auto 14px;display:flex;justify-content:center;align-items:center;">
+        <div style="width:52px;height:52px;border-radius:50%;background:#ff8f00;color:#fff;font-size:30px;font-weight:900;line-height:52px;font-family:var(--font-display);">!</div>
+      </div>
+      <div class="sos-modal-title" style="color:#ff8f00;">⚠ PHÁT HIỆN<br>BẤT THƯỜNG</div>
+      <div class="sos-modal-sub">Hệ thống AI phát hiện chỉ số bất thường</div>
+      <div style="background:rgba(255,143,0,0.06);border:1px solid rgba(255,143,0,0.2);border-radius:var(--radius-md);padding:16px 18px;text-align:left;margin-bottom:16px;">
+        <p style="font-size:13px;font-weight:500;color:var(--on-surface-variant);line-height:1.6;">🩸 Huyết áp: <b style="color:var(--error);font-weight:800;">155/95 mmHg</b> (Cao)<br>❤️ Nhịp tim: <b style="color:var(--error);font-weight:800;">105 bpm</b> (Nhanh)<br>🫁 SpO2: <b style="color:#ff8f00;font-weight:800;">93%</b> (Thấp hơn bình thường)<br>⏰ Phát hiện lúc: 14:32 — 22/05/2026</p>
+      </div>
+      <div style="font-size:13px;font-weight:500;color:var(--on-surface-variant);line-height:1.5;margin-bottom:18px;opacity:0.8;">💡 <b style="color:var(--on-surface);font-weight:700;">Khuyến nghị:</b> Hãy ngồi nghỉ ngơi, thở đều.<br>Nếu không cải thiện sau 15 phút, hãy bấm SOS.</div>
+      <div style="font-size:12px;font-weight:600;color:var(--on-surface-variant);opacity:0.6;margin-bottom:6px;font-family:var(--font-label);letter-spacing:0.03em;">Tự động tắt sau:</div>
+      <div style="display:inline-flex;align-items:center;justify-content:center;border:2px solid #ff8f00;color:#ff8f00;border-radius:var(--radius-full);padding:4px 18px;font-size:28px;font-weight:900;line-height:1.2;font-family:var(--font-display);letter-spacing:1px;">04:32</div>
+      <button class="sos-cancel-btn" onclick="hideBt()" style="margin-top:20px;">Tôi đã biết, tắt thông báo</button>
+      <div style="font-size:11px;font-weight:500;color:var(--outline);line-height:1.4;margin-top:12px;font-family:var(--font-label);letter-spacing:0.01em;">Thông báo sẽ tự tắt sau 5 phút<br>hoặc bấm nút tắt để đóng</div>
     </div>
   </div>
 
@@ -878,15 +898,29 @@
       });
     });
 
-    // ── SOS Modal ──
-    function showSos() {
-      document.getElementById('sosOverlay').classList.add('show');
+    // ── SOS / Bất thường Modal ──
+    let sosCount = 0;
+    function toggleSos() {
+      sosCount++;
+      if (sosCount % 2 === 1) {
+        document.getElementById('sosOverlay').classList.add('show');
+        document.getElementById('btOverlay').classList.remove('show');
+      } else {
+        document.getElementById('btOverlay').classList.add('show');
+        document.getElementById('sosOverlay').classList.remove('show');
+      }
     }
     function hideSos() {
       document.getElementById('sosOverlay').classList.remove('show');
     }
+    function hideBt() {
+      document.getElementById('btOverlay').classList.remove('show');
+    }
     document.getElementById('sosOverlay').addEventListener('click', function (e) {
       if (e.target === this) hideSos();
+    });
+    document.getElementById('btOverlay').addEventListener('click', function (e) {
+      if (e.target === this) hideBt();
     });
   </script>
 
