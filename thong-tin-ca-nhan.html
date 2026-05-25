@@ -168,6 +168,20 @@ body {
   box-shadow: 0 0 0 4px rgba(0, 191, 165, 0.1);
 }
 
+.field-group input.error {
+  border-color: var(--error);
+  box-shadow: 0 0 0 4px rgba(186, 26, 26, 0.1);
+}
+
+.error-text {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--error);
+  margin-top: 4px;
+  font-family: var(--font-label);
+  display: none;
+}
+
 /* ── RADIO GROUP ── */
 .radio-group {
   width: 100%;
@@ -216,7 +230,7 @@ body {
   font-weight: 700;
   border-radius: var(--radius-full);
   font-family: var(--font-display);
-  cursor: default;
+  cursor: pointer;
   transition: all 0.25s ease;
   box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
   letter-spacing: 0.02em;
@@ -277,30 +291,33 @@ body {
 
     <div class="field-group">
       <label>Họ và tên</label>
-      <input type="text" value="Nguyễn Văn An" />
+      <input type="text" id="hoten" placeholder="VD: Nguyễn Văn An" required />
+      <div class="error-text" id="errHoten">Vui lòng nhập họ và tên</div>
     </div>
 
     <div class="field-group">
       <label>Giới tính</label>
-      <div class="radio-group">
+      <div class="radio-group" id="genderGroup">
         <label class="radio-option">
-          <input type="radio" name="gender" checked /> Nam
+          <input type="radio" name="gender" value="Nam" checked /> Nam
         </label>
         <label class="radio-option">
-          <input type="radio" name="gender" /> Nữ
+          <input type="radio" name="gender" value="Nữ" /> Nữ
         </label>
         <label class="radio-option">
-          <input type="radio" name="gender" /> Khác
+          <input type="radio" name="gender" value="Khác" /> Khác
         </label>
       </div>
+      <div class="error-text" id="errGender">Vui lòng chọn giới tính</div>
     </div>
 
     <div class="field-group">
       <label>Tuổi</label>
-      <input type="number" value="65" />
+      <input type="number" id="tuoi" placeholder="VD: 65" required />
+      <div class="error-text" id="errTuoi">Vui lòng nhập tuổi</div>
     </div>
 
-    <button class="btn-submit">Hoàn tất</button>
+    <button class="btn-submit" onclick="validateAndComplete()">Hoàn tất</button>
 
     <p class="privacy">
       Thông tin của bạn được bảo mật theo chính sách quyền riêng tư
@@ -309,5 +326,49 @@ body {
 
 </div>
 
+<script>
+function validateAndComplete() {
+  const hoten = document.getElementById('hoten');
+  const tuoi = document.getElementById('tuoi');
+  const errHoten = document.getElementById('errHoten');
+  const errTuoi = document.getElementById('errTuoi');
+  let ok = true;
+
+  if (!hoten.value.trim()) {
+    hoten.classList.add('error');
+    errHoten.style.display = 'block';
+    ok = false;
+  } else {
+    hoten.classList.remove('error');
+    errHoten.style.display = 'none';
+  }
+
+  const genders = document.getElementsByName('gender');
+  let genderChecked = false;
+  for (const g of genders) {
+    if (g.checked) { genderChecked = true; break; }
+  }
+  if (!genderChecked) {
+    document.getElementById('genderGroup').style.borderColor = 'var(--error)';
+    document.getElementById('errGender').style.display = 'block';
+    ok = false;
+  } else {
+    document.getElementById('genderGroup').style.borderColor = '';
+    document.getElementById('errGender').style.display = 'none';
+  }
+
+  if (!tuoi.value.trim() || parseInt(tuoi.value) <= 0) {
+    tuoi.classList.add('error');
+    errTuoi.style.display = 'block';
+    ok = false;
+  } else {
+    tuoi.classList.remove('error');
+    errTuoi.style.display = 'none';
+  }
+
+  if (!ok) return;
+  location.href = 'phieu-theo-doi.html';
+}
+</script>
 </body>
 </html>

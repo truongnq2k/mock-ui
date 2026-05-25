@@ -167,6 +167,20 @@ body {
   box-shadow: 0 0 0 4px rgba(0, 191, 165, 0.1);
 }
 
+.field-group input.error {
+  border-color: var(--error);
+  box-shadow: 0 0 0 4px rgba(186, 26, 26, 0.1);
+}
+
+.error-text {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--error);
+  margin-top: 4px;
+  font-family: var(--font-label);
+  display: none;
+}
+
 /* ── BUTTON ── */
 .btn-submit {
   width: 100%;
@@ -178,7 +192,7 @@ body {
   font-weight: 700;
   border-radius: var(--radius-full);
   font-family: var(--font-display);
-  cursor: default;
+  cursor: pointer;
   transition: all 0.25s ease;
   box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
   letter-spacing: 0.02em;
@@ -239,10 +253,11 @@ body {
 
     <div class="field-group">
       <label>Số điện thoại</label>
-      <input type="tel" placeholder="0912 345 678" />
+      <input type="tel" id="sodt" placeholder="0912 345 678" required />
+      <div class="error-text" id="errSodt">Vui lòng nhập số điện thoại</div>
     </div>
 
-    <button class="btn-submit">Tiếp tục</button>
+    <button class="btn-submit" onclick="validateAndNext()">Tiếp tục</button>
 
     <p class="privacy">
       Thông tin của bạn được bảo mật theo chính sách quyền riêng tư
@@ -251,5 +266,22 @@ body {
 
 </div>
 
+<script>
+function validateAndNext() {
+  const sodt = document.getElementById('sodt');
+  const errSodt = document.getElementById('errSodt');
+  let ok = true;
+  if (!sodt.value.trim()) {
+    sodt.classList.add('error');
+    errSodt.style.display = 'block';
+    ok = false;
+  } else {
+    sodt.classList.remove('error');
+    errSodt.style.display = 'none';
+  }
+  if (!ok) return;
+  location.href = 'thong-tin-ca-nhan.html';
+}
+</script>
 </body>
 </html>
