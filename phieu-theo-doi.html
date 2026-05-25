@@ -1,374 +1,544 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Kolia AI - Phiếu theo dõi sức khỏe</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Kolia AI - Phiếu theo dõi sức khỏe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap"
+    rel="stylesheet">
 
-<style>
-:root {
-  --primary: #00bfa5;
-  --primary-dark: #006b5c;
-  --on-primary: #ffffff;
-  --tertiary: #e3f2fd;
-  --neutral: #f8fafc;
-  --on-surface: #191c1e;
-  --on-surface-variant: #404752;
-  --surface-container: #eceef0;
-  --outline: #707883;
-  --outline-variant: #bfc7d4;
-  --font-display: 'Manrope', sans-serif;
-  --font-label: 'Plus Jakarta Sans', sans-serif;
-  --radius-sm: 0.5rem;
-  --radius-md: 1.5rem;
-  --radius-lg: 2rem;
-  --radius-xl: 3rem;
-  --radius-full: 9999px;
-  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
-}
+  <style>
+    :root {
+      --primary: #00bfa5;
+      --primary-dark: #006b5c;
+      --on-primary: #ffffff;
+      --tertiary: #e3f2fd;
+      --neutral: #f8fafc;
+      --on-surface: #191c1e;
+      --on-surface-variant: #404752;
+      --surface-container: #eceef0;
+      --outline: #707883;
+      --outline-variant: #bfc7d4;
+      --font-display: 'Manrope', sans-serif;
+      --font-label: 'Plus Jakarta Sans', sans-serif;
+      --radius-sm: 0.5rem;
+      --radius-md: 1.5rem;
+      --radius-lg: 2rem;
+      --radius-xl: 3rem;
+      --radius-full: 9999px;
+      --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+    }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-body {
-  min-height: 100vh;
-  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: var(--font-display);
-  padding: 16px;
-}
+    body {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: var(--font-display);
+      padding: 16px;
+    }
 
-.screen {
-  width: 100%;
-  max-width: 400px;
-  min-height: 100vh;
-  background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
-  padding: 24px 20px;
-  border-radius: 40px;
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 30px 80px rgba(0,0,0,0.5), 0 0 60px rgba(0,191,165,0.06);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-}
-.screen::-webkit-scrollbar { display: none; }
+    .screen {
+      width: 100%;
+      max-width: 400px;
+      min-height: 100vh;
+      background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+      padding: 24px 20px;
+      border-radius: 40px;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 60px rgba(0, 191, 165, 0.06);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
 
-/* ── HEADER ── */
-.header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-}
+    .screen::-webkit-scrollbar {
+      display: none;
+    }
 
-.back {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  background: rgba(255,255,255,0.5);
-  backdrop-filter: blur(10px);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: var(--primary-dark);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.back:active { transform: scale(0.92); }
+    /* ── HEADER ── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
 
-.header h2 {
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--on-surface);
-  letter-spacing: -0.3px;
-}
+    .back {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--primary-dark);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
 
-/* ── TOP INFO ── */
-.top-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
+    .back:active {
+      transform: scale(0.92);
+    }
 
-.tip {
-  background: rgba(255, 179, 0, 0.1);
-  border: 1px solid rgba(255, 179, 0, 0.2);
-  border-radius: var(--radius-md);
-  padding: 6px 10px;
-  font-size: 10px;
-  line-height: 1.3;
-  color: #6f5b00;
-  font-weight: 500;
-  flex: 1;
-  margin-right: 10px;
-}
+    .header h2 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--on-surface);
+      letter-spacing: -0.3px;
+    }
 
-.coin {
-  font-size: 12px;
-  font-weight: 700;
-  color: #ff8f00;
-  white-space: nowrap;
-  font-family: var(--font-label);
-}
+    /* ── TOP INFO ── */
+    .top-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
 
-/* ── PROGRESS ── */
-.progress {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--on-surface-variant);
-  margin-bottom: 6px;
-  font-family: var(--font-label);
-  letter-spacing: 0.02em;
-}
+    .tip {
+      background: rgba(255, 179, 0, 0.1);
+      border: 1px solid rgba(255, 179, 0, 0.2);
+      border-radius: var(--radius-md);
+      padding: 6px 10px;
+      font-size: 10px;
+      line-height: 1.3;
+      color: #6f5b00;
+      font-weight: 500;
+      flex: 1;
+      margin-right: 10px;
+    }
 
-.progress-bar {
-  height: 4px;
-  background: rgba(191, 199, 212, 0.3);
-  border-radius: var(--radius-full);
-  margin-bottom: 16px;
-  overflow: hidden;
-}
+    .coin {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ff8f00;
+      white-space: nowrap;
+      font-family: var(--font-label);
+    }
 
-.progress-fill {
-  height: 100%;
-  width: 16.66%;
-  background: var(--primary);
-  border-radius: var(--radius-full);
-  transition: width 0.4s ease;
-}
+    /* ── PROGRESS ── */
+    .progress {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      margin-bottom: 6px;
+      font-family: var(--font-label);
+      letter-spacing: 0.02em;
+    }
 
-/* ── FORM (SCROLLABLE) ── */
-.form-area {
-  flex: 1;
-  overflow-y: auto;
-  margin: 0 -20px;
-  padding: 0 20px 140px;
-}
+    .progress-bar {
+      height: 4px;
+      background: rgba(191, 199, 212, 0.3);
+      border-radius: var(--radius-full);
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
 
-.form-area::-webkit-scrollbar { width: 3px; }
-.form-area::-webkit-scrollbar-thumb { background: var(--outline-variant); border-radius: 10px; }
+    .progress-fill {
+      height: 100%;
+      width: 16.66%;
+      background: var(--primary);
+      border-radius: var(--radius-full);
+      transition: width 0.4s ease;
+    }
 
-/* ── QUESTION ── */
-.question {
-  background: rgba(255,255,255,0.5);
-  backdrop-filter: blur(10px);
-  border-radius: var(--radius-lg);
-  padding: 14px 16px;
-  margin-bottom: 10px;
-  border: 1px solid rgba(191,199,212,0.15);
-}
+    /* ── FORM (SCROLLABLE) ── */
+    .form-area {
+      flex: 1;
+      overflow-y: auto;
+      margin: 0 -20px;
+      padding: 0 20px 140px;
+    }
 
-.question-title {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--on-surface);
-  margin-bottom: 10px;
-  line-height: 1.4;
-}
+    .form-area::-webkit-scrollbar {
+      width: 3px;
+    }
 
-.answers {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-}
+    .form-area::-webkit-scrollbar-thumb {
+      background: var(--outline-variant);
+      border-radius: 10px;
+    }
 
-.btn-answer {
-  height: 34px;
-  border: 1.5px solid rgba(191,199,212,0.3);
-  background: rgba(255,255,255,0.6);
-  border-radius: var(--radius-full);
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--on-surface-variant);
-  font-family: var(--font-display);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  padding: 0 8px;
-}
-.btn-answer:active { transform: scale(0.96); }
+    /* ── QUESTION ── */
+    .question {
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(191, 199, 212, 0.15);
+    }
 
-.btn-answer.active {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: var(--on-primary);
-  box-shadow: 0 2px 12px rgba(0,191,165,0.25);
-}
+    .question-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--on-surface);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
 
-/* ── GIFT FAB ── */
-.gift-fab {
-  position: absolute;
-  right: 20px;
-  bottom: 80px;
-  width: 56px;
-  height: 56px;
-  background: var(--error);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  box-shadow: 0 4px 20px rgba(186,26,26,0.3);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.gift-fab:active { transform: scale(0.92); }
+    .answers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
 
-.gift-label {
-  position: absolute;
-  top: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--error);
-  color: white;
-  font-size: 8px;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: var(--radius-full);
-  white-space: nowrap;
-  font-family: var(--font-label);
-  letter-spacing: 0.02em;
-}
+    .btn-answer {
+      height: 34px;
+      border: 1.5px solid rgba(191, 199, 212, 0.3);
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      font-family: var(--font-display);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0 8px;
+    }
 
-/* ── FOOTER ── */
-.footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 12px 20px 16px;
-  background: linear-gradient(transparent, rgba(248,250,252,0.6) 30%, rgba(248,250,252,0.9));
-}
+    .btn-answer:active {
+      transform: scale(0.96);
+    }
 
-.btn-submit {
-  width: 100%;
-  height: 50px;
-  background: var(--primary);
-  border: none;
-  color: var(--on-primary);
-  font-size: 14px;
-  font-weight: 700;
-  border-radius: var(--radius-full);
-  font-family: var(--font-display);
-  box-shadow: 0 6px 24px rgba(0,191,165,0.3);
-  cursor: pointer;
-  transition: all 0.25s ease;
-  letter-spacing: 0.01em;
-}
-.btn-submit:active { transform: scale(0.97); box-shadow: 0 3px 12px rgba(0,191,165,0.35); }
+    .btn-answer.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--on-primary);
+      box-shadow: 0 2px 12px rgba(0, 191, 165, 0.25);
+    }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 440px) {
-  body { padding: 0; background: transparent; }
-  .screen { max-width: 100%; border-radius: 0; min-height: 100dvh; box-shadow: none; padding: 20px 16px; }
-  .form-area { margin: 0 -16px; padding: 0 16px 140px; }
-  .footer { padding: 12px 16px 16px; }
-}
-</style>
+    .btn-answer.selected {
+      background: var(--primary-dark);
+      border-color: var(--primary-dark);
+      color: var(--on-primary);
+      box-shadow: 0 2px 12px rgba(0, 191, 165, 0.4);
+    }
+
+    /* ── TEXTAREA ── */
+    .question-textarea {
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(191, 199, 212, 0.15);
+    }
+
+    .question-textarea .question-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--on-surface);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .question-textarea textarea {
+      width: 100%;
+      min-height: 80px;
+      border: 1.5px solid rgba(191, 199, 212, 0.3);
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--on-surface);
+      font-family: var(--font-display);
+      outline: none;
+      resize: vertical;
+      transition: all 0.25s ease;
+    }
+
+    .question-textarea textarea:focus {
+      border-color: var(--primary);
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0 0 4px rgba(0, 191, 165, 0.1);
+    }
+
+    .question-textarea textarea::placeholder {
+      color: var(--outline);
+      opacity: 0.5;
+    }
+
+    /* ── COIN FLY ── */
+    .coin-fly {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999;
+      font-size: 20px;
+      transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      opacity: 1;
+    }
+
+    .coin-fly.animate {
+      opacity: 0;
+      transform: translateY(-80px) scale(0.3);
+    }
+
+    /* ── GIFT FAB ── */
+    .gift-fab {
+      position: absolute;
+      right: 20px;
+      bottom: 80px;
+      width: 56px;
+      height: 56px;
+      background: var(--error);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 20px rgba(186, 26, 26, 0.3);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .gift-fab:active {
+      transform: scale(0.92);
+    }
+
+    .gift-label {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--error);
+      color: white;
+      font-size: 8px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: var(--radius-full);
+      white-space: nowrap;
+      font-family: var(--font-label);
+      letter-spacing: 0.02em;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 20px 16px;
+      background: linear-gradient(transparent, rgba(248, 250, 252, 0.6) 30%, rgba(248, 250, 252, 0.9));
+    }
+
+    .btn-submit {
+      width: 100%;
+      height: 50px;
+      background: var(--primary);
+      border: none;
+      color: var(--on-primary);
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-submit:active {
+      transform: scale(0.97);
+      box-shadow: 0 3px 12px rgba(0, 191, 165, 0.35);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 440px) {
+      body {
+        padding: 0;
+        background: transparent;
+      }
+
+      .screen {
+        max-width: 100%;
+        border-radius: 0;
+        min-height: 100dvh;
+        box-shadow: none;
+        padding: 20px 16px;
+      }
+
+      .form-area {
+        margin: 0 -16px;
+        padding: 0 16px 140px;
+      }
+
+      .footer {
+        padding: 12px 16px 16px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="screen">
+  <div class="screen">
 
-  <div class="header">
-    <div class="back" onclick="location.href='qua-tang/qua-tang.html'">←</div>
-    <h2>Phiếu theo dõi sức khỏe</h2>
-  </div>
-
-  <div class="top-info">
-    <div class="tip">Lưu ý: Hãy chọn kết quả đúng nhất với tình trạng sức khỏe của bạn</div>
-    <div class="coin">Số dư: 110 🪙</div>
-  </div>
-
-  <div class="progress">
-    <span>Câu 1/6</span>
-    <span>Tích luỹ 60 🪙</span>
-  </div>
-  <div class="progress-bar"><div class="progress-fill"></div></div>
-
-  <div class="form-area">
-
-    <div class="question">
-      <div class="question-title">1. Đêm qua bạn ngủ có ngon không?</div>
-      <div class="answers">
-        <button class="btn-answer active">Rất ngon</button>
-        <button class="btn-answer">Bình thường</button>
-        <button class="btn-answer">Khó ngủ</button>
-        <button class="btn-answer">Mất ngủ</button>
-      </div>
+    <div class="header">
+      <div class="back" onclick="location.href='qua-tang/qua-tang.html'">←</div>
+      <h2>Phiếu theo dõi sức khỏe</h2>
     </div>
 
-    <div class="question">
-      <div class="question-title">2. Bạn có cảm thấy đau mỏi người không?</div>
-      <div class="answers">
-        <button class="btn-answer">Không</button>
-        <button class="btn-answer">Hơi mỏi</button>
-        <button class="btn-answer">Đau nhiều</button>
-        <button class="btn-answer">Rất đau</button>
-      </div>
+    <div class="top-info">
+      <div class="tip">Lưu ý: Hãy chọn kết quả đúng nhất với tình trạng sức khỏe của bạn</div>
+      <div class="coin">Số dư: 110 🪙</div>
     </div>
 
-    <div class="question">
-      <div class="question-title">3. Bạn có bị chóng mặt không?</div>
-      <div class="answers">
-        <button class="btn-answer">Không</button>
-        <button class="btn-answer">Thỉnh thoảng</button>
-        <button class="btn-answer">Thường xuyên</button>
-        <button class="btn-answer">Liên tục</button>
-      </div>
+    <div class="progress">
+      <span id="cauText">Câu 0/6</span>
+      <span id="coinText">Tích luỹ 0/60 🪙</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
     </div>
 
-    <div class="question">
-      <div class="question-title">4. Hôm nay bạn ăn uống thế nào?</div>
-      <div class="answers">
-        <button class="btn-answer">Tốt</button>
-        <button class="btn-answer">Bình thường</button>
-        <button class="btn-answer">Ít ăn</button>
-        <button class="btn-answer">Không ăn</button>
+    <div class="form-area">
+
+      <div class="question">
+        <div class="question-title">1. Đêm qua bạn ngủ có ngon không?</div>
+        <div class="answers">
+          <button class="btn-answer" onclick="selectAnswer(this,0)">Rất ngon</button>
+          <button class="btn-answer" onclick="selectAnswer(this,0)">Bình thường</button>
+          <button class="btn-answer" onclick="selectAnswer(this,0)">Khó ngủ</button>
+          <button class="btn-answer" onclick="selectAnswer(this,0)">Mất ngủ</button>
+        </div>
       </div>
+
+      <div class="question">
+        <div class="question-title">2. Bạn có cảm thấy đau mỏi người không?</div>
+        <div class="answers">
+          <button class="btn-answer" onclick="selectAnswer(this,1)">Không</button>
+          <button class="btn-answer" onclick="selectAnswer(this,1)">Hơi mỏi</button>
+          <button class="btn-answer" onclick="selectAnswer(this,1)">Đau nhiều</button>
+          <button class="btn-answer" onclick="selectAnswer(this,1)">Rất đau</button>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">3. Bạn có bị chóng mặt không?</div>
+        <div class="answers">
+          <button class="btn-answer" onclick="selectAnswer(this,2)">Không</button>
+          <button class="btn-answer" onclick="selectAnswer(this,2)">Thỉnh thoảng</button>
+          <button class="btn-answer" onclick="selectAnswer(this,2)">Thường xuyên</button>
+          <button class="btn-answer" onclick="selectAnswer(this,2)">Liên tục</button>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">4. Hôm nay bạn ăn uống thế nào?</div>
+        <div class="answers">
+          <button class="btn-answer" onclick="selectAnswer(this,3)">Tốt</button>
+          <button class="btn-answer" onclick="selectAnswer(this,3)">Bình thường</button>
+          <button class="btn-answer" onclick="selectAnswer(this,3)">Ít ăn</button>
+          <button class="btn-answer" onclick="selectAnswer(this,3)">Không ăn</button>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">5. Tâm trạng hôm nay của bạn?</div>
+        <div class="answers">
+          <button class="btn-answer" onclick="selectAnswer(this,4)">Vui vẻ</button>
+          <button class="btn-answer" onclick="selectAnswer(this,4)">Bình thường</button>
+          <button class="btn-answer" onclick="selectAnswer(this,4)">Buồn</button>
+          <button class="btn-answer" onclick="selectAnswer(this,4)">Căng thẳng</button>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">6. Bạn có tập thể dục hôm nay?</div>
+        <div class="answers">
+          <button class="btn-answer" onclick="selectAnswer(this,5)">Có</button>
+          <button class="btn-answer" onclick="selectAnswer(this,5)">Đi bộ ít</button>
+          <button class="btn-answer" onclick="selectAnswer(this,5)">Không</button>
+          <button class="btn-answer" onclick="selectAnswer(this,5)">Không thể</button>
+        </div>
+      </div>
+
+      <div class="question-textarea">
+        <div class="question-title">7. Bạn hãy mô tả thêm về tình trạng sức khỏe của mình</div>
+        <textarea id="moTa" placeholder="VD: Hôm nay tôi thấy hơi mệt, đau đầu nhẹ..." rows="3"></textarea>
+      </div>
+
     </div>
 
-    <div class="question">
-      <div class="question-title">5. Tâm trạng hôm nay của bạn?</div>
-      <div class="answers">
-        <button class="btn-answer">Vui vẻ</button>
-        <button class="btn-answer">Bình thường</button>
-        <button class="btn-answer">Buồn</button>
-        <button class="btn-answer">Căng thẳng</button>
-      </div>
-    </div>
-
-    <div class="question">
-      <div class="question-title">6. Bạn có tập thể dục hôm nay?</div>
-      <div class="answers">
-        <button class="btn-answer">Có</button>
-        <button class="btn-answer">Đi bộ ít</button>
-        <button class="btn-answer">Không</button>
-        <button class="btn-answer">Không thể</button>
-      </div>
+    <div class="footer">
+      <button class="btn-submit" onclick="location.href='trang-chu.html'">Hoàn tất</button>
     </div>
 
   </div>
 
-  <div class="gift-fab" onclick="location.href='qua-tang/qua-tang.html'">
-    <span class="gift-label">Đổi quà ngay</span>
-    🎁
-  </div>
+  <script>
+    let answered = new Set();
+    const COIN_PER_Q = 10;
+    const TOTAL_Q = 6;
 
-  <div class="footer">
-    <button class="btn-submit" onclick="location.href='trang-chu.html'">Hoàn tất</button>
-  </div>
+    // ── Answer selection ──
+    function selectAnswer(btn, qIndex) {
+      const parent = btn.parentElement;
+      // Deselect siblings
+      parent.querySelectorAll('.btn-answer').forEach(b => b.classList.remove('active', 'selected'));
+      btn.classList.add('selected');
+      // Track answered
+      answered.add(qIndex);
+      // Coin fly animation
+      flyCoin(btn);
+      // Update progress & coins
+      updateProgress();
+    }
 
-</div>
+    // ── Coin fly animation ──
+    function flyCoin(btn) {
+      const coinTarget = document.querySelector('.coin');
+      if (!coinTarget) return;
+      const btnRect = btn.getBoundingClientRect();
+      const targetRect = coinTarget.getBoundingClientRect();
 
+      const coin = document.createElement('div');
+      coin.className = 'coin-fly';
+      coin.textContent = '🪙';
+      coin.style.left = (btnRect.left + btnRect.width / 2 - 10) + 'px';
+      coin.style.top = (btnRect.top + btnRect.height / 2 - 10) + 'px';
+      document.body.appendChild(coin);
+
+      // Trigger animation after a frame
+      requestAnimationFrame(() => {
+        coin.style.left = (targetRect.left + targetRect.width / 2 - 10) + 'px';
+        coin.style.top = (targetRect.top + targetRect.height / 2 - 10) + 'px';
+        coin.style.transform = 'scale(0.5)';
+        coin.style.opacity = '0.3';
+      });
+
+      setTimeout(() => { coin.remove(); }, 600);
+    }
+
+    // ── Update progress & coins ──
+    function updateProgress() {
+      const count = answered.size;
+      const pct = (count / TOTAL_Q) * 100;
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('cauText').textContent = `Câu ${count}/${TOTAL_Q}`;
+      document.getElementById('coinText').textContent = `Tích luỹ ${count * COIN_PER_Q}/60 🪙`;
+    }
+  </script>
 </body>
+
 </html>
