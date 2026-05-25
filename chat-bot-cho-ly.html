@@ -389,47 +389,13 @@
 
     <div class="chat" id="chatBox">
 
-      <div class="message bot">
-        <div class="bubble">
+      <div class="message bot" id="welcomeMsg">
+        <div class="bubble" id="welcomeBubble">
           Xin chào! Tôi là Bác sĩ AI của Kolia.<br>
           Hôm nay bạn cảm thấy thế nào?<br>
           Tôi có thể giúp gì cho bạn?
         </div>
         <div class="msg-time">Bác sĩ AI • 08:30</div>
-      </div>
-
-      <div class="message user">
-        <div class="bubble">
-          Tôi bị đau đầu từ sáng đến giờ
-        </div>
-        <div class="msg-time">Bạn • 08:31</div>
-      </div>
-
-      <div class="message bot">
-        <div class="bubble">
-          Tôi hiểu bạn đang khó chịu. Để tôi hỏi thêm:<br><br>
-          • Đau ở vị trí nào? (trán, thái dương, sau gáy)<br>
-          • Mức độ đau từ 1-10?<br>
-          • Có kèm buồn nôn hoặc chóng mặt không?<br><br>
-          Nếu đau dữ dội, hãy bấm SOS ngay nhé!
-        </div>
-        <div class="msg-time">Bác sĩ AI • 08:31</div>
-      </div>
-
-      <div class="quick-reply">
-        <button class="quick-btn" onclick="sendQuickReply(this)">Đau thái dương</button>
-        <button class="quick-btn" onclick="sendQuickReply(this)">Mức 5/10</button>
-        <button class="quick-btn" onclick="sendQuickReply(this)">Có chóng mặt</button>
-        <button class="quick-btn selected" onclick="sendQuickReply(this)">Đau thái dương, mức 5</button>
-      </div>
-
-      <div class="tip-box">
-        Dựa trên triệu chứng, có thể bạn bị đau đầu căng thẳng.
-        Lời khuyên:<br><br>
-        ✅ Nghỉ ngơi ở nơi yên tĩnh<br>
-        ✅ Uống đủ nước<br>
-        ✅ Massage nhẹ thái dương<br><br>
-        ⚠ Nếu không giảm sau 2h, hãy đi khám.
       </div>
 
       <div class="warning">⚠️ Bác sĩ AI chỉ tham khảo, không thay thế bác sĩ thật</div>
@@ -502,12 +468,39 @@ Phong cách trả lời:
     const inputEl = document.getElementById("messageInput");
     const sendBtn = document.getElementById("sendBtn");
 
-    let messages = [
-      {
+    // ── Read relative data from URL ──
+    const params = new URLSearchParams(location.search);
+    const relativeName = params.get('name');
+    const relativeData = relativeName ? {
+      name: relativeName,
+      id: params.get('id') || '',
+      score: params.get('score') || '',
+      status: params.get('status') || '',
+      heart: params.get('heart') || '',
+      bp: params.get('bp') || '',
+      spo2: params.get('spo2') || '',
+      temp: params.get('temp') || '',
+      sleep: params.get('sleep') || '',
+      steps: params.get('steps') || ''
+    } : null;
+
+    let welcomeText = "Xin chào! Tôi là Bác sĩ AI của Kolia.<br>Hôm nay bạn cảm thấy thế nào?<br>Tôi có thể giúp gì cho bạn?";
+    let messages = [];
+    let relativeQuery = "";
+
+    if (relativeData) {
+      welcomeText = `Xin chào! Tôi là Bác sĩ AI của Kolia.<br><br>🧑‍⚕️ Tôi đang xem dữ liệu sức khoẻ của <b>${relativeData.name}</b>.<br><br>📊 Các chỉ số gần đây:<br>• Điểm sức khoẻ: <b>${relativeData.score}/100</b> (${relativeData.status})<br>• Nhịp tim: <b>${relativeData.heart}</b><br>• Huyết áp: <b>${relativeData.bp}</b><br>• SpO2: <b>${relativeData.spo2}</b><br>• Nhiệt độ: <b>${relativeData.temp}</b><br>• Giấc ngủ: <b>${relativeData.sleep}</b><br>• Bước chân: <b>${relativeData.steps}</b><br><br>Bạn muốn hỏi gì về tình trạng sức khoẻ của ${relativeData.name}?`;
+
+      relativeQuery = `Tôi muốn hỏi về tình trạng sức khoẻ của ${relativeData.name}. Đây là dữ liệu gần đây:\n- Điểm sức khoẻ: ${relativeData.score}/100 (${relativeData.status})\n- Nhịp tim: ${relativeData.heart}\n- Huyết áp: ${relativeData.bp}\n- SpO2: ${relativeData.spo2}\n- Nhiệt độ: ${relativeData.temp}\n- Giấc ngủ: ${relativeData.sleep}\n- Bước chân: ${relativeData.steps}\n\nHãy phân tích và giải thích tình trạng sức khoẻ của ${relativeData.name} một cách dễ hiểu.`;
+    } else {
+      messages.push({
         role: "model",
         parts: [{ text: "Xin chào! Tôi là Bác sĩ AI của Kolia. Hôm nay bạn cảm thấy thế nào? Tôi có thể giúp gì cho bạn?" }]
-      }
-    ];
+      });
+    }
+
+    // Update welcome message
+    document.getElementById('welcomeBubble').innerHTML = welcomeText;
 
     function nowTime() {
       const d = new Date();
@@ -709,6 +702,39 @@ Phong cách trả lời:
         setSending(false);
         inputEl.focus();
       }
+    }
+
+    // Auto-trigger AI if relative data is present
+    if (relativeData && relativeQuery) {
+      setTimeout(async () => {
+        messages.push({ role: "user", parts: [{ text: relativeQuery }] });
+        const botBubble = appendMessage("bot", "", true);
+        setSending(true);
+        try {
+          const response = await fetch(GEMINI_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(buildGeminiPayload())
+          });
+          if (!response.ok) throw new Error(`Gemini API lỗi ${response.status}`);
+          const { answer, finishReason } = await readGeminiStream(response, botBubble);
+          let finalAnswer = answer;
+          if (!finalAnswer) {
+            finalAnswer = finishReason === "SAFETY"
+              ? "Nội dung chưa phù hợp. Tôi chỉ hỗ trợ câu hỏi về sức khỏe."
+              : "Chưa nhận được phản hồi. Bạn vui lòng thử lại.";
+            botBubble.innerHTML = formatBotText(finalAnswer);
+          }
+          messages.push({ role: "model", parts: [{ text: finalAnswer }] });
+          chatBox.scrollTop = chatBox.scrollHeight;
+        } catch (error) {
+          console.error(error);
+          botBubble.innerHTML = formatBotText(`Không thể kết nối Gemini lúc này. Vui lòng kiểm tra API key hoặc kết nối mạng.\n\nChi tiết: ${error.message}`);
+        } finally {
+          setSending(false);
+          inputEl.focus();
+        }
+      }, 600);
     }
   </script>
 
