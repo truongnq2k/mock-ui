@@ -83,7 +83,7 @@ body {
   font-size: 24px;
   font-weight: 600;
   color: var(--primary);
-  cursor: default;
+  cursor: pointer;
   line-height: 1;
   padding: 2px 4px;
 }
@@ -127,7 +127,7 @@ body {
   padding: 5px 0;
   border-radius: var(--radius-full);
   transition: all 0.3s ease;
-  cursor: default;
+  cursor: pointer;
   line-height: 1.2;
 }
 
@@ -241,7 +241,7 @@ body {
   border-radius: var(--radius-full);
   margin-bottom: 14px;
   font-family: var(--font-display);
-  cursor: default;
+  cursor: pointer;
   transition: all 0.25s ease;
   box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
   letter-spacing: 0.01em;
@@ -267,6 +267,10 @@ body {
   font-weight: 500;
   color: var(--on-surface-variant);
   line-height: 1.4;
+}
+
+.health-item {
+  cursor: pointer;
 }
 
 .health-item b {
@@ -295,7 +299,7 @@ body {
 <div class="screen">
 
   <div class="header">
-    <div class="back">←</div>
+    <div class="back" onclick="location.href='cai-dat.html'">←</div>
     <div class="info">
       <h2>Nguyễn Thị Lan</h2>
       <div class="sub">Con gái · ID: HC-2024-00123</div>
@@ -303,12 +307,12 @@ body {
   </div>
 
   <div class="tabs">
-    <div>T2</div>
-    <div>T3</div>
-    <div>T4</div>
-    <div>T5</div>
-    <div class="active">Hôm<br>Nay</div>
-    <div>CN</div>
+    <div onclick="switchTab(this)">T2</div>
+    <div onclick="switchTab(this)">T3</div>
+    <div onclick="switchTab(this)">T4</div>
+    <div onclick="switchTab(this)">T5</div>
+    <div class="active" onclick="switchTab(this)">Hôm<br>Nay</div>
+    <div onclick="switchTab(this)">CN</div>
   </div>
 
   <div class="card score-card">
@@ -336,32 +340,32 @@ body {
     </div>
   </div>
 
-  <button class="btn">Xem phiếu theo dõi chi tiết</button>
+  <button class="btn" onclick="location.href='thong-so-chi-tiet-nguoi-than/phieu-theo-doi-chi-tiet.html'">Xem phiếu theo dõi chi tiết</button>
 
   <div class="card">
     <div class="card-title">Chỉ số sức khoẻ</div>
     <div class="health-grid">
-      <div class="health-item">
+      <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-nhip-tim.html'">
         <span>❤️ Nhịp tim</span>
         <b class="teal">78 bpm</b>
       </div>
-      <div class="health-item">
+      <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-huyet-ap.html'">
         <span>🩸 Huyết áp</span>
         <b class="orange">135/85</b>
       </div>
-      <div class="health-item">
+      <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-spo2.html'">
         <span>🫁 SpO2</span>
         <b class="teal">96%</b>
       </div>
-      <div class="health-item">
+      <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-nhip-tim.html'">
         <span>🌡️ Nhiệt độ</span>
         <b class="teal">36.8°C</b>
       </div>
-      <div class="health-item">
+      <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-giac-ngu.html'">
         <span>😴 Giấc ngủ</span>
         <b class="red">5h 30m</b>
       </div>
-      <div class="health-item">
+      <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-buoc-chan.html'">
         <span>🚶 Bước chân</span>
         <b class="orange">3,120</b>
       </div>
@@ -370,5 +374,11 @@ body {
 
 </div>
 
+<script>
+function switchTab(el) {
+  document.querySelector('.tabs div.active')?.classList.remove('active');
+  el.classList.add('active');
+}
+</script>
 </body>
 </html>
