@@ -19,6 +19,7 @@
   --on-surface-variant: #404752;
   --outline: #707883;
   --outline-variant: #bfc7d4;
+  --warning: #ff8f00;
   --font-display: 'Manrope', sans-serif;
   --font-label: 'Plus Jakarta Sans', sans-serif;
   --radius-sm: 0.5rem;
@@ -28,11 +29,7 @@
   --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   min-height: 100vh;
@@ -62,7 +59,6 @@ body {
 
 .screen::-webkit-scrollbar { display: none; }
 
-/* ── HEADER ── */
 .header {
   display: flex;
   align-items: center;
@@ -86,7 +82,6 @@ body {
   letter-spacing: -0.4px;
 }
 
-/* ── ICON ── */
 .icon-wrap {
   width: 76px;
   height: 76px;
@@ -99,7 +94,6 @@ body {
   margin: 0 auto 16px;
 }
 
-/* ── DESC ── */
 .desc {
   text-align: center;
   font-size: 14px;
@@ -112,7 +106,6 @@ body {
   letter-spacing: 0.01em;
 }
 
-/* ── GLASS CARD ── */
 .card {
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(20px);
@@ -126,14 +119,8 @@ body {
   box-shadow: var(--shadow-glass);
 }
 
-/* ── FORM ── */
-.field-group {
-  margin-bottom: 18px;
-}
-
-.field-group:last-child {
-  margin-bottom: 0;
-}
+.field-group { margin-bottom: 18px; }
+.field-group:last-child { margin-bottom: 0; }
 
 .field-group label {
   display: block;
@@ -197,7 +184,6 @@ body {
   letter-spacing: 0.01em;
 }
 
-/* ── BUTTON ── */
 .btn {
   width: 100%;
   height: 52px;
@@ -220,33 +206,6 @@ body {
   box-shadow: 0 3px 12px rgba(0, 191, 165, 0.35);
 }
 
-/* ── TOAST ── */
-.toast {
-  position: fixed;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-80px);
-  background: rgba(255, 87, 87, 0.92);
-  backdrop-filter: blur(16px);
-  color: #fff;
-  padding: 14px 24px;
-  border-radius: var(--radius-full);
-  font-size: 14px;
-  font-weight: 700;
-  font-family: var(--font-display);
-  box-shadow: 0 8px 32px rgba(255, 87, 87, 0.3);
-  z-index: 999;
-  opacity: 0;
-  transition: all 0.4s ease;
-  white-space: nowrap;
-  pointer-events: none;
-}
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-/* ── NOTE ── */
 .note {
   text-align: center;
   font-size: 11px;
@@ -260,7 +219,148 @@ body {
   margin: 0 auto;
 }
 
-/* ── RESPONSIVE ── */
+/* ── CONFIRM OVERLAY ── */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+  padding: 24px 20px;
+}
+
+.overlay.show { display: flex; }
+
+.modal {
+  width: 100%;
+  max-width: 320px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: var(--radius-xl);
+  padding: 28px 22px 24px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+  border-right-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+  animation: modalIn 0.3s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal h3 {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--on-surface);
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+}
+
+.modal .modal-desc {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  opacity: 0.65;
+  margin-bottom: 20px;
+  font-family: var(--font-label);
+}
+
+.cost-box {
+  background: rgba(255, 143, 0, 0.08);
+  border: 1px solid rgba(255, 143, 0, 0.2);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--warning);
+}
+
+.cost-box img {
+  width: 28px;
+  height: 28px;
+}
+
+.cost-box span {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  opacity: 0.5;
+  font-family: var(--font-label);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  flex: 1;
+  height: 48px;
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.actions button:active { transform: scale(0.97); }
+
+.actions .cancel {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--on-surface-variant);
+}
+
+.actions .confirm {
+  background: var(--warning);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(255, 143, 0, 0.3);
+}
+
+/* ── SUCCESS TOAST ── */
+.toast {
+  display: none;
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 360px;
+  width: calc(100% - 40px);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-full);
+  padding: 14px 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--on-surface);
+  z-index: 1001;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-left: 3px solid var(--primary);
+  animation: toastIn 0.3s ease;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
 @media (max-width: 440px) {
   body { padding: 0; background: transparent; }
   .screen {
@@ -305,7 +405,7 @@ body {
     </div>
   </div>
 
-  <button class="btn" onclick="showToast()">Thêm người thân</button>
+  <button class="btn" onclick="submitForm()">Thêm người thân</button>
 
   <div class="note">
     Người thân sẽ nhận được thông báo xác nhận<br>
@@ -314,10 +414,25 @@ body {
 
 </div>
 
-<div class="toast" id="toast">Đã đến giới hạn</div>
+<div class="overlay" id="confirmOverlay" onclick="if(event.target===this) closeConfirm()">
+  <div class="modal">
+    <h3>Xác nhận kết nối</h3>
+    <div class="modal-desc">Bạn có muốn dùng 200 xu để thêm người thân này?</div>
+    <div class="cost-box">
+      <img src="../assets/coin.png" alt=""> 200 <span>xu</span>
+    </div>
+    <div class="actions">
+      <button class="cancel" onclick="closeConfirm()">Huỷ</button>
+      <button class="confirm" onclick="confirmAdd()">Xác nhận</button>
+    </div>
+    <div style="margin-top:14px;font-size:11px;color:var(--outline);font-family:var(--font-label);cursor:pointer;" onclick="closeConfirm();location.href='../thanh-toan.html'">Bạn không đủ xu? Mua thêm</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-function showToast() {
+function submitForm() {
   const id = document.getElementById('id');
   const ten = document.getElementById('tengo');
   const errId = document.getElementById('errId');
@@ -328,11 +443,24 @@ function showToast() {
   if (!ten.value.trim()) { ten.classList.add('error'); errTen.style.display = 'block'; ok = false; }
   else { ten.classList.remove('error'); errTen.style.display = 'none'; }
   if (!ok) return;
+  document.getElementById('confirmOverlay').classList.add('show');
+}
+
+function closeConfirm() {
+  document.getElementById('confirmOverlay').classList.remove('show');
+}
+
+function confirmAdd() {
+  document.getElementById('confirmOverlay').classList.remove('show');
   const t = document.getElementById('toast');
-  t.classList.add('show');
-  setTimeout(() => { t.classList.remove('show'); }, 1500);
-  setTimeout(() => { location.href = '../thanh-toan.html'; }, 1800);
+  t.textContent = '✅ Đã kết nối người thân thành công! (-200 xu)';
+  t.style.display = 'block';
+  setTimeout(() => {
+    t.style.display = 'none';
+    location.href = 'cai-dat.html';
+  }, 2500);
 }
 </script>
+
 </body>
 </html>
