@@ -1,351 +1,708 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Kolia AI - Mua thêm điểm</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Kolia AI - Mua thêm xu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap"
+    rel="stylesheet">
 
-<style>
-:root {
-  --primary: #00bfa5;
-  --primary-container: #00a48e;
-  --primary-dark: #006b5c;
-  --on-primary: #ffffff;
-  --secondary: #2196f3;
-  --tertiary: #e3f2fd;
-  --neutral: #f8fafc;
-  --on-surface: #191c1e;
-  --on-surface-variant: #404752;
-  --surface-container-lowest: #ffffff;
-  --error: #ba1a1a;
-  --error-container: #ffdad6;
-  --outline: #707883;
-  --outline-variant: #bfc7d4;
-  --font-display: 'Manrope', sans-serif;
-  --font-label: 'Plus Jakarta Sans', sans-serif;
-  --radius-sm: 0.5rem;
-  --radius-md: 1.5rem;
-  --radius-lg: 2rem;
-  --radius-xl: 3rem;
-  --radius-full: 9999px;
-  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
-}
+  <style>
+    :root {
+      --primary: #00bfa5;
+      --primary-container: #00a48e;
+      --primary-dark: #006b5c;
+      --on-primary: #ffffff;
+      --secondary: #2196f3;
+      --tertiary: #e3f2fd;
+      --neutral: #f8fafc;
+      --on-surface: #191c1e;
+      --on-surface-variant: #404752;
+      --surface-container-lowest: #ffffff;
+      --error: #ba1a1a;
+      --error-container: #ffdad6;
+      --outline: #707883;
+      --outline-variant: #bfc7d4;
+      --warning: #ff8f00;
+      --font-display: 'Manrope', sans-serif;
+      --font-label: 'Plus Jakarta Sans', sans-serif;
+      --radius-sm: 0.5rem;
+      --radius-md: 1.5rem;
+      --radius-lg: 2rem;
+      --radius-xl: 3rem;
+      --radius-full: 9999px;
+      --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+    }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-body {
-  min-height: 100vh;
-  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: var(--font-display);
-  padding: 16px;
-}
+    body {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: var(--font-display);
+      padding: 16px;
+    }
 
-.screen {
-  width: 100%;
-  max-width: 400px;
-  min-height: 100vh;
-  background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
-  padding: 24px 20px 32px;
-  position: relative;
-  border-radius: 40px;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.08),
-    0 30px 80px rgba(0, 0, 0, 0.5),
-    0 0 60px rgba(0, 191, 165, 0.06);
-  overflow-y: auto;
-  overflow-x: hidden;
-}
+    .screen {
+      width: 100%;
+      max-width: 400px;
+      min-height: 100vh;
+      background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+      padding: 24px 20px 32px;
+      position: relative;
+      border-radius: 40px;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 30px 80px rgba(0, 0, 0, 0.5),
+        0 0 60px rgba(0, 191, 165, 0.06);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
 
-.screen::-webkit-scrollbar {
-  display: none;
-}
+    .screen::-webkit-scrollbar {
+      display: none;
+    }
 
-/* ── HEADER ── */
-.header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 22px;
-  padding-top: 4px;
-}
+    /* ── HEADER ── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      padding-top: 4px;
+    }
 
-.back {
-  color: var(--primary);
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 1;
-  cursor: pointer;
-}
+    .back {
+      color: var(--primary);
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 1;
+      cursor: pointer;
+    }
 
-.page-title {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--on-surface);
-  letter-spacing: -0.4px;
-}
+    .page-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--on-surface);
+      letter-spacing: -0.4px;
+    }
 
-/* ── ALERT ── */
-.alert-card {
-  background: rgba(255, 241, 241, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 197, 197, 0.4);
-  border-radius: var(--radius-lg);
-  padding: 14px 18px;
-  text-align: center;
-  margin-bottom: 16px;
-}
+    /* ── BALANCE CARD ── */
+    .balance-card {
+      background: linear-gradient(135deg, rgba(0, 191, 165, 0.12), rgba(0, 164, 142, 0.06));
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 191, 165, 0.2);
+      border-radius: var(--radius-xl);
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-.alert-card b {
-  display: block;
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--error);
-  margin-bottom: 4px;
-}
+    .balance-amount {
+      font-size: 40px;
+      font-weight: 900;
+      color: var(--warning);
+      letter-spacing: -1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      line-height: 1;
+    }
 
-.alert-card span {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--on-surface-variant);
-  opacity: 0.7;
-}
+    .balance-amount img {
+      width: 32px;
+      height: 32px;
+    }
 
-/* ── BALANCE ── */
-.balance-bar {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: var(--radius-full);
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--on-surface-variant);
-  margin-bottom: 22px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
+    .balance-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      opacity: 0.6;
+      margin-top: 4px;
+      font-family: var(--font-label);
+    }
 
-.balance-bar b {
-  color: var(--error);
-  font-size: 16px;
-  font-weight: 800;
-}
+    /* ── SECTION ── */
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--on-surface);
+      margin: 0 0 10px 4px;
+      letter-spacing: -0.2px;
+    }
 
-/* ── SECTION ── */
-.section-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--on-surface);
-  margin: 0 0 10px 4px;
-  letter-spacing: -0.2px;
-}
+    /* ── PACKAGE LIST ── */
+    .pkg-card {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-bottom-color: rgba(255, 255, 255, 0.05);
+      border-right-color: rgba(255, 255, 255, 0.05);
+      box-shadow: var(--shadow-glass);
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
 
-/* ── PACKAGE LIST ── */
-.pkg-card {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: var(--radius-md);
-  padding: 14px 16px;
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-bottom-color: rgba(255, 255, 255, 0.05);
-  border-right-color: rgba(255, 255, 255, 0.05);
-  box-shadow: var(--shadow-glass);
-  transition: all 0.25s ease;
-}
+    .pkg-card:active {
+      transform: scale(0.98);
+    }
 
-.pkg-card.active {
-  background: rgba(0, 191, 165, 0.1);
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(0, 191, 165, 0.15), var(--shadow-glass);
-}
+    .pkg-card.active {
+      background: rgba(0, 191, 165, 0.1);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(0, 191, 165, 0.15), var(--shadow-glass);
+    }
 
-.pkg-name {
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--on-surface);
-  line-height: 1.2;
-}
+    .pkg-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-.pkg-name span {
-  display: block;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--on-surface-variant);
-  opacity: 0.7;
-  margin-top: 3px;
-  font-family: var(--font-label);
-  letter-spacing: 0.01em;
-}
+    .pkg-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 143, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
 
-.pkg-price {
-  min-width: 80px;
-  height: 32px;
-  border: none;
-  border-radius: var(--radius-full);
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--on-primary);
-  cursor: default;
-  transition: all 0.2s ease;
-  padding: 0 14px;
-  font-family: var(--font-display);
-}
+    .pkg-icon img {
+      width: 24px;
+      height: 24px;
+    }
 
-.pkg-price:active {
-  transform: scale(0.95);
-}
+    .pkg-info {
+      line-height: 1.2;
+    }
 
-.pkg-price.primary {
-  background: var(--primary);
-  box-shadow: 0 3px 12px rgba(0, 191, 165, 0.25);
-}
+    .pkg-amount {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--on-surface);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
 
-.pkg-price.muted {
-  background: var(--on-surface-variant);
-  opacity: 0.6;
-}
+    .pkg-amount img {
+      width: 16px;
+      height: 16px;
+      vertical-align: middle;
+    }
 
-.pkg-price.green {
-  background: #18b96f;
-  box-shadow: 0 3px 12px rgba(24, 185, 111, 0.25);
-}
+    .pkg-badge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      background: var(--error);
+      color: white;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      letter-spacing: 0.02em;
+      font-family: var(--font-label);
+      vertical-align: middle;
+    }
 
-/* ── PAYMENT ROW ── */
-.payment-row {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: var(--radius-full);
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--on-surface-variant);
-  margin-top: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: var(--shadow-glass);
-}
+    .pkg-badge.best {
+      background: var(--warning);
+    }
 
-.payment-row b {
-  color: var(--on-surface);
-  font-weight: 700;
-}
+    .pkg-desc {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      opacity: 0.7;
+      margin-top: 2px;
+      font-family: var(--font-label);
+    }
 
-/* ── NOTE ── */
-.note-text {
-  text-align: center;
-  color: var(--outline);
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 1.5;
-  margin-top: 12px;
-  font-family: var(--font-label);
-  letter-spacing: 0.01em;
-}
+    .pkg-price {
+      min-width: 88px;
+      height: 36px;
+      border: none;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--on-primary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0 14px;
+      font-family: var(--font-display);
+      background: var(--primary);
+      box-shadow: 0 3px 12px rgba(0, 191, 165, 0.25);
+    }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 440px) {
-  body {
-    padding: 0;
-    background: transparent;
-  }
+    .pkg-price:active {
+      transform: scale(0.95);
+    }
 
-  .screen {
-    max-width: 100%;
-    border-radius: 0;
-    min-height: 100dvh;
-    box-shadow: none;
-    padding: 20px 16px;
-  }
-}
-</style>
+    .pkg-price.green {
+      background: #18b96f;
+      box-shadow: 0 3px 12px rgba(24, 185, 111, 0.25);
+    }
+
+    .pkg-price.grey {
+      background: var(--on-surface-variant);
+      opacity: 0.5;
+      box-shadow: none;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 18px 0 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--outline);
+      font-family: var(--font-label);
+      letter-spacing: 0.02em;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--outline-variant);
+      opacity: 0.4;
+    }
+
+    /* ── PAYMENT ROW ── */
+    .payment-row {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-full);
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      margin-top: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: var(--shadow-glass);
+    }
+
+    .payment-row b {
+      color: var(--on-surface);
+      font-weight: 700;
+    }
+
+    .payment-row img {
+      width: 18px;
+      height: 18px;
+      vertical-align: middle;
+    }
+
+    /* ── NOTE ── */
+    .note-text {
+      text-align: center;
+      color: var(--outline);
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1.5;
+      margin-top: 12px;
+      font-family: var(--font-label);
+    }
+
+    /* ── GOOGLE PLAY BILLING DIALOG ── */
+    .billing-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      padding: 24px 20px;
+    }
+
+    .billing-overlay.show {
+      display: flex;
+    }
+
+    .billing-dialog {
+      width: 100%;
+      max-width: 300px;
+      background: #fff;
+      border-radius: 28px;
+      padding: 24px 20px 16px;
+      text-align: center;
+      animation: billingIn 0.25s ease;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes billingIn {
+      from {
+        opacity: 0;
+        transform: scale(1.1);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .billing-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 12px;
+      background: rgba(0, 191, 165, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .billing-icon img {
+      width: 32px;
+      height: 32px;
+    }
+
+    .billing-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1f1f1f;
+      margin-bottom: 2px;
+    }
+
+    .billing-sub {
+      font-size: 13px;
+      color: #5f6368;
+      margin-bottom: 20px;
+      font-family: var(--font-label);
+    }
+
+    .billing-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      font-size: 13px;
+      color: #3c4043;
+      font-weight: 500;
+    }
+
+    .billing-row:last-of-type {
+      padding-bottom: 0;
+    }
+
+    .billing-label {
+      color: #5f6368;
+    }
+
+    .billing-value {
+      font-weight: 700;
+      color: #1f1f1f;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .billing-value img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .billing-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0 16px;
+      margin-top: 8px;
+      border-top: 1px solid #e8eaed;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1f1f1f;
+    }
+
+    .billing-total .total-label {
+      color: #5f6368;
+      font-weight: 500;
+    }
+
+    .billing-total .total-price {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    .billing-btn {
+      width: 100%;
+      height: 48px;
+      background: var(--primary);
+      border: none;
+      border-radius: 24px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: var(--font-display);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 191, 165, 0.3);
+      letter-spacing: 0.01em;
+    }
+
+    .billing-btn:active {
+      transform: scale(0.97);
+    }
+
+    .billing-terms {
+      font-size: 10px;
+      color: #9aa0a6;
+      margin-top: 12px;
+      line-height: 1.4;
+      font-family: var(--font-label);
+    }
+
+    .billing-close {
+      font-size: 12px;
+      color: #5f6368;
+      cursor: pointer;
+      margin-top: 8px;
+      font-weight: 600;
+      font-family: var(--font-label);
+      display: inline-block;
+    }
+
+    /* ── SUCCESS TOAST ── */
+    .toast {
+      display: none;
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 360px;
+      width: calc(100% - 40px);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-full);
+      padding: 14px 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--on-surface);
+      z-index: 1001;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-left: 3px solid var(--primary);
+      animation: toastIn 0.3s ease;
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 440px) {
+      body {
+        padding: 0;
+        background: transparent;
+      }
+
+      .screen {
+        max-width: 100%;
+        border-radius: 0;
+        min-height: 100dvh;
+        box-shadow: none;
+        padding: 20px 16px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="screen">
+  <div class="screen">
 
-  <div class="header">
-    <div class="back" onclick="location.href='cai-dat/cai-dat.html'">←</div>
-    <div class="page-title">Mua thêm điểm</div>
-  </div>
-
-  <div class="alert-card">
-    <b>Bạn đã hết điểm!</b>
-    <span>Mua thêm điểm để tiếp tục chat với Bác sĩ AI</span>
-  </div>
-
-  <div class="balance-bar">
-    Số dư hiện tại: <b>0 Token</b>
-  </div>
-
-  <div class="section-title">Chọn gói điểm</div>
-
-  <div class="pkg-card">
-    <div class="pkg-name">
-      FREE : Dùng thử 1 tháng
-      <span>Miễn phí cho người dùng mới</span>
+    <div class="header">
+      <div class="back" onclick="location.href='cai-dat/cai-dat.html'">←</div>
+      <div class="page-title">Mua thêm xu</div>
     </div>
-    <button class="pkg-price green">MIỄN PHÍ</button>
-  </div>
 
-  <div class="pkg-card active">
-    <div class="pkg-name">
-      150 Token
-      <span>Phổ biến nhất</span>
+    <div class="balance-card">
+      <div class="balance-amount">
+        <img src="assets/coin.png" alt=""> 200
+      </div>
+      <div class="balance-label">Số dư hiện tại</div>
     </div>
-    <button class="pkg-price primary">49.000 VND</button>
-  </div>
 
-  <div class="pkg-card">
-    <div class="pkg-name">
-      300 Token
-      <span>Tiết kiệm 10%</span>
+    <div class="section-title">Chọn gói xu</div>
+
+    <div class="pkg-card" onclick="selectPkg(this, '100 Xu', 100, 0)">
+      <div class="pkg-left">
+        <div class="pkg-icon"><img src="assets/coin.png" alt=""></div>
+        <div class="pkg-info">
+          <div class="pkg-amount">100 <img src="assets/coin.png" alt=""> <span class="pkg-badge">DÙNG THỬ</span></div>
+          <div class="pkg-desc">Miễn phí cho người mới</div>
+        </div>
+      </div>
+      <button class="pkg-price green">MIỄN PHÍ</button>
     </div>
-    <button class="pkg-price muted">89.000 VND</button>
-  </div>
 
-  <div class="pkg-card">
-    <div class="pkg-name">
-      500 Token
-      <span>Tiết kiệm 20%</span>
+    <div class="pkg-card active" onclick="selectPkg(this, '150 Xu', 150, 29000, 'primary')">
+      <div class="pkg-left">
+        <div class="pkg-icon"><img src="assets/coin.png" alt=""></div>
+        <div class="pkg-info">
+          <div class="pkg-amount">150 <img src="assets/coin.png" alt=""> <span class="pkg-badge best">BÁN CHẠY</span>
+          </div>
+          <div class="pkg-desc">Phù hợp cho nhu cầu cơ bản</div>
+        </div>
+      </div>
+      <button class="pkg-price">29.000 ₫</button>
     </div>
-    <button class="pkg-price muted">139.000 VND</button>
-  </div>
 
-  <div class="section-title" style="margin-top:18px;">Thanh toán qua</div>
+    <div class="pkg-card" onclick="selectPkg(this, '350 Xu', 350, 59000, 'primary')">
+      <div class="pkg-left">
+        <div class="pkg-icon"><img src="assets/coin.png" alt=""></div>
+        <div class="pkg-info">
+          <div class="pkg-amount">350 <img src="assets/coin.png" alt=""> <span
+              style="font-size:10px;color:var(--primary);font-weight:700;">+16%</span></div>
+          <div class="pkg-desc">Tiết kiệm hơn so với gói Nhỏ</div>
+        </div>
+      </div>
+      <button class="pkg-price">59.000 ₫</button>
+    </div>
+
+    <div class="pkg-card" onclick="selectPkg(this, '800 Xu', 800, 119000, 'primary')">
+      <div class="pkg-left">
+        <div class="pkg-icon"><img src="assets/coin.png" alt=""></div>
+        <div class="pkg-info">
+          <div class="pkg-amount">800 <img src="assets/coin.png" alt=""> <span
+              style="font-size:10px;color:var(--primary);font-weight:700;">+33%</span></div>
+          <div class="pkg-desc">Gói phổ biến nhất — tiết kiệm nhất</div>
+        </div>
+      </div>
+      <button class="pkg-price">119.000 ₫</button>
+    </div>
+
+    <!-- <div class="divider">Phương thức thanh toán</div>
 
   <div class="payment-row">
-    <b>Google Play</b> • Thanh toán an toàn
+    <img src="assets/gpay.png" alt="" onerror="this.style.display='none'">
+    <b>Google Play</b> • Thanh toán an toàn, bảo mật
+  </div> -->
+
+    <div class="note-text">
+      Giá đã bao gồm VAT. Bạn có thể huỷ bất cứ lúc nào trong Cài đặt.<br>
+      Thanh toán được xử lý qua cổng Google Play.
+    </div>
+
   </div>
 
-  <div class="note-text">
-    Thanh toán được xử lý qua cổng Google Play.<br>
-    Bạn có thể huỷ bất cứ lúc nào.
+  <!-- Google Play Billing dialog -->
+  <div class="billing-overlay" id="billingOverlay" onclick="if(event.target===this) closeBilling()">
+    <div class="billing-dialog">
+      <div class="billing-icon"><img src="assets/coin.png" alt=""></div>
+      <div class="billing-title" id="billTitle">150 Xu</div>
+      <div class="billing-sub" id="billSub">Mua gói xu Kolia</div>
+
+      <div class="billing-row">
+        <span class="billing-label">Gói</span>
+        <span class="billing-value" id="billPkg">150 <img src="assets/coin.png" alt=""></span>
+      </div>
+      <div class="billing-row">
+        <span class="billing-label">Giá</span>
+        <span class="billing-value" id="billPrice">29.000 ₫</span>
+      </div>
+      <div class="billing-row">
+        <span class="billing-label">Phương thức</span>
+        <span class="billing-value">Google Play</span>
+      </div>
+
+      <div class="billing-total">
+        <span class="total-label">Tổng cộng</span>
+        <span class="total-price" id="billTotal">29.000 ₫</span>
+      </div>
+
+      <button class="billing-btn" id="billingBtn" onclick="purchase()">Mua với giá 29.000 ₫</button>
+      <div class="billing-terms">Thanh toán được xử lý qua Google Play. Bạn có thể quản lý gói đã mua trong Cài đặt.
+      </div>
+      <span class="billing-close" onclick="closeBilling()">Huỷ</span>
+    </div>
   </div>
 
-</div>
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    let selectedPkg = { name: '150 Xu', amount: 150, price: 29000 };
+
+    function selectPkg(el, name, amount, price) {
+      document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      selectedPkg = { name, amount, price };
+      if (price > 0) {
+        const fmt = price.toLocaleString('vi-VN') + ' ₫';
+        document.getElementById('billTitle').textContent = name;
+        document.getElementById('billPkg').innerHTML = amount + ' <img src=\"assets/coin.png\" alt=\"\">';
+        document.getElementById('billPrice').textContent = fmt;
+        document.getElementById('billTotal').textContent = fmt;
+        document.getElementById('billingBtn').textContent = 'Mua với giá ' + fmt;
+        document.getElementById('billingOverlay').classList.add('show');
+      }
+    }
+
+    function closeBilling() {
+      document.getElementById('billingOverlay').classList.remove('show');
+    }
+
+    function purchase() {
+      document.getElementById('billingBtn').textContent = 'Đang xử lý...';
+      document.getElementById('billingBtn').disabled = true;
+      setTimeout(() => {
+        document.getElementById('billingOverlay').classList.remove('show');
+        const t = document.getElementById('toast');
+        t.textContent = '✅ Đã mua ' + selectedPkg.name + ' thành công!';
+        t.style.display = 'block';
+        setTimeout(() => { t.style.display = 'none'; }, 3000);
+        document.getElementById('billingBtn').textContent = 'Mua với giá ' + selectedPkg.price.toLocaleString('vi-VN') + ' ₫';
+        document.getElementById('billingBtn').disabled = false;
+      }, 1500);
+    }
+  </script>
 
 </body>
+
 </html>
