@@ -1,498 +1,579 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Đánh giá tổng quan cả ngày</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Đánh giá tổng quan cả ngày</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap"
+    rel="stylesheet">
 
-<style>
-:root {
-  --primary: #00bfa5;
-  --primary-container: #00a48e;
-  --primary-dark: #006b5c;
-  --on-primary: #ffffff;
-  --secondary: #2196f3;
-  --tertiary: #e3f2fd;
-  --neutral: #f8fafc;
-  --on-surface: #191c1e;
-  --on-surface-variant: #404752;
-  --surface-container-lowest: #ffffff;
-  --error: #ba1a1a;
-  --error-container: #ffdad6;
-  --outline: #707883;
-  --outline-variant: #bfc7d4;
-  --font-display: 'Manrope', sans-serif;
-  --font-label: 'Plus Jakarta Sans', sans-serif;
-  --radius-sm: 0.5rem;
-  --radius-md: 1.5rem;
-  --radius-lg: 2rem;
-  --radius-xl: 3rem;
-  --radius-full: 9999px;
-  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
-}
+  <style>
+    :root {
+      --primary: #00bfa5;
+      --primary-container: #00a48e;
+      --primary-dark: #006b5c;
+      --on-primary: #ffffff;
+      --secondary: #2196f3;
+      --tertiary: #e3f2fd;
+      --neutral: #f8fafc;
+      --on-surface: #191c1e;
+      --on-surface-variant: #404752;
+      --surface-container-lowest: #ffffff;
+      --error: #ba1a1a;
+      --error-container: #ffdad6;
+      --outline: #707883;
+      --outline-variant: #bfc7d4;
+      --font-display: 'Manrope', sans-serif;
+      --font-label: 'Plus Jakarta Sans', sans-serif;
+      --radius-sm: 0.5rem;
+      --radius-md: 1.5rem;
+      --radius-lg: 2rem;
+      --radius-xl: 3rem;
+      --radius-full: 9999px;
+      --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+    }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-body {
-  min-height: 100vh;
-  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: var(--font-display);
-  padding: 16px;
-}
+    body {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: var(--font-display);
+      padding: 16px;
+    }
 
-.screen {
-  width: 100%;
-  max-width: 400px;
-  min-height: 100vh;
-  background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
-  padding: 20px 16px 28px;
-  position: relative;
-  border-radius: 40px;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.08),
-    0 30px 80px rgba(0, 0, 0, 0.5),
-    0 0 60px rgba(0, 191, 165, 0.06);
-}
+    .screen {
+      width: 100%;
+      max-width: 400px;
+      min-height: 100vh;
+      background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+      padding: 20px 16px 28px;
+      position: relative;
+      border-radius: 40px;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 30px 80px rgba(0, 0, 0, 0.5),
+        0 0 60px rgba(0, 191, 165, 0.06);
+    }
 
-/* ── HEADER ── */
-.header {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  margin-bottom: 18px;
-}
+    /* ── HEADER ── */
+    .header {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
 
-.back {
-  color: var(--primary);
-  font-size: 26px;
-  font-weight: 400;
-  line-height: 1;
-  margin-top: 1px;
-  cursor: pointer;
-}
+    .back {
+      color: var(--primary);
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 1;
+      margin-top: 1px;
+      cursor: pointer;
+    }
 
-.header-text {
-  flex: 1;
-}
+    .header-text {
+      flex: 1;
+    }
 
-.header-title {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--on-surface);
-  letter-spacing: -0.3px;
-  line-height: 1.2;
-}
+    .header-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--on-surface);
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+    }
 
-.header-date {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--outline);
-  margin-top: 3px;
-  font-family: var(--font-label);
-  letter-spacing: 0.02em;
-}
+    .header-date {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--outline);
+      margin-top: 3px;
+      font-family: var(--font-label);
+      letter-spacing: 0.02em;
+    }
 
-/* ── SCORE CARD ── */
-.score-card {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: var(--radius-xl);
-  padding: 18px 20px;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-bottom-color: rgba(255, 255, 255, 0.05);
-  border-right-color: rgba(255, 255, 255, 0.05);
-  box-shadow: var(--shadow-glass);
-}
+    /* ── SCORE CARD ── */
+    .score-card {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-xl);
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-bottom-color: rgba(255, 255, 255, 0.05);
+      border-right-color: rgba(255, 255, 255, 0.05);
+      box-shadow: var(--shadow-glass);
+    }
 
-.score-ring {
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  border: 6px solid var(--primary);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
+    .score-ring {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      border: 6px solid var(--primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
 
-.score-num {
-  color: var(--primary);
-  font-size: 26px;
-  font-weight: 900;
-  line-height: 20px;
-  letter-spacing: -0.5px;
-}
+    .score-num {
+      color: var(--primary);
+      font-size: 26px;
+      font-weight: 900;
+      line-height: 20px;
+      letter-spacing: -0.5px;
+    }
 
-.score-sub {
-  font-size: 8px;
-  font-weight: 700;
-  color: var(--outline);
-  font-family: var(--font-label);
-}
+    .score-sub {
+      font-size: 8px;
+      font-weight: 700;
+      color: var(--outline);
+      font-family: var(--font-label);
+    }
 
-.score-info h3 {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--on-surface);
-  margin-bottom: 3px;
-}
+    .score-info h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--on-surface);
+      margin-bottom: 3px;
+    }
 
-.score-tag {
-  display: inline-block;
-  background: rgba(255, 179, 0, 0.15);
-  color: #e6a000;
-  padding: 2px 10px;
-  font-size: 10px;
-  font-weight: 700;
-  border-radius: var(--radius-full);
-  font-family: var(--font-label);
-  letter-spacing: 0.03em;
-  margin-bottom: 2px;
-}
+    .score-tag {
+      display: inline-block;
+      background: rgba(255, 179, 0, 0.15);
+      color: #e6a000;
+      padding: 2px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: var(--radius-full);
+      font-family: var(--font-label);
+      letter-spacing: 0.03em;
+      margin-bottom: 2px;
+    }
 
-.score-info p {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--outline);
-  font-family: var(--font-label);
-}
+    .score-info p {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--outline);
+      font-family: var(--font-label);
+    }
 
-/* ── SECTION ── */
-.section-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--on-surface);
-  margin: 0 0 10px 4px;
-  letter-spacing: -0.2px;
-}
+    /* ── SECTION ── */
+    .section-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--on-surface);
+      margin: 0 0 10px 4px;
+      letter-spacing: -0.2px;
+    }
 
-/* ── SESSION ROWS ── */
-.session {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: var(--radius-lg);
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: var(--shadow-glass);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
+    /* ── SESSION ROWS ── */
+    .session {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-lg);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: var(--shadow-glass);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
 
-.session:active {
-  transform: scale(0.98);
-}
+    .session:active {
+      transform: scale(0.98);
+    }
 
-.session-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+    .session-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-.session-badge {
-  width: 38px;
-  height: 38px;
-  border-radius: var(--radius-md);
-  background: var(--primary);
-  color: var(--on-primary);
-  font-size: 18px;
-  font-weight: 900;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
+    .session-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      background: var(--primary);
+      color: var(--on-primary);
+      font-size: 18px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
 
-.session-badge.orange {
-  background: #ff8f00;
-}
+    .session-badge.orange {
+      background: #ff8f00;
+    }
 
-.session-name {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--on-surface);
-  line-height: 1.2;
-}
+    .session-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--on-surface);
+      line-height: 1.2;
+    }
 
-.session-name span {
-  display: block;
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--outline);
-  margin-top: 1px;
-  font-family: var(--font-label);
-}
+    .session-name span {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--outline);
+      margin-top: 1px;
+      font-family: var(--font-label);
+    }
 
-.session-arrow {
-  color: var(--primary);
-  font-size: 18px;
-  font-weight: 700;
-}
+    .session-arrow {
+      color: var(--primary);
+      font-size: 18px;
+      font-weight: 700;
+    }
 
-/* ── TABLE ── */
-.table-wrap {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(16px);
-  border-radius: var(--radius-lg);
-  padding: 2px;
-  margin-bottom: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: var(--shadow-glass);
-  overflow: hidden;
-}
+    /* ── TABLE ── */
+    .table-wrap {
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(16px);
+      border-radius: var(--radius-lg);
+      padding: 2px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: var(--shadow-glass);
+      overflow: hidden;
+    }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 11px;
-}
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
 
-.table thead {
-  background: rgba(0, 191, 165, 0.08);
-}
+    .table thead {
+      background: rgba(0, 191, 165, 0.08);
+    }
 
-.table th {
-  padding: 8px 6px;
-  color: var(--on-surface-variant);
-  font-weight: 700;
-  text-align: center;
-  font-size: 10px;
-  font-family: var(--font-label);
-  letter-spacing: 0.03em;
-}
+    .table th {
+      padding: 8px 6px;
+      color: var(--on-surface-variant);
+      font-weight: 700;
+      text-align: center;
+      font-size: 10px;
+      font-family: var(--font-label);
+      letter-spacing: 0.03em;
+    }
 
-.table th:first-child,
-.table td:first-child {
-  text-align: left;
-  padding-left: 12px;
-}
+    .table th:first-child,
+    .table td:first-child {
+      text-align: left;
+      padding-left: 12px;
+    }
 
-.table td {
-  padding: 7px 6px;
-  text-align: center;
-  color: var(--on-surface-variant);
-  font-weight: 600;
-  font-size: 11px;
-  border-bottom: 1px solid rgba(191, 199, 212, 0.15);
-}
+    .table td {
+      padding: 7px 6px;
+      text-align: center;
+      color: var(--on-surface-variant);
+      font-weight: 600;
+      font-size: 11px;
+      border-bottom: 1px solid rgba(191, 199, 212, 0.15);
+    }
 
-.table tbody tr:last-child td {
-  border-bottom: none;
-}
+    .table tbody tr:last-child td {
+      border-bottom: none;
+    }
 
-.td-good {
-  color: var(--primary) !important;
-  font-weight: 800;
-}
+    .td-good {
+      color: var(--primary) !important;
+      font-weight: 800;
+    }
 
-.td-mid {
-  color: #ff8f00 !important;
-  font-weight: 800;
-}
+    .td-mid {
+      color: #ff8f00 !important;
+      font-weight: 800;
+    }
 
-.td-bad {
-  color: var(--error) !important;
-  font-weight: 800;
-}
+    .td-bad {
+      color: var(--error) !important;
+      font-weight: 800;
+    }
 
-/* ── AI BOX ── */
-.ai-box {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 191, 165, 0.2);
-  border-radius: var(--radius-lg);
-  padding: 16px 18px;
-  margin-bottom: 14px;
-  box-shadow: 0 4px 20px rgba(0, 191, 165, 0.06);
-}
+    /* ── AI BOX ── */
+    .ai-box {
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 191, 165, 0.2);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 20px rgba(0, 191, 165, 0.06);
+    }
 
-.ai-box h3 {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--on-surface);
-  margin-bottom: 8px;
-}
+    .ai-box h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--on-surface);
+      margin-bottom: 8px;
+    }
 
-.ai-box p {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--on-surface-variant);
-  line-height: 1.5;
-}
+    .ai-box p {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      line-height: 1.5;
+    }
 
-.ai-box b {
-  color: var(--on-surface);
-}
+    .ai-box b {
+      color: var(--on-surface);
+    }
 
-/* ── LEGEND ── */
-.legend {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--on-surface-variant);
-  font-family: var(--font-label);
-  letter-spacing: 0.02em;
-}
 
-.legend span {
-  margin-right: 6px;
-}
+    .btn {
+      width: 100%;
+      height: 50px;
+      background: var(--primary);
+      border: none;
+      color: var(--on-primary);
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: var(--radius-full);
+      margin-bottom: 14px;
+      font-family: var(--font-display);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
+      letter-spacing: 0.01em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
 
-.legend-good {
-  color: var(--primary) !important;
-}
+    .btn.chuyensau {
+      background: var(--secondary);
+      box-shadow: 0 6px 24px rgba(33, 150, 243, 0.3);
+    }
 
-.legend-mid {
-  color: #ff8f00 !important;
-}
+    .btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 3px 12px rgba(0, 191, 165, 0.35);
+    }
 
-.legend-bad {
-  color: var(--error) !important;
-}
+    /* ── LEGEND ── */
+    .legend {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--on-surface-variant);
+      font-family: var(--font-label);
+      letter-spacing: 0.02em;
+    }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 440px) {
-  body {
-    padding: 0;
-    background: transparent;
-  }
+    .legend span {
+      margin-right: 6px;
+    }
 
-  .screen {
-    max-width: 100%;
-    border-radius: 0;
-    min-height: 100dvh;
-    box-shadow: none;
-    padding: 16px 14px 24px;
-  }
-}
-</style>
+    .legend-good {
+      color: var(--primary) !important;
+    }
+
+    .legend-mid {
+      color: #ff8f00 !important;
+    }
+
+    .legend-bad {
+      color: var(--error) !important;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 440px) {
+      body {
+        padding: 0;
+        background: transparent;
+      }
+
+      .screen {
+        max-width: 100%;
+        border-radius: 0;
+        min-height: 100dvh;
+        box-shadow: none;
+        padding: 16px 14px 24px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="screen">
+  <div class="screen">
 
-  <div class="header">
-    <div class="back" onclick="location.href='trang-chu.html'">←</div>
-    <div class="header-text">
-      <div class="header-title">Đánh giá tổng quan cả ngày</div>
-      <div class="header-date">22/05/2026 - Sáng | Trưa | Tối</div>
-    </div>
-  </div>
-
-  <div class="score-card">
-    <div class="score-ring">
-      <div class="score-num">72</div>
-      <div class="score-sub">/100</div>
-    </div>
-    <div class="score-info">
-      <h3>Điểm sức khoẻ cả ngày</h3>
-      <div class="score-tag">Trung bình</div>
-      <p>TB = (Sáng + Trưa + Tối) / 3</p>
-    </div>
-  </div>
-
-  <div class="section-title">📊 Điểm từng buổi</div>
-
-  <div class="session" onclick="location.href='phieu-theo-doi-chi-tiet.html'">
-    <div class="session-left">
-      <div class="session-badge">75</div>
-      <div class="session-name">
-        🌅 Buổi sáng
-        <span>Khá tốt | 06:30 - Đã hoàn thành</span>
+    <div class="header">
+      <div class="back" onclick="location.href='trang-chu.html'">←</div>
+      <div class="header-text">
+        <div class="header-title">Đánh giá tổng quan cả ngày</div>
+        <div class="header-date">22/05/2026 - Sáng | Trưa | Tối</div>
       </div>
     </div>
-    <div class="session-arrow">→</div>
-  </div>
 
-  <div class="session" onclick="location.href='phieu-theo-doi-chi-tiet.html'">
-    <div class="session-left">
-      <div class="session-badge orange">68</div>
-      <div class="session-name">
-        ☀️ Buổi trưa
-        <span>Trung bình | 12:15 - Đã hoàn thành</span>
+    <div class="score-card">
+      <div class="score-ring">
+        <div class="score-num">72</div>
+        <div class="score-sub">/100</div>
+      </div>
+      <div class="score-info">
+        <h3>Điểm sức khoẻ cả ngày</h3>
+        <div class="score-tag">Trung bình</div>
+        <p>TB = (Sáng + Trưa + Tối) / 3</p>
       </div>
     </div>
-    <div class="session-arrow">→</div>
-  </div>
 
-  <div class="session" onclick="location.href='phieu-theo-doi-chi-tiet.html'">
-    <div class="session-left">
-      <div class="session-badge orange">72</div>
-      <div class="session-name">
-        🌙 Buổi tối
-        <span>Trung bình | 20:00 - Đã hoàn thành</span>
+    <div class="section-title">📊 Điểm từng buổi</div>
+
+    <div class="session" onclick="location.href='phieu-theo-doi-chi-tiet.html'">
+      <div class="session-left">
+        <div class="session-badge">75</div>
+        <div class="session-name">
+          🌅 Buổi sáng
+          <span>Khá tốt | 06:30 - Đã hoàn thành</span>
+        </div>
       </div>
+      <div class="session-arrow">→</div>
     </div>
-    <div class="session-arrow">→</div>
+
+    <div class="session" onclick="location.href='phieu-theo-doi-chi-tiet.html'">
+      <div class="session-left">
+        <div class="session-badge orange">68</div>
+        <div class="session-name">
+          ☀️ Buổi trưa
+          <span>Trung bình | 12:15 - Đã hoàn thành</span>
+        </div>
+      </div>
+      <div class="session-arrow">→</div>
+    </div>
+
+    <div class="session" onclick="location.href='phieu-theo-doi-chi-tiet.html'">
+      <div class="session-left">
+        <div class="session-badge orange">72</div>
+        <div class="session-name">
+          🌙 Buổi tối
+          <span>Trung bình | 20:00 - Đã hoàn thành</span>
+        </div>
+      </div>
+      <div class="session-arrow">→</div>
+    </div>
+
+    <div class="section-title">📈 Chi tiết thang điểm</div>
+
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Tiêu chí</th>
+            <th>Sáng</th>
+            <th>Trưa</th>
+            <th>Tối</th>
+            <th>TB</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tự cảm nhận</td>
+            <td class="td-good">8</td>
+            <td class="td-good">7</td>
+            <td class="td-good">7</td>
+            <td class="td-good">7.3</td>
+          </tr>
+          <tr>
+            <td>Giấc ngủ</td>
+            <td class="td-good">8</td>
+            <td>—</td>
+            <td class="td-good">7</td>
+            <td class="td-good">7.5</td>
+          </tr>
+          <tr>
+            <td>Vận động</td>
+            <td class="td-mid">6</td>
+            <td class="td-mid">5</td>
+            <td class="td-good">7</td>
+            <td class="td-mid">6.0</td>
+          </tr>
+          <tr>
+            <td>Uống nước</td>
+            <td class="td-mid">5</td>
+            <td class="td-mid">6</td>
+            <td class="td-good">7</td>
+            <td class="td-mid">6.0</td>
+          </tr>
+          <tr>
+            <td>Uống thuốc</td>
+            <td class="td-good">10</td>
+            <td class="td-good">10</td>
+            <td class="td-good">10</td>
+            <td class="td-good">10</td>
+          </tr>
+          <tr>
+            <td>Triệu chứng</td>
+            <td class="td-good">8</td>
+            <td class="td-good">6</td>
+            <td class="td-good">7</td>
+            <td class="td-good">7.0</td>
+          </tr>
+          <tr>
+            <td>Tâm trạng</td>
+            <td class="td-good">8</td>
+            <td class="td-good">7</td>
+            <td class="td-good">8</td>
+            <td class="td-good">7.7</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <a class="btn chuyensau" href="#">Đánh giá chuyên sâu từ Kolia</a>
+
+    <div class="ai-box">
+      <h3>👨‍⚕️ Nhận định Bác sĩ AI cả ngày</h3>
+      <p><b>Điểm tổng: 72/100 - Trung bình</b></p>
+      <br>
+      <p>✅ <b>Tốt:</b></p>
+      <p>• Uống thuốc đúng giờ cả 3 buổi (10/10)</p>
+      <p>• Tâm trạng ổn định, tích cực</p>
+      <p>• Giấc ngủ đêm qua đạt 7h15m</p>
+      <br>
+      <p>⚠️ <b>Cần cải thiện:</b></p>
+      <p>• Vận động chưa đủ (TB 6.0) → Tăng đi bộ</p>
+      <p>• Uống nước ít (TB 6.0) → Cần 6-8 cốc/ngày</p>
+      <p>• Buổi trưa điểm thấp nhất (68) → Cần nghỉ ngơi</p>
+    </div>
+
+    <div class="legend">
+      Thang điểm:
+      <span class="legend-good">80-100: Tốt</span>
+      <span class="legend-mid">60-79: TB</span>
+      <span class="legend-bad">0-59: Yếu</span>
+    </div>
+
   </div>
-
-  <div class="section-title">📈 Chi tiết thang điểm</div>
-
-  <div class="table-wrap">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Tiêu chí</th>
-          <th>Sáng</th>
-          <th>Trưa</th>
-          <th>Tối</th>
-          <th>TB</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Tự cảm nhận</td><td class="td-good">8</td><td class="td-good">7</td><td class="td-good">7</td><td class="td-good">7.3</td></tr>
-        <tr><td>Giấc ngủ</td><td class="td-good">8</td><td>—</td><td class="td-good">7</td><td class="td-good">7.5</td></tr>
-        <tr><td>Vận động</td><td class="td-mid">6</td><td class="td-mid">5</td><td class="td-good">7</td><td class="td-mid">6.0</td></tr>
-        <tr><td>Uống nước</td><td class="td-mid">5</td><td class="td-mid">6</td><td class="td-good">7</td><td class="td-mid">6.0</td></tr>
-        <tr><td>Uống thuốc</td><td class="td-good">10</td><td class="td-good">10</td><td class="td-good">10</td><td class="td-good">10</td></tr>
-        <tr><td>Triệu chứng</td><td class="td-good">8</td><td class="td-good">6</td><td class="td-good">7</td><td class="td-good">7.0</td></tr>
-        <tr><td>Tâm trạng</td><td class="td-good">8</td><td class="td-good">7</td><td class="td-good">8</td><td class="td-good">7.7</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="ai-box">
-    <h3>👨‍⚕️ Nhận định Bác sĩ AI cả ngày</h3>
-    <p><b>Điểm tổng: 72/100 - Trung bình</b></p>
-    <br>
-    <p>✅ <b>Tốt:</b></p>
-    <p>• Uống thuốc đúng giờ cả 3 buổi (10/10)</p>
-    <p>• Tâm trạng ổn định, tích cực</p>
-    <p>• Giấc ngủ đêm qua đạt 7h15m</p>
-    <br>
-    <p>⚠️ <b>Cần cải thiện:</b></p>
-    <p>• Vận động chưa đủ (TB 6.0) → Tăng đi bộ</p>
-    <p>• Uống nước ít (TB 6.0) → Cần 6-8 cốc/ngày</p>
-    <p>• Buổi trưa điểm thấp nhất (68) → Cần nghỉ ngơi</p>
-  </div>
-
-  <div class="legend">
-    Thang điểm:
-    <span class="legend-good">80-100: Tốt</span>
-    <span class="legend-mid">60-79: TB</span>
-    <span class="legend-bad">0-59: Yếu</span>
-  </div>
-
-</div>
 
 </body>
+
 </html>

@@ -1,723 +1,810 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Nguyễn Thị Lan</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Nguyễn Thị Lan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 
-<style>
-:root {
-  --primary: #00bfa5;
-  --primary-container: #00a48e;
-  --primary-dark: #006b5c;
-  --on-primary: #ffffff;
-  --secondary: #2196f3;
-  --tertiary: #e3f2fd;
-  --neutral: #f8fafc;
-  --on-surface: #191c1e;
-  --on-surface-variant: #404752;
-  --surface-container-lowest: #ffffff;
-  --error: #ba1a1a;
-  --error-container: #ffdad6;
-  --outline: #707883;
-  --outline-variant: #bfc7d4;
-  --font-display: 'Manrope', sans-serif;
-  --font-label: 'Plus Jakarta Sans', sans-serif;
-  --radius-sm: 0.5rem;
-  --radius-md: 1.5rem;
-  --radius-lg: 2rem;
-  --radius-xl: 3rem;
-  --radius-full: 9999px;
-  --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
-}
+  <style>
+    :root {
+      --primary: #00bfa5;
+      --primary-container: #00a48e;
+      --primary-dark: #006b5c;
+      --on-primary: #ffffff;
+      --secondary: #2196f3;
+      --tertiary: #e3f2fd;
+      --neutral: #f8fafc;
+      --on-surface: #191c1e;
+      --on-surface-variant: #404752;
+      --surface-container-lowest: #ffffff;
+      --error: #ba1a1a;
+      --error-container: #ffdad6;
+      --outline: #707883;
+      --outline-variant: #bfc7d4;
+      --font-display: 'Manrope', sans-serif;
+      --font-label: 'Plus Jakarta Sans', sans-serif;
+      --radius-sm: 0.5rem;
+      --radius-md: 1.5rem;
+      --radius-lg: 2rem;
+      --radius-xl: 3rem;
+      --radius-full: 9999px;
+      --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+    }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-body {
-  min-height: 100vh;
-  background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: var(--font-display);
-  padding: 16px;
-}
+    body {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: var(--font-display);
+      padding: 16px;
+    }
 
-.screen {
-  width: 100%;
-  max-width: 400px;
-  min-height: 100vh;
-  background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
-  padding: 24px 20px;
-  position: relative;
-  border-radius: 40px;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.08),
-    0 30px 80px rgba(0, 0, 0, 0.5),
-    0 0 60px rgba(0, 191, 165, 0.06);
-  overflow-y: auto;
-  overflow-x: hidden;
-}
+    .screen {
+      width: 100%;
+      max-width: 400px;
+      min-height: 100vh;
+      background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+      padding: 24px 20px;
+      position: relative;
+      border-radius: 40px;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 30px 80px rgba(0, 0, 0, 0.5),
+        0 0 60px rgba(0, 191, 165, 0.06);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
 
-.screen::-webkit-scrollbar {
-  display: none;
-}
+    .screen::-webkit-scrollbar {
+      display: none;
+    }
 
-/* ── HEADER ── */
-.header {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 16px;
-  padding-top: 4px;
-}
+    /* ── HEADER ── */
+    .header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-top: 4px;
+    }
 
-.back {
-  font-size: 24px;
-  font-weight: 600;
-  color: var(--primary);
-  cursor: pointer;
-  line-height: 1;
-  padding: 2px 4px;
-}
+    .back {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--primary);
+      cursor: pointer;
+      line-height: 1;
+      padding: 2px 4px;
+    }
 
-.info h2 {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--on-surface);
-  letter-spacing: -0.3px;
-}
+    .info h2 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--on-surface);
+      letter-spacing: -0.3px;
+    }
 
-.info .sub {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--on-surface-variant);
-  opacity: 0.6;
-  margin-top: 2px;
-  font-family: var(--font-label);
-  letter-spacing: 0.02em;
-}
+    .info .sub {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      opacity: 0.6;
+      margin-top: 2px;
+      font-family: var(--font-label);
+      letter-spacing: 0.02em;
+    }
 
-/* ── TABS ── */
-.tabs {
-  height: 30px;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  align-items: center;
-  text-align: center;
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--on-surface-variant);
-  opacity: 0.7;
-  margin-bottom: 14px;
-  font-family: var(--font-label);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  gap: 3px;
-}
+    /* ── TABS ── */
+    .tabs {
+      height: 30px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      align-items: center;
+      text-align: center;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      opacity: 0.7;
+      margin-bottom: 14px;
+      font-family: var(--font-label);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      gap: 3px;
+    }
 
-.tabs div {
-  padding: 5px 0;
-  border-radius: var(--radius-full);
-  transition: all 0.3s ease;
-  cursor: pointer;
-  line-height: 1.2;
-}
+    .tabs div {
+      padding: 5px 0;
+      border-radius: var(--radius-full);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      line-height: 1.2;
+    }
 
-.tabs div.active {
-  background: var(--primary);
-  color: var(--on-primary);
-  opacity: 1;
-  font-weight: 700;
-  box-shadow: 0 2px 12px rgba(0, 191, 165, 0.3);
-}
+    .tabs div.active {
+      background: var(--primary);
+      color: var(--on-primary);
+      opacity: 1;
+      font-weight: 700;
+      box-shadow: 0 2px 12px rgba(0, 191, 165, 0.3);
+    }
 
-/* ── GLASS CARD ── */
-.card {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: var(--radius-xl);
-  padding: 20px;
-  margin-bottom: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-bottom-color: rgba(255, 255, 255, 0.05);
-  border-right-color: rgba(255, 255, 255, 0.05);
-  box-shadow: var(--shadow-glass);
-}
+    /* ── GLASS CARD ── */
+    .card {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-xl);
+      padding: 20px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-bottom-color: rgba(255, 255, 255, 0.05);
+      border-right-color: rgba(255, 255, 255, 0.05);
+      box-shadow: var(--shadow-glass);
+    }
 
-.card-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--on-surface);
-  margin-bottom: 12px;
-  letter-spacing: -0.3px;
-}
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--on-surface);
+      margin-bottom: 12px;
+      letter-spacing: -0.3px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-/* ── SCORE ── */
-.score-card {
-  text-align: center;
-  padding-bottom: 20px;
-}
+    .card-title a,
+    .card-title .link {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+      font-family: var(--font-label);
+      text-decoration: none;
+      cursor: pointer;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
 
-.gauge-wrap {
-  width: 100%;
-  height: 150px;
-  margin: 0 auto;
-}
+    .card-title a:hover,
+    .card-title .link:hover {
+      opacity: 1;
+    }
 
-.status-text {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--on-surface-variant);
-  margin-top: 6px;
-  font-family: var(--font-display);
-}
+    /* ── SCORE ── */
+    .score-card {
+      text-align: center;
+      padding-bottom: 20px;
+    }
 
-.status-text b {
-  color: var(--primary);
-  font-weight: 800;
-  text-shadow: 0 2px 8px rgba(0, 191, 165, 0.2);
-}
+    .gauge-wrap {
+      width: 100%;
+      height: 150px;
+      margin: 0 auto;
+    }
 
-/* ── CHART SECTION ── */
-.chart-tabs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  height: 32px;
-  gap: 8px;
-  margin-bottom: 16px;
-}
+    .status-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      margin-top: 6px;
+      font-family: var(--font-display);
+    }
 
-.chart-tabs div {
-  background: rgba(227, 242, 253, 0.4);
-  border-radius: var(--radius-full);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--on-surface-variant);
-  text-align: center;
-  line-height: 32px;
-  font-family: var(--font-label);
-  transition: all 0.25s ease;
-  cursor: pointer;
-}
+    .status-text b {
+      color: var(--primary);
+      font-weight: 800;
+      text-shadow: 0 2px 8px rgba(0, 191, 165, 0.2);
+    }
 
-.chart-tabs .active {
-  background: var(--primary);
-  color: var(--on-primary);
-  font-weight: 700;
-  box-shadow: 0 4px 12px rgba(0, 191, 165, 0.2);
-}
+    /* ── CHART SECTION ── */
+    .chart-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      height: 32px;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
 
-.realtime-status-container {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  padding: 0 4px;
-}
+    .chart-tabs div {
+      background: rgba(227, 242, 253, 0.4);
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      text-align: center;
+      line-height: 32px;
+      font-family: var(--font-label);
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
 
-.realtime-value-box {
-  font-size: 32px;
-  font-weight: 900;
-  color: var(--on-surface);
-  letter-spacing: -1px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+    .chart-tabs .active {
+      background: var(--primary);
+      color: var(--on-primary);
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(0, 191, 165, 0.2);
+    }
 
-.realtime-value-box span.unit {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--outline);
-  letter-spacing: 0;
-}
+    .realtime-status-container {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
 
-.pulse-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--primary);
-  display: inline-block;
-  animation: pulse 1.5s infinite;
-  align-self: center;
-}
+    .realtime-value-box {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--on-surface);
+      letter-spacing: -1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-@keyframes pulse {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 191, 165, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(0, 191, 165, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 191, 165, 0); }
-}
+    .realtime-value-box span.unit {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--outline);
+      letter-spacing: 0;
+    }
 
-.realtime-label-box {
-  font-size: 12px;
-  font-weight: 700;
-  font-family: var(--font-label);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 4px 10px;
-  border-radius: var(--radius-sm);
-  background: rgba(0, 191, 165, 0.1);
-  color: var(--primary-container);
-}
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      display: inline-block;
+      animation: pulse 1.5s infinite;
+      align-self: center;
+    }
 
-.chart-wrap {
-  width: 100%;
-  height: 160px;
-}
+    @keyframes pulse {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 191, 165, 0.7);
+      }
 
-/* ── AI BUTTON ── */
-.ai-btn {
-  width: 100%;
-  height: auto;
-  min-height: 56px;
-  background: linear-gradient(135deg, #7c3aed, #6366f1);
-  border: none;
-  color: var(--on-primary);
-  font-size: 13px;
-  font-weight: 800;
-  border-radius: var(--radius-full);
-  font-family: var(--font-display);
-  cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 6px 24px rgba(124, 58, 237, 0.3);
-  letter-spacing: 0.01em;
-  padding: 14px 20px;
-  line-height: 1.3;
-  margin-bottom: 14px;
-  text-align: center;
-  display: block;
-  text-decoration: none;
-}
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 5px rgba(0, 191, 165, 0);
+      }
 
-.ai-btn:active {
-  transform: scale(0.97);
-  box-shadow: 0 3px 12px rgba(124, 58, 237, 0.35);
-}
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 191, 165, 0);
+      }
+    }
 
-.ai-btn span {
-  display: block;
-  font-size: 10px;
-  font-weight: 500;
-  opacity: 0.85;
-  font-family: var(--font-label);
-  letter-spacing: 0.02em;
-  margin-top: 4px;
-}
+    .realtime-label-box {
+      font-size: 12px;
+      font-weight: 700;
+      font-family: var(--font-label);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      background: rgba(0, 191, 165, 0.1);
+      color: var(--primary-container);
+    }
 
-/* ── FORM ROW ── */
-.form-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
+    .chart-wrap {
+      width: 100%;
+      height: 160px;
+    }
 
-.form-box {
-  background: rgba(248, 250, 252, 0.5);
-  border: 1px solid rgba(191, 199, 212, 0.3);
-  border-radius: var(--radius-md);
-  text-align: center;
-  padding: 10px 6px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--on-surface-variant);
-  font-family: var(--font-label);
-  letter-spacing: 0.02em;
-}
+    /* ── AI BUTTON ── */
+    .ai-btn {
+      width: 100%;
+      height: auto;
+      min-height: 56px;
+      background: linear-gradient(135deg, #7c3aed, #6366f1);
+      border: none;
+      color: var(--on-primary);
+      font-size: 13px;
+      font-weight: 800;
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 24px rgba(124, 58, 237, 0.3);
+      letter-spacing: 0.01em;
+      padding: 14px 20px;
+      line-height: 1.3;
+      margin-bottom: 14px;
+      text-align: center;
+      display: block;
+      text-decoration: none;
+    }
 
-.form-box b {
-  display: block;
-  margin-top: 4px;
-  font-size: 15px;
-  font-weight: 800;
-  font-family: var(--font-display);
-  letter-spacing: -0.3px;
-}
+    .ai-btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 3px 12px rgba(124, 58, 237, 0.35);
+    }
 
-.green { color: var(--primary); }
-.orange { color: #ff8f00; }
-.red { color: var(--error); }
-.teal { color: var(--primary-dark); }
+    .ai-btn span {
+      display: block;
+      font-size: 10px;
+      font-weight: 500;
+      opacity: 0.85;
+      font-family: var(--font-label);
+      letter-spacing: 0.02em;
+      margin-top: 4px;
+    }
 
-/* ── BUTTON ── */
-.btn {
-  width: 100%;
-  height: 50px;
-  background: var(--primary);
-  border: none;
-  color: var(--on-primary);
-  font-size: 14px;
-  font-weight: 700;
-  border-radius: var(--radius-full);
-  margin-bottom: 14px;
-  font-family: var(--font-display);
-  cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
-  letter-spacing: 0.01em;
-}
+    /* ── FORM ROW ── */
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
 
-.btn:active {
-  transform: scale(0.97);
-  box-shadow: 0 3px 12px rgba(0, 191, 165, 0.35);
-}
+    .form-box {
+      background: rgba(248, 250, 252, 0.5);
+      border: 1px solid rgba(191, 199, 212, 0.3);
+      border-radius: var(--radius-md);
+      text-align: center;
+      padding: 10px 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      font-family: var(--font-label);
+      letter-spacing: 0.02em;
+    }
 
-/* ── HEALTH GRID ── */
-.health-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-}
+    .form-box b {
+      display: block;
+      margin-top: 4px;
+      font-size: 15px;
+      font-weight: 800;
+      font-family: var(--font-display);
+      letter-spacing: -0.3px;
+    }
 
-.health-item {
-  background: rgba(248, 250, 252, 0.5);
-  border-radius: var(--radius-md);
-  padding: 10px 12px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--on-surface-variant);
-  font-family: var(--font-display);
-  line-height: 1.4;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
+    .green {
+      color: var(--primary);
+    }
 
-.health-item:active {
-  transform: scale(0.96);
-  background: rgba(248, 250, 252, 0.7);
-}
+    .orange {
+      color: #ff8f00;
+    }
 
-.health-item b {
-  display: block;
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--primary-dark);
-  font-family: var(--font-display);
-  letter-spacing: -0.4px;
-  margin-top: 2px;
-}
+    .red {
+      color: var(--error);
+    }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 440px) {
-  body { padding: 0; background: transparent; }
-  .screen {
-    max-width: 100%;
-    border-radius: 0;
-    min-height: 100dvh;
-    box-shadow: none;
-    padding: 20px 16px;
-  }
-}
-</style>
+    .teal {
+      color: var(--primary-dark);
+    }
+
+    /* ── BUTTON ── */
+    .btn {
+      width: 100%;
+      height: 50px;
+      background: var(--primary);
+      border: none;
+      color: var(--on-primary);
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: var(--radius-full);
+      margin-bottom: 14px;
+      font-family: var(--font-display);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
+      letter-spacing: 0.01em;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 3px 12px rgba(0, 191, 165, 0.35);
+    }
+
+    /* ── HEALTH GRID ── */
+    .health-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .health-item {
+      background: rgba(248, 250, 252, 0.5);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      font-family: var(--font-display);
+      line-height: 1.4;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .health-item:active {
+      transform: scale(0.96);
+      background: rgba(248, 250, 252, 0.7);
+    }
+
+    .health-item b {
+      display: block;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      font-family: var(--font-display);
+      letter-spacing: -0.4px;
+      margin-top: 2px;
+    }
+
+    .btn {
+      width: 100%;
+      height: 50px;
+      background: var(--primary);
+      border: none;
+      color: var(--on-primary);
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: var(--radius-full);
+      margin-bottom: 14px;
+      font-family: var(--font-display);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
+      letter-spacing: 0.01em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .btn.chuyensau {
+      background: var(--secondary);
+      box-shadow: 0 6px 24px rgba(33, 150, 243, 0.3);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 3px 12px rgba(0, 191, 165, 0.35);
+    }
+
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 440px) {
+      body {
+        padding: 0;
+        background: transparent;
+      }
+
+      .screen {
+        max-width: 100%;
+        border-radius: 0;
+        min-height: 100dvh;
+        box-shadow: none;
+        padding: 20px 16px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="screen">
+  <div class="screen">
 
-  <div class="header">
-    <div class="back" onclick="location.href='cai-dat.html'">←</div>
-    <div class="info">
-      <h2>Nguyễn Thị Lan</h2>
-      <div class="sub">Con gái · ID: HC-2024-00123</div>
-    </div>
-  </div>
-
-  <div class="tabs">
-    <div onclick="switchTab(this)">T2</div>
-    <div onclick="switchTab(this)">T3</div>
-    <div onclick="switchTab(this)">T4</div>
-    <div onclick="switchTab(this)">T5</div>
-    <div class="active" onclick="switchTab(this)">Hôm<br>Nay</div>
-    <div onclick="switchTab(this)">CN</div>
-  </div>
-
-  <div class="card score-card">
-    <div class="card-title" style="text-align:left;">Điểm sức khoẻ</div>
-    <div class="gauge-wrap" id="gaugeChart"></div>
-    <div class="status-text">Tình trạng: <b>TRUNG BÌNH</b> — Cần cải thiện!</div>
-  </div>
-
-  <div class="card">
-    <div class="card-title" style="margin-bottom: 10px;">Biểu đồ theo dõi</div>
-    <div class="chart-tabs">
-      <div class="active" data-chart="heart">Nhịp tim</div>
-      <div data-chart="bp">Huyết áp</div>
-      <div data-chart="spo2">SpO2</div>
-    </div>
-    <div class="realtime-status-container">
-      <div class="realtime-value-box">
-        <span class="pulse-dot"></span>
-        <span id="realtimeNum">78</span>
-        <span class="unit" id="realtimeUnit">bpm</span>
-      </div>
-      <div class="realtime-label-box" id="realtimeStatusText">Ổn định</div>
-    </div>
-    <div class="chart-wrap" id="lineChart"></div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">📋 Phiếu theo dõi hôm nay</div>
-    <div class="form-row">
-      <div class="form-box">
-        🌅 Sáng
-        <b class="green">75 điểm</b>
-      </div>
-      <div class="form-box">
-        ☀️ Trưa
-        <b class="orange">68 điểm</b>
-      </div>
-      <div class="form-box">
-        🌙 Tối
-        <b class="orange">72 điểm</b>
+    <div class="header">
+      <div class="back" onclick="location.href='cai-dat.html'">←</div>
+      <div class="info">
+        <h2>Nguyễn Thị Lan</h2>
+        <div class="sub">Con gái · ID: HC-2024-00123</div>
       </div>
     </div>
-  </div>
 
-  <button class="btn" onclick="location.href='thong-so-chi-tiet-nguoi-than/danh-gia-tong-quan-ca-ngay.html'">Xem phiếu theo dõi tổng quan</button>
+    <div class="tabs">
+      <div onclick="switchTab(this)">T2</div>
+      <div onclick="switchTab(this)">T3</div>
+      <div onclick="switchTab(this)">T4</div>
+      <div onclick="switchTab(this)">T5</div>
+      <div class="active" onclick="switchTab(this)">Hôm<br>Nay</div>
+      <div onclick="switchTab(this)">CN</div>
+    </div>
 
-  <div class="card">
-    <div class="card-title">Chỉ số sức khoẻ</div>
-    <div class="health-grid">
-      <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-nhip-tim.html'">
-        <span>❤️ Nhịp tim</span>
-        <b class="teal">78 bpm</b>
+    <div class="card score-card">
+      <div class="card-title" style="text-align:left;">Điểm sức khoẻ</div>
+      <div class="gauge-wrap" id="gaugeChart"></div>
+      <div class="status-text">Tình trạng: <b>TRUNG BÌNH</b> — Cần cải thiện!</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="margin-bottom: 10px;">Biểu đồ theo dõi</div>
+      <div class="chart-tabs">
+        <div class="active" data-chart="heart">Nhịp tim</div>
+        <div data-chart="bp">Huyết áp</div>
+        <div data-chart="spo2">SpO2</div>
       </div>
-      <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-huyet-ap.html'">
-        <span>🩸 Huyết áp</span>
-        <b class="orange">135/85</b>
+      <div class="realtime-status-container">
+        <div class="realtime-value-box">
+          <span class="pulse-dot"></span>
+          <span id="realtimeNum">78</span>
+          <span class="unit" id="realtimeUnit">bpm</span>
+        </div>
+        <div class="realtime-label-box" id="realtimeStatusText">Ổn định</div>
       </div>
-      <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-spo2.html'">
-        <span>🫁 SpO2</span>
-        <b class="teal">96%</b>
+      <div class="chart-wrap" id="lineChart"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>Phiếu theo dõi hôm nay</span>
+        <span class="link" onclick="location.href='thong-so-chi-tiet-nguoi-than/danh-gia-tong-quan-ca-ngay.html'">Chi tiết</span>
       </div>
-      <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-nhip-tim.html'">
-        <span>🌡️ Nhiệt độ</span>
-        <b class="teal">36.8°C</b>
-      </div>
-      <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-giac-ngu.html'">
-        <span>😴 Giấc ngủ</span>
-        <b class="red">5h 30m</b>
-      </div>
-      <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-buoc-chan.html'">
-        <span>🚶 Bước chân</span>
-        <b class="orange">3,120</b>
+      <div class="form-row">
+        <div class="form-box">
+          🌅 Sáng
+          <b class="green">75 điểm</b>
+        </div>
+        <div class="form-box">
+          ☀️ Trưa
+          <b class="orange">68 điểm</b>
+        </div>
+        <div class="form-box">
+          🌙 Tối
+          <b class="orange">72 điểm</b>
+        </div>
       </div>
     </div>
+
+
+    <a class="btn chuyensau" href="#">Đánh giá chuyên sâu từ Kolia</a>
+
+    <div class="card">
+      <div class="card-title">Chỉ số sức khoẻ</div>
+      <div class="health-grid">
+        <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-nhip-tim.html'">
+          <span>❤️ Nhịp tim</span>
+          <b class="teal">78 bpm</b>
+        </div>
+        <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-huyet-ap.html'">
+          <span>🩸 Huyết áp</span>
+          <b class="orange">135/85</b>
+        </div>
+        <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-spo2.html'">
+          <span>🫁 SpO2</span>
+          <b class="teal">96%</b>
+        </div>
+        <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-nhip-tim.html'">
+          <span>🌡️ Nhiệt độ</span>
+          <b class="teal">36.8°C</b>
+        </div>
+        <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-giac-ngu.html'">
+          <span>😴 Giấc ngủ</span>
+          <b class="red">5h 30m</b>
+        </div>
+        <div class="health-item" onclick="location.href='thong-so-chi-tiet-nguoi-than/chi-tiet-buoc-chan.html'">
+          <span>🚶 Bước chân</span>
+          <b class="orange">3,120</b>
+        </div>
+      </div>
+    </div>
+
+    <a class="ai-btn" onclick="askAI()">
+      🤖 Trao đổi với trợ lý AI
+      <span>Để hiểu thêm về tình trạng sức khoẻ của Nguyễn Thị Lan</span>
+    </a>
+
   </div>
 
-  <a class="ai-btn" onclick="askAI()">
-    🤖 Trao đổi với trợ lý AI
-    <span>Để hiểu thêm về tình trạng sức khoẻ của Nguyễn Thị Lan</span>
-  </a>
+  <script>
+    // ── Tab switch (day of week) ──
+    function switchTab(el) {
+      document.querySelector('.tabs div.active')?.classList.remove('active');
+      el.classList.add('active');
+    }
 
-</div>
-
-<script>
-// ── Tab switch (day of week) ──
-function switchTab(el) {
-  document.querySelector('.tabs div.active')?.classList.remove('active');
-  el.classList.add('active');
-}
-
-// ── Gauge Chart (ECharts) ──
-const gaugeChart = echarts.init(document.getElementById('gaugeChart'));
-gaugeChart.setOption({
-  series: [{
-    type: 'gauge',
-    startAngle: 210,
-    endAngle: -30,
-    min: 0,
-    max: 100,
-    splitNumber: 5,
-    radius: '100%',
-    center: ['50%', '55%'],
-    progress: {
-      show: true,
-      width: 12,
-      roundCap: true,
-      itemStyle: {
-        color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-          { offset: 0, color: '#e53935' },
-          { offset: 0.35, color: '#ff8f00' },
-          { offset: 0.65, color: '#ffb300' },
-          { offset: 1, color: '#00bfa5' }
-        ])
-      }
-    },
-    axisLine: {
-      roundCap: true,
-      lineStyle: {
-        width: 12,
-        color: [[1, 'rgba(0, 191, 165, 0.12)']]
-      }
-    },
-    axisTick: { show: false },
-    splitLine: {
-      distance: -22,
-      length: 6,
-      lineStyle: { color: 'rgba(112, 120, 131, 0.3)', width: 1.5 }
-    },
-    axisLabel: {
-      distance: -8,
-      fontSize: 10,
-      fontWeight: 600,
-      color: '#707883',
-      fontFamily: 'Plus Jakarta Sans'
-    },
-    pointer: { show: false },
-    anchor: { show: false },
-    title: { show: false },
-    detail: {
-      offsetCenter: [0, '10%'],
-      fontSize: 34,
-      fontWeight: 900,
-      color: '#191c1e',
-      fontFamily: 'Manrope',
-      formatter: function (value) {
-        return value + '{unit|/100}\n{label|Điểm}';
-      },
-      rich: {
-        unit: {
-          fontSize: 14,
+    // ── Gauge Chart (ECharts) ──
+    const gaugeChart = echarts.init(document.getElementById('gaugeChart'));
+    gaugeChart.setOption({
+      series: [{
+        type: 'gauge',
+        startAngle: 210,
+        endAngle: -30,
+        min: 0,
+        max: 100,
+        splitNumber: 5,
+        radius: '100%',
+        center: ['50%', '55%'],
+        progress: {
+          show: true,
+          width: 12,
+          roundCap: true,
+          itemStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+              { offset: 0, color: '#e53935' },
+              { offset: 0.35, color: '#ff8f00' },
+              { offset: 0.65, color: '#ffb300' },
+              { offset: 1, color: '#00bfa5' }
+            ])
+          }
+        },
+        axisLine: {
+          roundCap: true,
+          lineStyle: {
+            width: 12,
+            color: [[1, 'rgba(0, 191, 165, 0.12)']]
+          }
+        },
+        axisTick: { show: false },
+        splitLine: {
+          distance: -22,
+          length: 6,
+          lineStyle: { color: 'rgba(112, 120, 131, 0.3)', width: 1.5 }
+        },
+        axisLabel: {
+          distance: -8,
+          fontSize: 10,
           fontWeight: 600,
           color: '#707883',
-          padding: [0, 0, 8, 2]
+          fontFamily: 'Plus Jakarta Sans'
         },
-        label: {
-          fontSize: 11,
-          fontWeight: 700,
-          color: '#404752',
-          fontFamily: 'Plus Jakarta Sans',
-          textTransform: 'uppercase',
-          padding: [6, 0, 0, 0]
-        }
-      }
-    },
-    data: [{ value: 72 }]
-  }]
-});
+        pointer: { show: false },
+        anchor: { show: false },
+        title: { show: false },
+        detail: {
+          offsetCenter: [0, '10%'],
+          fontSize: 34,
+          fontWeight: 900,
+          color: '#191c1e',
+          fontFamily: 'Manrope',
+          formatter: function (value) {
+            return value + '{unit|/100}\n{label|Điểm}';
+          },
+          rich: {
+            unit: {
+              fontSize: 14,
+              fontWeight: 600,
+              color: '#707883',
+              padding: [0, 0, 8, 2]
+            },
+            label: {
+              fontSize: 11,
+              fontWeight: 700,
+              color: '#404752',
+              fontFamily: 'Plus Jakarta Sans',
+              textTransform: 'uppercase',
+              padding: [6, 0, 0, 0]
+            }
+          }
+        },
+        data: [{ value: 72 }]
+      }]
+    });
 
-// ── Line Chart ──
-const lineChart = echarts.init(document.getElementById('lineChart'));
-const hours = ['0h', '3h', '6h', '9h', '12h', '15h', '18h', '21h'];
+    // ── Line Chart ──
+    const lineChart = echarts.init(document.getElementById('lineChart'));
+    const hours = ['0h', '3h', '6h', '9h', '12h', '15h', '18h', '21h'];
 
-const chartData = {
-  heart: {
-    values: [78, 76, 72, 74, 80, 82, 79, 78],
-    color: '#00bfa5',
-    unit: 'bpm',
-    status: 'Ổn định'
-  },
-  bp: {
-    values: [135, 132, 138, 140, 133, 130, 132, 135],
-    color: '#2196f3',
-    unit: 'mmHg',
-    status: 'Cao nhẹ'
-  },
-  spo2: {
-    values: [96, 95, 94, 96, 97, 96, 95, 96],
-    color: '#33a0fd',
-    unit: '%',
-    status: 'Bình thường'
-  }
-};
-
-let currentKey = 'heart';
-
-function updateChart(key) {
-  currentKey = key;
-  const d = chartData[key];
-  document.getElementById('realtimeNum').innerText = Math.round(d.values[d.values.length - 1]);
-  document.getElementById('realtimeUnit').innerText = d.unit;
-  document.getElementById('realtimeStatusText').innerText = d.status;
-  document.querySelector('.pulse-dot').style.backgroundColor = d.color;
-  const lblBox = document.getElementById('realtimeStatusText');
-  lblBox.style.color = d.color;
-  lblBox.style.backgroundColor = d.color + '15';
-
-  lineChart.setOption({
-    grid: { left: '4%', right: '4%', top: 15, bottom: 20, containLabel: false },
-    xAxis: {
-      type: 'category',
-      data: hours,
-      axisLine: { show: false },
-      axisTick: { show: false },
-      axisLabel: { fontSize: 10, color: '#94a3b8', fontWeight: 500, fontFamily: 'Plus Jakarta Sans' }
-    },
-    yAxis: {
-      type: 'value',
-      scale: true,
-      splitLine: { lineStyle: { color: 'rgba(191,199,212,0.25)', type: 'dashed' } },
-      axisLabel: { show: false }
-    },
-    series: [{
-      data: d.values,
-      type: 'line',
-      smooth: true,
-      symbol: 'circle',
-      symbolSize: 6,
-      showSymbol: true,
-      lineStyle: { width: 3, color: d.color },
-      areaStyle: {
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          { offset: 0, color: d.color + '30' },
-          { offset: 1, color: d.color + '00' }
-        ])
+    const chartData = {
+      heart: {
+        values: [78, 76, 72, 74, 80, 82, 79, 78],
+        color: '#00bfa5',
+        unit: 'bpm',
+        status: 'Ổn định'
       },
-      itemStyle: { color: d.color, borderColor: '#fff', borderWidth: 1 }
-    }]
-  }, true);
-}
+      bp: {
+        values: [135, 132, 138, 140, 133, 130, 132, 135],
+        color: '#2196f3',
+        unit: 'mmHg',
+        status: 'Cao nhẹ'
+      },
+      spo2: {
+        values: [96, 95, 94, 96, 97, 96, 95, 96],
+        color: '#33a0fd',
+        unit: '%',
+        status: 'Bình thường'
+      }
+    };
 
-updateChart('heart');
+    let currentKey = 'heart';
 
-document.querySelectorAll('.chart-tabs div').forEach(tab => {
-  tab.addEventListener('click', function () {
-    document.querySelector('.chart-tabs div.active').classList.remove('active');
-    this.classList.add('active');
-    updateChart(this.dataset.chart);
-  });
-});
+    function updateChart(key) {
+      currentKey = key;
+      const d = chartData[key];
+      document.getElementById('realtimeNum').innerText = Math.round(d.values[d.values.length - 1]);
+      document.getElementById('realtimeUnit').innerText = d.unit;
+      document.getElementById('realtimeStatusText').innerText = d.status;
+      document.querySelector('.pulse-dot').style.backgroundColor = d.color;
+      const lblBox = document.getElementById('realtimeStatusText');
+      lblBox.style.color = d.color;
+      lblBox.style.backgroundColor = d.color + '15';
 
-// ── Realtime simulation ──
-setInterval(() => {
-  const d = chartData[currentKey];
-  const lastIndex = d.values.length - 1;
-  const variation = (Math.random() - 0.5) * 3;
-  d.values[lastIndex] = d.values[lastIndex] + variation;
-  updateChart(currentKey);
-}, 2500);
+      lineChart.setOption({
+        grid: { left: '4%', right: '4%', top: 15, bottom: 20, containLabel: false },
+        xAxis: {
+          type: 'category',
+          data: hours,
+          axisLine: { show: false },
+          axisTick: { show: false },
+          axisLabel: { fontSize: 10, color: '#94a3b8', fontWeight: 500, fontFamily: 'Plus Jakarta Sans' }
+        },
+        yAxis: {
+          type: 'value',
+          scale: true,
+          splitLine: { lineStyle: { color: 'rgba(191,199,212,0.25)', type: 'dashed' } },
+          axisLabel: { show: false }
+        },
+        series: [{
+          data: d.values,
+          type: 'line',
+          smooth: true,
+          symbol: 'circle',
+          symbolSize: 6,
+          showSymbol: true,
+          lineStyle: { width: 3, color: d.color },
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: d.color + '30' },
+              { offset: 1, color: d.color + '00' }
+            ])
+          },
+          itemStyle: { color: d.color, borderColor: '#fff', borderWidth: 1 }
+        }]
+      }, true);
+    }
 
-window.addEventListener('resize', () => {
-  gaugeChart.resize();
-  lineChart.resize();
-});
+    updateChart('heart');
 
-// ── Ask AI about this relative ──
-function askAI() {
-  const params = new URLSearchParams({
-    name: 'Nguyễn Thị Lan',
-    id: 'HC-2024-00123',
-    score: '72',
-    status: 'TRUNG BÌNH',
-    heart: '78 bpm',
-    bp: '135/85',
-    spo2: '96%',
-    temp: '36.8°C',
-    sleep: '5h 30m',
-    steps: '3,120'
-  });
-  location.href = '../chat-bot-cho-ly.html?' + params.toString();
-}
-</script>
+    document.querySelectorAll('.chart-tabs div').forEach(tab => {
+      tab.addEventListener('click', function () {
+        document.querySelector('.chart-tabs div.active').classList.remove('active');
+        this.classList.add('active');
+        updateChart(this.dataset.chart);
+      });
+    });
+
+    // ── Realtime simulation ──
+    setInterval(() => {
+      const d = chartData[currentKey];
+      const lastIndex = d.values.length - 1;
+      const variation = (Math.random() - 0.5) * 3;
+      d.values[lastIndex] = d.values[lastIndex] + variation;
+      updateChart(currentKey);
+    }, 2500);
+
+    window.addEventListener('resize', () => {
+      gaugeChart.resize();
+      lineChart.resize();
+    });
+
+    // ── Ask AI about this relative ──
+    function askAI() {
+      const params = new URLSearchParams({
+        name: 'Nguyễn Thị Lan',
+        id: 'HC-2024-00123',
+        score: '72',
+        status: 'TRUNG BÌNH',
+        heart: '78 bpm',
+        bp: '135/85',
+        spo2: '96%',
+        temp: '36.8°C',
+        sleep: '5h 30m',
+        steps: '3,120'
+      });
+      location.href = '../chat-bot-cho-ly.html?' + params.toString();
+    }
+  </script>
 </body>
+
 </html>
