@@ -223,6 +223,136 @@
       letter-spacing: 0.01em;
     }
 
+    /* ── OTP OVERLAY ── */
+    .otp-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      justify-content: center;
+      align-items: center;
+      padding: 24px 20px;
+    }
+
+    .otp-overlay.show {
+      display: flex;
+    }
+
+    .otp-modal {
+      width: 100%;
+      max-width: 340px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: var(--radius-xl);
+      padding: 28px 24px 24px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-bottom-color: rgba(255, 255, 255, 0.1);
+      border-right-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+      animation: otpIn 0.3s ease;
+    }
+
+    @keyframes otpIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .otp-modal h2 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--on-surface);
+      letter-spacing: -0.3px;
+      margin-bottom: 2px;
+    }
+
+    .otp-modal .otp-desc {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      opacity: 0.6;
+      margin-bottom: 24px;
+      font-family: var(--font-label);
+    }
+
+    .otp-modal .otp-desc b {
+      color: var(--on-surface);
+      opacity: 1;
+    }
+
+    .otp-boxes {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .otp-boxes input {
+      width: 44px;
+      height: 52px;
+      border: 1.5px solid var(--outline-variant);
+      border-radius: var(--radius-md);
+      text-align: center;
+      font-size: 22px;
+      font-weight: 800;
+      font-family: var(--font-display);
+      color: var(--on-surface);
+      outline: none;
+      transition: all 0.2s ease;
+      background: rgba(248, 250, 252, 0.5);
+    }
+
+    .otp-boxes input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 191, 165, 0.1);
+      background: #fff;
+    }
+
+    .otp-boxes input.filled {
+      border-color: var(--primary);
+      background: rgba(0, 191, 165, 0.06);
+    }
+
+    .otp-resend {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      font-family: var(--font-label);
+      margin-bottom: 20px;
+    }
+
+    .otp-resend a {
+      color: var(--primary);
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .otp-resend a.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .otp-error {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--error);
+      font-family: var(--font-label);
+      display: none;
+      margin-bottom: 12px;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 440px) {
       body {
@@ -273,6 +403,31 @@
 
   </div>
 
+  <div class="otp-overlay" id="otpOverlay" onclick="if(event.target===this) closeOtp()">
+    <div class="otp-modal">
+      <h2>Xác thực OTP</h2>
+      <div class="otp-desc">Nhập mã 6 số gửi đến <b id="otpPhone">0912 345 678</b></div>
+
+      <div class="otp-boxes" id="otpBoxes">
+        <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" autofocus>
+        <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]">
+        <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]">
+        <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]">
+        <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]">
+        <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]">
+      </div>
+
+      <div class="otp-error" id="otpError">Mã OTP không đúng, vui lòng thử lại</div>
+
+      <div class="otp-resend">
+        Chưa nhận được mã? <a id="otpResendLink" onclick="resendOtp()">Gửi lại</a>
+        <span id="otpCountdown" style="display:none;color:var(--outline);"></span>
+      </div>
+
+      <button class="btn-submit" id="otpBtn" onclick="verifyOtp()" disabled>Xác thực</button>
+    </div>
+  </div>
+
   <script>
     function validateAndNext() {
       const sodt = document.getElementById('sodt');
@@ -287,7 +442,84 @@
         errSodt.style.display = 'none';
       }
       if (!ok) return;
-      location.href = 'thong-tin-ca-nhan.html';
+      document.getElementById('otpPhone').textContent = sodt.value.trim();
+      document.getElementById('otpOverlay').classList.add('show');
+      document.querySelector('#otpBoxes input').focus();
+    }
+
+    // ── OTP ──
+    const otpInputs = document.querySelectorAll('#otpBoxes input');
+    const otpError = document.getElementById('otpError');
+    const otpBtn = document.getElementById('otpBtn');
+
+    otpInputs.forEach((inp, i) => {
+      inp.addEventListener('input', function () {
+        this.value = this.value.replace(/\D/g, '').slice(0, 1);
+        if (this.value) this.classList.add('filled');
+        else this.classList.remove('filled');
+        otpError.style.display = 'none';
+        if (this.value && i < otpInputs.length - 1) {
+          otpInputs[i + 1].focus();
+        }
+        updateOtpBtn();
+      });
+      inp.addEventListener('keydown', function (e) {
+        if (e.key === 'Backspace' && !this.value && i > 0) {
+          otpInputs[i - 1].focus();
+          otpInputs[i - 1].value = '';
+          otpInputs[i - 1].classList.remove('filled');
+          updateOtpBtn();
+        }
+        if (e.key === 'Enter' && otpBtn.disabled === false) verifyOtp();
+      });
+      inp.addEventListener('focus', function () { this.select(); });
+    });
+
+    function updateOtpBtn() {
+      const filled = Array.from(otpInputs).every(inp => inp.value.length === 1);
+      otpBtn.disabled = !filled;
+    }
+
+    function verifyOtp() {
+      const code = Array.from(otpInputs).map(inp => inp.value).join('');
+      if (code.length !== 6) return;
+      otpBtn.disabled = true;
+      otpBtn.textContent = 'Đang xác thực...';
+      setTimeout(() => {
+        if (code === '123456') {
+          location.href = 'thong-tin-ca-nhan.html';
+        } else {
+          otpError.style.display = 'block';
+          otpInputs.forEach(inp => { inp.value = ''; inp.classList.remove('filled'); });
+          otpInputs[0].focus();
+          otpBtn.textContent = 'Xác thực';
+          otpBtn.disabled = false;
+        }
+      }, 1200);
+    }
+
+    function closeOtp() {
+      document.getElementById('otpOverlay').classList.remove('show');
+    }
+
+    let countdown = 60;
+    function resendOtp() {
+      const link = document.getElementById('otpResendLink');
+      const cd = document.getElementById('otpCountdown');
+      link.style.display = 'none';
+      cd.style.display = 'inline';
+      countdown = 60;
+      cd.textContent = ' (' + countdown + 's)';
+      const timer = setInterval(() => {
+        countdown--;
+        cd.textContent = ' (' + countdown + 's)';
+        if (countdown <= 0) {
+          clearInterval(timer);
+          link.style.display = 'inline';
+          cd.style.display = 'none';
+        }
+      }, 1000);
+      otpError.style.display = 'none';
     }
   </script>
 </body>

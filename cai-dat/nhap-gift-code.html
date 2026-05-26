@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Nhập gift code</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #00bfa5;
+      --primary-container: #00a48e;
+      --primary-dark: #006b5c;
+      --on-primary: #ffffff;
+      --secondary: #2196f3;
+      --tertiary: #e3f2fd;
+      --neutral: #f8fafc;
+      --on-surface: #191c1e;
+      --on-surface-variant: #404752;
+      --surface-container-lowest: #ffffff;
+      --error: #ba1a1a;
+      --error-container: #ffdad6;
+      --outline: #707883;
+      --outline-variant: #bfc7d4;
+      --warning: #ff8f00;
+      --font-display: 'Manrope', sans-serif;
+      --font-label: 'Plus Jakarta Sans', sans-serif;
+      --radius-sm: 0.5rem;
+      --radius-md: 1.5rem;
+      --radius-lg: 2rem;
+      --radius-xl: 3rem;
+      --radius-full: 9999px;
+      --shadow-glass: 0 8px 32px rgba(0, 191, 165, 0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 30% 20%, #1a3a3a, #0f1a1d 60%, #0a0e10);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: var(--font-display);
+      padding: 16px;
+    }
+
+    .screen {
+      width: 100%;
+      max-width: 400px;
+      min-height: 100vh;
+      background: linear-gradient(165deg, var(--tertiary) 0%, var(--neutral) 100%);
+      padding: 24px 20px;
+      position: relative;
+      border-radius: 40px;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 30px 80px rgba(0, 0, 0, 0.5),
+        0 0 60px rgba(0, 191, 165, 0.06);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .screen::-webkit-scrollbar {
+      display: none;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-top: 4px;
+    }
+
+    .back {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--primary);
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--on-surface);
+      letter-spacing: -0.4px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-xl);
+      padding: 24px 20px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-bottom-color: rgba(255, 255, 255, 0.05);
+      border-right-color: rgba(255, 255, 255, 0.05);
+      box-shadow: var(--shadow-glass);
+      text-align: center;
+    }
+
+    .gift-icon {
+      font-size: 56px;
+      margin-bottom: 12px;
+    }
+
+    .card h2 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--on-surface);
+      margin-bottom: 4px;
+      letter-spacing: -0.3px;
+    }
+
+    .card p {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      opacity: 0.7;
+      margin-bottom: 20px;
+      font-family: var(--font-label);
+    }
+
+    .input-wrap {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .input-wrap input {
+      width: 100%;
+      height: 50px;
+      background: rgba(248, 250, 252, 0.7);
+      border: 1.5px solid var(--outline-variant);
+      border-radius: var(--radius-full);
+      padding: 0 20px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: var(--font-display);
+      color: var(--on-surface);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      outline: none;
+      transition: border-color 0.25s ease;
+      text-align: center;
+    }
+
+    .input-wrap input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 191, 165, 0.1);
+    }
+
+    .input-wrap input::placeholder {
+      color: var(--outline);
+      letter-spacing: 0;
+      font-weight: 500;
+      font-size: 14px;
+      opacity: 0.5;
+    }
+
+    .btn {
+      width: 100%;
+      height: 50px;
+      background: var(--primary);
+      border: none;
+      color: var(--on-primary);
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 24px rgba(0, 191, 165, 0.3);
+      letter-spacing: 0.01em;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 3px 12px rgba(0, 191, 165, 0.35);
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      box-shadow: none;
+      transform: none;
+      cursor: not-allowed;
+    }
+
+    .note {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--outline);
+      line-height: 1.5;
+      margin-top: 8px;
+      font-family: var(--font-label);
+    }
+
+    .toast {
+      display: none;
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 360px;
+      width: calc(100% - 40px);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-full);
+      padding: 14px 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--on-surface);
+      z-index: 1000;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      animation: toastIn 0.3s ease;
+    }
+
+    .toast.success {
+      border-left: 3px solid var(--primary);
+    }
+
+    .toast.error {
+      border-left: 3px solid var(--error);
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    @media (max-width: 440px) {
+      body {
+        padding: 0;
+        background: transparent;
+      }
+
+      .screen {
+        max-width: 100%;
+        border-radius: 0;
+        min-height: 100dvh;
+        box-shadow: none;
+        padding: 20px 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="screen">
+
+    <div class="header">
+      <div class="back" onclick="location.href='cai-dat.html'">←</div>
+      <h1>Nhập gift code</h1>
+    </div>
+
+    <div class="card">
+      <div class="gift-icon">🎁</div>
+      <h2>Bạn có mã quà tặng?</h2>
+      <p>Nhập mã để nhận xu Kolia và các ưu đãi đặc biệt</p>
+
+      <div class="input-wrap">
+        <input type="text" id="giftCode" placeholder="Nhập mã tại đây" maxlength="20" autocomplete="off">
+      </div>
+
+      <button class="btn" id="redeemBtn" onclick="redeemCode()">Nhận quà</button>
+
+      <div class="note">Mã gồm 6-20 ký tự, không phân biệt chữ hoa/thường</div>
+    </div>
+
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const input = document.getElementById('giftCode');
+    const btn = document.getElementById('redeemBtn');
+
+    input.addEventListener('input', function () {
+      this.value = this.value.toUpperCase();
+      btn.disabled = this.value.trim().length < 4;
+    });
+
+    btn.disabled = true;
+
+    function showToast(msg, type) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast ' + type;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 3000);
+    }
+
+    function redeemCode() {
+      const code = input.value.trim();
+      if (code.length < 4) return;
+
+      // Simulate API call
+      btn.disabled = true;
+      btn.textContent = 'Đang xử lý...';
+
+      setTimeout(() => {
+        if (code === 'KOLIA100' || code === 'SALE50' || code === 'WELCOME') {
+          showToast('🎉 Nhận mã thành công! Bạn được +50 xu', 'success');
+          btn.textContent = 'Đã nhận';
+        } else {
+          showToast('❌ Mã không hợp lệ hoặc đã hết hạn', 'error');
+          btn.textContent = 'Nhận quà';
+          btn.disabled = false;
+        }
+      }, 1200);
+    }
+  </script>
+
+</body>
+
+</html>
